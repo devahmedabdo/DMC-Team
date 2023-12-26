@@ -1,0 +1,85 @@
+.login {
+  .container {
+    min-height: calc(100vh - var(--header-height));
+    .signup-progress {
+      @apply justify-between z-0  w-11/12;
+      &::after {
+        content: "";
+        @apply absolute top-0 h-full bg-cyan-400 duration-300 -z-10;
+        width: var(--w);
+      }
+      > div {
+        @apply cursor-pointer w-10 h-10 flex items-center justify-center border-2 duration-300 mb-[-18px] bg-zinc-50 rounded-full;
+        &.active {
+          @apply border-cyan-400 text-cyan-400 bg-white;
+        }
+        &.error {
+          @apply bg-red-600 border-red-600 text-white;
+        }
+      }
+    }
+    > div {
+      @apply w-full flex flex-wrap-reverse gap-16 justify-center items-center;
+      .formImg {
+        @apply w-11/12 max-w-md min-w-[300px] flex justify-center;
+        lord-icon {
+          @apply w-72 h-72 md:scale-125;
+        }
+      }
+      form {
+        @apply w-11/12 max-w-md min-w-[300px] flex relative flex-col min-h-[520px] justify-end;
+        h2 {
+          @apply font-bold uppercase my-4;
+        }
+        .toNextBtn {
+          @apply flex items-center justify-center overflow-hidden relative w-full border border-transparent font-bold  px-5 py-4 rounded-2xl text-white duration-300 cursor-pointer;
+          &::after {
+            content: "";
+            @apply origin-left absolute top-0 left-0 w-full h-full bg-cyan-500 duration-300 -z-10 scale-x-100;
+          }
+          &:hover {
+            @apply border-cyan-400 text-cyan-500;
+            &::after {
+              @apply scale-x-0;
+            }
+            span {
+              @apply border-cyan-500 border-t-transparent;
+            }
+          }
+          span {
+            @apply rounded-full w-6 block h-6 border border-t-transparent border-white animate-spin;
+          }
+        }
+        > div:not(.form-btns) {
+          @apply absolute top-0 left-0 w-full duration-300 flex flex-col justify-center;
+          height: calc(100% - 60px);
+          &.hide {
+            @apply opacity-0 -translate-x-full;
+          }
+        }
+        .cropperBox {
+          // @apply ;
+          &.active {
+            @apply z-50 opacity-100;
+          }
+          > div {
+            &.active {
+              @apply flex z-50 opacity-100;
+            }
+            .imgCropper {
+              max-height: 500px;
+              > div {
+                img {
+                  margin: auto;
+                }
+              }
+            }
+          }
+          button {
+            @apply px-3 py-1 flex items-center gap-3 border-cyan-500 duration-300 hover:bg-cyan-500 hover:text-white text-cyan-500;
+          }
+        }
+      }
+    }
+  }
+}

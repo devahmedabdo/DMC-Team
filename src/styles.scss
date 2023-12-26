@@ -1,1 +1,253 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "ElMessiri";
+  src: url("assets/fonts/ElMessiri-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ElMessiri";
+  src: url("assets/fonts/ElMessiri-Medium.ttf");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ElMessiri";
+  src: url("assets/fonts/ElMessiri-SemiBold.ttf");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ElMessiri";
+  src: url("assets/fonts/ElMessiri-Bold.ttf");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ElMessiri";
+  src: url("assets/fonts/ElMessiri-Bold.ttf");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ElMessiri";
+  src: url("assets/fonts/ElMessiri-Bold.ttf");
+  font-weight: 900;
+  font-style: normal;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    --header-height: 70px;
+    body {
+      @apply bg-white bg-opacity-40 text-zinc-800;
+      font-family: "ElMessiri";
+      input:-internal-autofill-selected {
+        appearance: unset !important;
+        color: unset !important;
+        // background-color: transparent !important;
+        background-color: transparent !important;
+      }
+      input {
+        @apply bg-transparent;
+        &:focus {
+          @apply outline-none;
+        }
+      }
+      .secondry {
+        @media (max-width: 850px) {
+          display: none;
+        }
+        hr {
+          @apply my-10;
+        }
+      }
+    }
+    ::selection {
+      @apply bg-cyan-500 text-white;
+    }
+  }
+}
+@layer utilities {
+  .container {
+    @apply mx-auto px-2;
+    @media (min-width: 768px) {
+      max-width: 1200px;
+    }
+  }
+  // .dark {
+  //   .bg-cyan-900 {
+  //     background-color: red !important;
+  //   }
+  // }
+}
+@layer components {
+  .title {
+    @apply pt-24 text-center capitalize;
+    > h2 {
+      @apply relative text-3xl font-bold px-5 w-fit  mx-auto duration-300 cursor-pointer;
+      // &::after,
+      // &::before {
+      //   content: "";
+      //   background: url(assets/titleImg2.png) center center no-repeat;
+      //   filter: saturate(0.5);
+      //   @apply w-12 h-12 absolute top-1/2 -translate-y-1/2 bg-cover duration-300;
+      //   @media (max-width: 430px) {
+      //     @apply hidden;
+      //   }
+      // }
+      // &::after {
+      //   @apply left-full;
+      //   --tw-scale-x: -1;
+      // }
+      // &::before {
+      //   @apply right-full;
+      // }
+    }
+    p {
+      @apply py-2 text-zinc-400;
+    }
+    &:hover {
+      h2 {
+        @apply text-cyan-500;
+        &::after,
+        &::before {
+          filter: saturate(1);
+        }
+      }
+    }
+  }
+  .shop-btn {
+    @apply py-2 px-5 bg-cyan-900 hover:bg-cyan-400 text-white duration-300 uppercase;
+  }
+  .checkBoxLable {
+    @apply flex gap-2 items-center cursor-pointer select-none;
+    > div {
+      @apply w-4 border h-4 rounded-sm;
+      > div {
+        @apply h-full w-full scale-0 duration-150 rounded-sm bg-cyan-500;
+      }
+    }
+    &.active {
+      > div {
+        > div {
+          --tw-scale-x: 0.8;
+          --tw-scale-y: 0.8;
+        }
+      }
+    }
+  }
+  // .side-title {
+  //   @apply font-bold text-lg pb-5 capitalize;
+  // }
+  .formInput {
+    > div {
+      @apply flex items-center relative;
+      input {
+        outline: none !important;
+        @apply accent-cyan-400 w-full border border-transparent font-bold bg-zinc-50 px-5 py-4 pt-6 rounded-2xl duration-300;
+        &:focus {
+          @apply bg-transparent border-cyan-400;
+          & + label {
+            @apply text-xs top-2;
+          }
+        }
+        &:-webkit-autofill {
+          @apply font-bold;
+          --tw-bg-opacity: 1;
+          -webkit-box-shadow: 0 0 0 1000px
+            rgb(250 250 250 / var(--tw-bg-opacity)) inset;
+          & + label {
+            @apply text-xs top-2;
+          }
+        }
+      }
+      label {
+        @apply absolute right-5 top-6 duration-300;
+        &.active {
+          @apply top-2 text-xs;
+        }
+      }
+      fa-icon {
+        @apply text-zinc-500 duration-300 text-sm cursor-pointer absolute left-2;
+        @media (min-width: 400px) {
+          @apply left-4;
+        }
+        @media (min-width: 500px) {
+          @apply left-5  text-xl;
+        }
+      }
+    }
+    > p {
+      @apply px-4 py-1 text-xs text-red-500 h-6 overflow-hidden;
+      // span {
+      //   @apply translate-y-6 opacity-0 duration-300  block;
+      // }
+    }
+    &.active {
+      label {
+        @apply text-cyan-500;
+      }
+      fa-icon {
+        @apply text-cyan-500;
+      }
+    }
+    &.error {
+      > div {
+        label {
+          @apply text-red-500;
+        }
+        fa-icon {
+          @apply text-red-500;
+        }
+      }
+      // p {
+      //   // span {
+      //   //   @apply translate-y-0 opacity-100;
+      //   // }
+      // }
+    }
+  }
+  .formRadio {
+    label {
+      @apply capitalize duration-300 rounded-2xl flex justify-center items-center w-fit w-24 md:w-28 py-4 bg-zinc-50 flex-col gap-3 border border-transparent;
+      fa-icon {
+        @apply duration-300 text-4xl text-zinc-600;
+      }
+    }
+    p {
+      @apply px-4 py-1 text-xs text-red-500 h-6 overflow-hidden;
+      span {
+        @apply translate-y-6 opacity-0 duration-300 capitalize block;
+      }
+    }
+    &.active {
+      label {
+        @apply shadow-lg border-cyan-400 bg-transparent;
+        fa-icon {
+          @apply text-cyan-400;
+        }
+      }
+    }
+    &.error {
+      label {
+        @apply border-red-400;
+        fa-icon {
+          @apply text-red-400;
+        }
+      }
+      p {
+        span {
+          @apply translate-y-0 opacity-100;
+        }
+      }
+    }
+  }
+  .formNumber {
+    appearance: unset;
+    @extend .formInput;
+  }
+}

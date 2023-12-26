@@ -1,0 +1,42 @@
+.toTop {
+  button {
+    @apply w-10 h-10 flex justify-center items-center rounded-full relative overflow-hidden  text-cyan-600 bg-cyan-100  duration-300;
+    &::after {
+      content: "";
+      @apply absolute top-1/2 -translate-y-1/2 left-0 -translate-x-full transition duration-1000 -rotate-45 w-24 h-4;
+      background: linear-gradient(288deg, white, transparent);
+    }
+    svg {
+      @apply absolute stroke-cyan-600 z-10 fill-none overflow-visible duration-300;
+      stroke-width: 6px;
+      stroke-dasharray: 310;
+      stroke-dashoffset: var(--progress);
+      stroke-linecap: round;
+    }
+  }
+  div {
+    @apply absolute h-full w-full bg-zinc-400 opacity-0 transition duration-500;
+    bottom: -25px;
+    transform: scaleY(0.1);
+    filter: blur(10px);
+  }
+  &:hover,
+  &.active {
+    button {
+      @apply -translate-y-1 bg-cyan-600 text-cyan-50;
+      &::after {
+        @apply translate-x-full;
+      }
+      svg {
+        @apply stroke-cyan-50;
+        transform: scale(0.85);
+      }
+    }
+    div {
+      @apply opacity-50;
+    }
+  }
+  &.hide {
+    @apply translate-y-16 opacity-0;
+  }
+}

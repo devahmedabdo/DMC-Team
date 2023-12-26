@@ -1,0 +1,46 @@
+<!-- <app-animated-bg></app-animated-bg> -->
+<footer class="bg-zinc-900 pt-5">
+  <div class="container p-5 text-zinc-400 grid gap-3">
+    <div>
+      <img class="w-24 brightness-0 invert" src="assets/main/logo.svg" alt="Diamond Logo">
+      <p>فريق لجنة الدلنجات الطبية</p>
+      <div class="flex flex-wrap gap-2 links">
+        <div class="h-10 w-10 text-2xl" *ngFor="let link of links">
+          <fa-icon [style]="'--color:'+link.color"
+            class="rounded-xl h-full w-full flex justify-center items-center duration-300 text-zinc-700"
+            [icon]="link.icon">
+            <a [href]="link.link"></a>
+          </fa-icon>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h6>SHOPPING ONLINE</h6>
+      <a href="">
+        Jewellery Materials</a>
+      <a href="">Sizing Children’s Jewellery</a>
+      <a href="">Delivery & Returns</a>
+      <a href="">Order Tracking</a>
+      <a href="">Order Tracking</a>
+      <a href="">FAQs</a>
+    </div>
+    <div>
+      <h6>ABOUT US</h6>
+      <a href="">Our Story</a>
+      <a href="">Gift Wrap</a>
+      <a href="">Engraving</a>
+      <a href="">Jewellery Care</a>
+      <a href="">World of Molly Brown London</a>
+      <a href="">DELIVERY</a>
+    </div>
+    <div>
+      <h6>ACCOUNT</h6>
+      <span>Head Office: 785 15h Street, Office 478 Berlin, De 81566</span>
+      <a href="tel:0123456778">Tel: 0123456778</a>
+      <a href="mailto:hello@aro-jewelry.com">Email: hello@aro-jewelry.com</a>
+    </div>
+  </div>
+  <span class="text-zinc-500 block py-5 text-center border-t border-zinc-500 capitalize">Copyright &copy;
+    <span>{{year}}</span>
+    <span class="capitalize text-orange-400 "> diamond store </span>. All Rights Reserved.</span>
+</footer>

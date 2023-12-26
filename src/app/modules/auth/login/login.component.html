@@ -1,0 +1,335 @@
+<div class="login">
+  <div class="container relative flex flex-wrap-reverse gap-12 items-center justify-center py-14">
+    <div *ngIf="formType == 'signup'" [style]="'--w:'+signupStep / 2 * 100+'%'"
+      class="signup-progress h-1 bg-zinc-100 rounded-full justify-between absolute top-8 max-w-3xl">
+      <div
+        [ngClass]="{active:signupStep >= 0 ,error:signupErrors?.firstName||signupErrors?.lastName||signupErrors?.email||signupErrors?.password}"
+        (click)="signupStep = 0">
+        1
+      </div>
+      <div
+        [ngClass]="{active:signupStep >= 1 ,error:signupErrors?.phone||signupErrors?.country||signupErrors?.city||signupErrors?.street||signupErrors?.governate}"
+        (click)="signupStep = 1">
+        2
+      </div>
+      <div [ngClass]="{active:signupStep >= 2 ,error:signupErrors?.gender||signupErrors?.accountType}"
+        (click)="signupStep = 2">
+        3
+      </div>
+    </div>
+    <div *ngIf="formType == 'login'">
+      <div class="formImg">
+        <lord-icon colors="primary:#3f3f46,secondary:#fb923c" trigger="loop" delay="1500"
+          src="assets/lottie/login.json"></lord-icon>
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+        <div>
+          <div class="px-4 my-5 capitalize font-bold text-zinc-600">
+            <h2 class="text-4xl">تسجيل الدخول</h2>
+          </div>
+          <div class="formInput"
+            [ngClass]="{active:loginForm.controls.email.valid,error:loginForm.controls.email.errors?.['required']&& loginForm.controls.email.touched}">
+            <div>
+              <input #email value="asd" id="loginEmail" (focus)="changeFormStatus(false)" [autocomplete]="'off'"
+                formControlName="email" type="email" (change)="setRememberMe('email', email.value)">
+              <label [ngClass]="{active:loginForm.controls.email.value != ''}" for="loginEmail">البريد
+                الالكترونى</label>
+              <fa-icon [icon]="emailIcon"></fa-icon>
+            </div>
+            <p>
+              <span>* هذا الحقل مطلوب</span>
+            </p>
+          </div>
+          <div class="formInput"
+            [ngClass]="{active:loginForm.controls.password.valid,error:loginForm.controls.password.errors?.['required'] && loginForm.controls.password.touched}">
+            <div>
+              <input id="loginPassword" autocomplete="false" #password (focus)="changeFormStatus(false)"
+                (change)="setRememberMe('password', password.value)" formControlName="password" [type]="type">
+              <label [ngClass]="{active:loginForm.controls.password.value != ''}" for="loginPassword">Enter Your
+                password</label>
+              <fa-icon *ngIf="type =='password'" [icon]="eay" (click)="this.type = 'text'"></fa-icon>
+              <fa-icon *ngIf="type =='text'" [icon]="eayslash" (click)="this.type = 'password'"></fa-icon>
+            </div>
+            <p>
+              <span>* هذا الحقل مطلوب</span>
+            </p>
+          </div>
+          <div class="flex justify-between py-3 px-4 pt-0">
+            <label [ngClass]="{active:rememberMe}" class="checkBoxLable" for="rememberMe">
+              <div>
+                <div></div>
+              </div>
+              <span>Remember Me</span>
+            </label>
+            <input [(ngModel)]="rememberMe" class="hidden" type="checkbox" id="rememberMe"
+              [ngModelOptions]="{standalone: true}">
+            <button>Forget Password ?</button>
+          </div>
+
+          <div class="mt-5 formInput">
+            <button class="toNextBtn" (click)="log(email)" type="submit"><span *ngIf="startPost"></span>
+              <div *ngIf="!startPost">Login</div>
+            </button>
+            <p [ngClass]="{error:loginInvalid}" class="text-red-500 text-center py-3 overflow-hidden "><span>Please
+                Check
+                Your email
+                or password</span></p>
+          </div>
+        </div>
+
+        <!-- <span routerLink="/login">Register</span>
+      <div [ngClass]="{active:loginInvalid}" class="error ">
+        Please check your email or pass
+      </div> -->
+      </form>
+    </div>
+    <div *ngIf="formType == 'signup'">
+      <div class="formImg">
+        <lord-icon colors="primary:#3f3f46,secondary:#fb923c" trigger="loop" delay="1500"
+          src="assets/lottie/singup.json"></lord-icon>
+      </div>
+      <form class="" [formGroup]="signupForm" (ngSubmit)="signup(signupForm.value)">
+        <div [ngClass]="{hide:signupStep != 0}">
+          <div class="px-4 my-5 capitalize font-bold text-zinc-600">
+            <span class="text-zinc-400">start For free</span>
+            <h2 class="text-3xl">Create new account <span class="text-7xl text-cyan-400 leading-5">.</span></h2>
+            <h6 class="text-zinc-400 font-medium">already a member ? <button
+                class="duration-300 text-cyan-400 font-semibold" routerLink="/login">Login</button>
+            </h6>
+          </div>
+          <div class="flex justify-between gap-4">
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.firstName.valid,error:signupForm.controls.firstName.errors?.['required']&& signupForm.controls.firstName.touched || signupErrors?.firstName }">
+              <div> <input id="firstName" formControlName="firstName" type="text" (focus)="removeError('firstName')">
+                <label [ngClass]="{active:signupForm.controls.firstName.value != ''}" for="firstName">First name</label>
+                <fa-icon [icon]="contactIcon"></fa-icon>
+              </div>
+              <p>
+                <span *ngIf="signupForm.controls.firstName.errors?.['required']">* First name is
+                  required</span>
+                <span *ngIf="signupErrors?.firstName">* First name is
+                  required</span>
+              </p>
+            </div>
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.lastName.valid,error:signupForm.controls.lastName.errors?.['required']&& signupForm.controls.lastName.touched  || signupErrors?.lastName}">
+              <div> <input id="lastName" formControlName="lastName" type="text" (focus)="removeError('lastName')">
+                <label [ngClass]="{active:signupForm.controls.lastName.value != ''}" for="lastName">last name</label>
+                <fa-icon [icon]="contactIcon"></fa-icon>
+              </div>
+              <p>
+                <span *ngIf="signupForm.controls.firstName.errors?.['required']">* last name is
+                  required</span>
+                <span *ngIf="signupErrors?.firstName">* last name is
+                  required</span>
+              </p>
+            </div>
+          </div>
+          <div class="formInput"
+            [ngClass]="{active:signupForm.controls.email.valid && !signupEmailDublicated,error:signupForm.controls.email.invalid && signupForm.controls.email.touched || signupForm.controls.email.valid && signupEmailDublicated || signupErrors?.email}">
+            <div> <input (blur)="checkEmail()" (focus)="signupEmailDublicated=false ;removeError('email')"
+                id="signupEmail" formControlName="email" type="email">
+              <label [ngClass]="{active:signupForm.controls.email.value != ''}" for="signupEmail">Enter Your
+                Email</label>
+              <fa-icon [icon]="emailIcon"></fa-icon>
+            </div>
+            <p>
+              <span *ngIf="signupForm.controls.email.errors?.['required']" [@fadeInOut]>* this
+                field is
+                required</span>
+              <span *ngIf="signupForm.controls.email.errors?.['email']" [@fadeInOut]>* Enter Valid Email</span>
+              <span *ngIf="signupErrors?.email" [@fadeInOut]>* Enter Valid Email</span>
+              <span *ngIf="signupEmailDublicated" [@fadeInOut]>* this email is already exist <button
+                  class="text-cyan-400 underline" (click)="formType='login'">Login!</button></span>
+            </p>
+          </div>
+          <div class="formInput"
+            [ngClass]="{active:signupForm.controls.password.valid,error:signupForm.controls.password.invalid&& signupForm.controls.password.touched || signupErrors?.password}">
+            <div> <input id="signupPassword" formControlName="password" [type]="type" (focus)="removeError('password')">
+              <label [ngClass]="{active:signupForm.controls.password.value != ''}" for="signupPassword">Enter Your
+                password</label>
+
+              <fa-icon *ngIf="type =='password'" [icon]="eay" (click)="this.type = 'text'"></fa-icon>
+              <fa-icon *ngIf="type =='text'" [icon]="eayslash" (click)="this.type = 'password'"></fa-icon>
+            </div>
+            <p>
+              <span *ngIf="signupForm.controls.password.errors?.['required']">* this
+                field is
+                required</span>
+              <span *ngIf="signupForm.controls.password.errors?.['minlength']">* minimum password length is
+                {{signupForm.controls.password.errors?.['minlength'].requiredLength}} You enterd
+                {{signupForm.controls.password.errors?.['minlength'].actualLength}}</span>
+              <span *ngIf="signupErrors?.password">* enter strong password</span>
+            </p>
+          </div>
+        </div>
+        <div [ngClass]="{hide:signupStep!=1}">
+          <div class="formInput"
+            [ngClass]="{active:signupForm.controls.phone.valid,error:signupForm.controls.phone.invalid && signupForm.controls.phone.touched || signupErrors?.phone}">
+            <div> <input id="signupPhone" formControlName="phone" type="tel" (focus)="removeError('phone')">
+              <label [ngClass]="{active:signupForm.controls.phone.value != ''}" for="signupPhone">Enter Your
+                Phone Number</label>
+              <fa-icon [icon]="PhoneIcon"></fa-icon>
+            </div>
+            <p>
+              <span *ngIf="signupForm.controls.phone.errors?.['required']" [@fadeInOut]>* this
+                field is
+                required</span>
+              <span *ngIf="signupErrors?.phone" [@fadeInOut]>* this is invalid phone number</span>
+            </p>
+          </div>
+          <div class="flex justify-between gap-4">
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.country.valid,error:signupForm.controls.country.errors?.['required']&& signupForm.controls.country.touched || signupErrors?.country}">
+              <div> <input id="country" formControlName="country" type="text" (focus)="removeError('country')">
+                <label [ngClass]="{active:signupForm.controls.country.value != ''}" for="country">country</label>
+                <fa-icon [icon]="locationIcon"></fa-icon>
+              </div>
+              <p>
+                <span *ngIf="signupForm.controls.country.errors?.['required']">* country name is
+                  required</span>
+                <span *ngIf="signupErrors?.country">* country name is
+                  required</span>
+              </p>
+            </div>
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.governate.valid,error:signupForm.controls.governate.errors?.['required']&& signupForm.controls.governate.touched || signupErrors?.governate}">
+              <div> <input id="governate" formControlName="governate" type="text" (focus)="removeError('governate')">
+                <label [ngClass]="{active:signupForm.controls.governate.value != ''}" for="governate">governate</label>
+                <fa-icon [icon]=" governateIcon"></fa-icon>
+              </div>
+              <p>
+                <span *ngIf="signupForm.controls.governate.errors?.['required']">* governate name is
+                  required</span>
+                <span *ngIf="signupErrors?.governate">* governate name is
+                  required</span>
+              </p>
+            </div>
+          </div>
+          <div class="flex justify-between gap-4">
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.city.valid,error:signupForm.controls.city.errors?.['required']&& signupForm.controls.city.touched || signupErrors?.governate}">
+              <div> <input id="city" formControlName="city" type="text" (focus)="removeError('city')">
+                <label [ngClass]="{active:signupForm.controls.city.value != ''}" for="city">city</label>
+                <fa-icon [icon]="cityIcon"></fa-icon>
+              </div>
+              <p>
+                <span *ngIf="signupForm.controls.city.errors?.['required']">* city name is
+                  required</span>
+                <span *ngIf="signupErrors?.city">* city name is
+                  required</span>
+              </p>
+            </div>
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.street.valid,error:signupForm.controls.street.errors?.['required']&& signupForm.controls.street.touched || signupErrors?.street}">
+              <div> <input id="street" formControlName="street" type="text" (focus)="removeError('street')">
+                <label [ngClass]="{active:signupForm.controls.street.value != ''}" for="street">street</label>
+                <fa-icon [icon]="streetIcon"></fa-icon>
+              </div>
+              <p>
+                <span *ngIf="signupForm.controls.street.errors?.['required']">* street name is
+                  required</span>
+                <span *ngIf="signupErrors?.street">* street name is
+                  required</span>
+              </p>
+            </div>
+          </div>
+          <div class="formNumber"
+            [ngClass]="{active:signupForm.controls.age.valid,error:signupForm.controls.age.invalid && signupForm.controls.age.touched || signupErrors?.age}">
+            <div> <input id="age" formControlName="age" min="0" type="number" (focus)="removeError('age')">
+              <label [ngClass]="{active:signupForm.controls.age.value != null }" for="age">age</label>
+              <!-- <fa-icon [icon]=" governateIcon"></fa-icon> -->
+            </div>
+            <p>
+              <span *ngIf="signupForm.controls.age.errors?.['required']">* age is
+                required</span>
+              <span *ngIf="signupForm.controls.age.errors?.['min']">* age muste be larger than
+                {{signupForm.controls.age.errors?.['min'].min - 1}}</span>
+              <span *ngIf="signupErrors?.age">* invalid age</span>
+            </p>
+          </div>
+        </div>
+        <div [ngClass]="{hide:signupStep!=2}">
+          <div class="flex justify-center gap-4 py-3 items-center">
+
+            <div class="formRadio"
+              [ngClass]="{active:signupForm.controls.gender.value == 'male' ,error: signupErrors?.gender}">
+              <input hidden id="maleGneder" formControlName="gender" type="radio" name="gender" value="male">
+              <label for="maleGneder" (click)="removeError('gender')">
+                <fa-icon [icon]="male"></fa-icon>
+                <span>male</span>
+              </label>
+            </div>
+            <span class="font-bold text-zinc-600">OR</span>
+            <div class="formRadio"
+              [ngClass]="{active:signupForm.controls.gender.value == 'female' ,error: signupErrors?.gender}">
+              <input hidden id="femaleGneder" formControlName="gender" type="radio" name="gender" value="female">
+              <label for="femaleGneder" (click)="removeError('gender')">
+                <fa-icon [icon]="female"></fa-icon>
+                <span>female</span>
+              </label>
+            </div>
+          </div>
+          <div class="flex justify-center gap-4 py-3 items-center">
+            <div class="formRadio"
+              [ngClass]="{active:signupForm.controls.accountType.value == 'buyer' ,error: signupErrors?.accountType}">
+              <input hidden id="buyerType" formControlName="accountType" type="radio" name="accountType" value="buyer">
+              <label for="buyerType" (click)="removeError('accountType')">
+                <fa-icon [icon]="buyer"></fa-icon>
+                <span>buyer</span>
+              </label>
+            </div> <span class="font-bold text-zinc-600">OR</span>
+            <div class="formRadio"
+              [ngClass]="{active:signupForm.controls.accountType.value == 'seller',error: signupErrors?.accountType }">
+              <input hidden id="sellerType" formControlName="accountType" type="radio" name="accountType"
+                value="seller">
+              <label for="sellerType" (click)="removeError('accountType')">
+                <fa-icon [icon]="seller"></fa-icon>
+                <span>Seller</span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <input id="userImg" #userImgInput type="file" accept=".png,.jpg" (change)="onFileChanged($event)">
+            <label for="userImg">
+              <fa-icon [icon]="camera"></fa-icon>
+
+            </label>
+            <div [ngClass]="{active:userImgBox}"
+              class="cropperBox flex justify-center items-center fixed w-full h-screen top-0 left-0 bg-black bg-opacity-40 duration-300 -z-50 opacity-0">
+              <span *ngIf="!userImgBoxReady"
+                class="rounded-full w-6 block h-6 border border-t-transparent border-white animate-spin"></span>
+              <div [ngClass]="{active:userImgBoxReady}"
+                class="flex flex-wrap  gap-5 -z-10 opacity-0 duration-200 relative w-full max-w-2xl  bg-zinc-200">
+                <image-cropper class="imgCropper" [imageChangedEvent]="userImg" [aspectRatio]="1/1"
+                  [maintainAspectRatio]="true" format="png" (imageCropped)="cropImg($event)" (imageLoaded)="imgLoad()"
+                  (cropperReady)="initCropper()" (loadImageFailed)="imgFaild()">
+
+                </image-cropper>
+                <div class="flex gap-5 flex-col justify-center">
+                  <img class="w-20 h-20" [src]="userImgCropped" alt="">
+                  <div class="flex gap-5">
+                    <button (click)="userImgInput.click()"><fa-icon [icon]="change"></fa-icon>
+                      <span>change</span></button>
+                    <button (click)="this.userImgBox = false"><fa-icon [icon]="change"></fa-icon><span>
+                        Save</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 flex form-btns gap-3">
+          <div role="button" *ngIf="signupStep > 0" class="toNextBtn" (click)="signupStep = signupStep - 1 ">Previous
+          </div>
+          <div role="button" *ngIf="signupStep < 2" class="toNextBtn" (click)="signupStep = signupStep + 1">
+            Next</div>
+          <button class="toNextBtn disabled:cursor-not-allowed" *ngIf="signupStep == 2" (click)="this.startPost = true"
+            type="submit"><span *ngIf="startPost"></span>
+            <div *ngIf="!startPost">signup</div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

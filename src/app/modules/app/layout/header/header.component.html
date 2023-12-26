@@ -1,0 +1,54 @@
+<header class="px-3 md:px-9 py-2 flex justify-between bg-white border-b border-neutral-200 relative container">
+  <div>
+    <img class="w-24" src="assets/main/logo.svg" alt="logo"><span nz-icon nzType="down"></span>
+  </div>
+  <div class="flex flex-grow menu duration-300" [ngClass]="{active:activeMenu}">
+    <nav class="flex gap-4 flex-grow justify-center items-center">
+      <a *ngFor="let link of nav;let i =index" routerLink="{{link.link}}" [style]="'--d:'+i" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}">
+        {{link.name}}
+      </a>
+    </nav>
+    <div class="flex gap-4 items-center btns">
+      <button>
+        <span>1</span>
+        <img src="assets/icons/heart.svg" alt="favourit icon">
+      </button>
+      <button>
+        <span>9</span>
+        <img src="assets/icons/shopping-cart.svg" alt="favourit icon">
+      </button>
+      <button>
+        <img src="assets/icons/logout.svg" alt="favourit icon">
+      </button>
+      <!-- <button>
+        <img src="assets/icons/notifications.svg" alt="notifications.">
+      </button> -->
+      <!-- <button *ngIf="!permissionsOfPages?.settings" routerLinkActive="active" routerLink="/settings">
+        <img src="assets/icons/settings.svg" alt="settings">
+      </button> -->
+      <div class="cursor-pointer">
+        <img
+          class="w-10 h-10 object-cover rounded-full border-2 duration-300 grayscale-[30%] hover:grayscale-0 border-cyan-600"
+          src="assets/user.png" alt="user-img">
+      </div>
+      <!-- <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu class="w-36">
+          <li nz-menu-item class="relative" (click)="logout()">تسجيل الخروج
+
+            <div *ngIf="loading" class="loading bg-neutral-50">
+              <span class="border-neutral-600"></span>
+            </div>
+          </li>
+
+        </ul>
+      </nz-dropdown-menu> -->
+    </div>
+  </div>
+  <div class="menu-icon w-8 flex flex-col  gap-2 items-end cursor-pointer" [ngClass]="{active:activeMenu}"
+    (click)="reflectActiveMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>

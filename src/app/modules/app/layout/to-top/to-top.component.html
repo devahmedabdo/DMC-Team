@@ -1,0 +1,11 @@
+<div class="toTop fixed bottom-5 right-5 z-30 transition duration-500"
+  [ngClass]="{hide: scrollHeight < screenHieght  , active: documentHieght - 1000 <  scrollHeight }">
+  <button (click)="toTop()">
+    <svg width="100%" height="100%" viewBox="-1 -1 102 102" [style]="'--progress:'+dashOffset">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98">
+      </path>
+    </svg>
+    <fa-icon class="leading-4" [icon]="top"></fa-icon>
+  </button>
+  <div></div>
+</div>
