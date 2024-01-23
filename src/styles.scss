@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @font-face {
   font-family: "ElMessiri";
   src: url("assets/fonts/ElMessiri-Regular.ttf");
@@ -34,21 +37,16 @@
   font-weight: 900;
   font-style: normal;
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   html {
     scroll-behavior: smooth;
     --header-height: 70px;
     body {
-      @apply bg-white bg-opacity-40 text-zinc-800;
       font-family: "ElMessiri";
       input:-internal-autofill-selected {
         appearance: unset !important;
         color: unset !important;
-        // background-color: transparent !important;
         background-color: transparent !important;
       }
       input {
@@ -57,32 +55,33 @@
           @apply outline-none;
         }
       }
-      .secondry {
-        @media (max-width: 850px) {
-          display: none;
-        }
-        hr {
-          @apply my-10;
-        }
-      }
     }
     ::selection {
       @apply bg-cyan-500 text-white;
+    }
+    &::-webkit-scrollbar {
+      @apply bg-transparent w-2;
+    }
+    &::-webkit-scrollbar-thumb {
+      @apply bg-cyan-500 rounded-lg hover:bg-cyan-300 active:bg-cyan-800 duration-300;
     }
   }
 }
 @layer utilities {
   .container {
     @apply mx-auto px-2;
-    @media (min-width: 768px) {
-      max-width: 1200px;
+    // @media (min-width: 768px) {
+    //   max-width: 1200px;
+    // }
+  }
+  .dark {
+    .bg-white {
+      @apply dark:bg-neutral-950;
+    }
+    .text-neutral-800 {
+      @apply text-neutral-50;
     }
   }
-  // .dark {
-  //   .bg-cyan-900 {
-  //     background-color: red !important;
-  //   }
-  // }
 }
 @layer components {
   .title {
