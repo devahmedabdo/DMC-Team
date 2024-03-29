@@ -32,6 +32,12 @@
   font-style: normal;
 }
 @font-face {
+  font-family: "leigo";
+  src: url("assets/fonts/leigo.otf");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
   font-family: "ElMessiri";
   src: url("assets/fonts/ElMessiri-Bold.ttf");
   font-weight: 900;
@@ -109,15 +115,15 @@
     p {
       @apply py-2 text-zinc-400;
     }
-    &:hover {
-      h2 {
-        @apply text-cyan-500;
-        &::after,
-        &::before {
-          filter: saturate(1);
-        }
-      }
-    }
+    // &:hover {
+    //   h2 {
+    //     @apply text-cyan-500;
+    //     &::after,
+    //     &::before {
+    //       filter: saturate(1);
+    //     }
+    //   }
+    // }
   }
   .shop-btn {
     @apply py-2 px-5 bg-cyan-900 hover:bg-cyan-400 text-white duration-300 uppercase;

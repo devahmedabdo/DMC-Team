@@ -13,12 +13,12 @@ export class HeaderComponent {
       link: '',
     },
     {
-      name: 'إثراء',
-      link: 'questions',
+      name: 'الجاليري',
+      link: 'gallery',
     },
     {
-      name: 'الدعم',
-      link: 'supprt',
+      name: 'القزافل',
+      link: 'convoys',
     },
     {
       name: 'نجاح العملاء',

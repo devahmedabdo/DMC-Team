@@ -1,7 +1,11 @@
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        leigo: ["leigo", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };
