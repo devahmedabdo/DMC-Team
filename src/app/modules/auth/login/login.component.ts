@@ -29,6 +29,13 @@ import {
   state,
 } from '@angular/animations';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ApiService } from 'src/app/services/api.service';
+import {
+  faFacebook,
+  faInstagram,
+  faTwitter,
+  faWhatsapp,
+} from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -38,7 +45,7 @@ export class LoginComponent {
   constructor(
     // private auth: AuthService,
     private fb: FormBuilder,
-    // private storage: StorageService,
+    private api: ApiService,
     private router: Router
   ) {}
   formType: string = 'login';
@@ -47,7 +54,10 @@ export class LoginComponent {
   eay = faEye;
   eayslash = faEyeSlash;
   contactIcon = faContactCard;
-  PhoneIcon = faPhone;
+  whatsappIcon = faWhatsapp;
+  twitterIcon = faTwitter;
+  instagramIcon = faInstagram;
+  facebookIcon = faFacebook;
   locationIcon = faLocationDot;
   cityIcon = faCity;
   governateIcon = faStreetView;
@@ -59,8 +69,9 @@ export class LoginComponent {
   camera = faCamera;
   change = faExchange;
   ////////////////////////
-  signupStep: number = 2;
+  signupStep: number = 1;
   type: string = 'password';
+
   loginForm = this.fb.group({
     email: [
       localStorage.getItem('email') || '',
@@ -68,15 +79,25 @@ export class LoginComponent {
     ],
     password: [localStorage.getItem('password') || '', [Validators.required]],
   });
+
   signupForm = this.fb.group({
-    firstName: ['22', [Validators.required]],
-    lastName: ['22', [Validators.required]],
+    firstNameAr: ['22', [Validators.required]],
+    firstNameEn: ['22', [Validators.required]],
+    lastNameAr: ['22', [Validators.required]],
+    lastNameEn: ['22', [Validators.required]],
+    // step 2
     email: ['ahmed22@gmail.com', [Validators.required, Validators.email]],
     password: ['223333322', [Validators.required, Validators.minLength(8)]],
-    //
-    phone: ['22', [Validators.required]],
-    street: ['22', [Validators.required]],
+    consvoys: [[], [Validators.required, Validators.minLength(1)]],
+    committee: ['', [Validators.required]],
+    // step 3
+    whatsapp: ['22', [Validators.required]],
+    twitter: ['22', [Validators.required]],
+    facebook: ['22', [Validators.required]],
+    instagram: ['22', [Validators.required]],
+
     city: ['22', [Validators.required]],
+    street: ['22', [Validators.required]],
     governate: ['22', [Validators.required]],
     country: ['22', [Validators.required]],
     age: [22, [Validators.required, Validators.min(10)]],
@@ -85,6 +106,76 @@ export class LoginComponent {
     accountType: ['22', [Validators.required]],
     avatar: [],
   });
+
+  consvoys: any[] = [
+    {
+      name: 'PR',
+      id: '2331',
+    },
+    {
+      name: 'OC',
+      id: '221',
+    },
+    {
+      name: 'AC',
+      id: '2441',
+    },
+    {
+      name: 'Media',
+      id: '5521',
+    },
+    {
+      name: 'OC',
+      id: '221',
+    },
+    {
+      name: 'AC',
+      id: '2441',
+    },
+    {
+      name: 'Media',
+      id: '5521',
+    },
+    {
+      name: 'OC',
+      id: '221',
+    },
+    {
+      name: 'AC',
+      id: '2441',
+    },
+    {
+      name: 'Media',
+      id: '5521',
+    },
+    {
+      name: 'OC',
+      id: '221',
+    },
+    {
+      name: 'AC',
+      id: '2441',
+    },
+    {
+      name: 'Media',
+      id: '5521',
+    },
+  ];
+  committees: any[] = [
+    {
+      name: 'الحجر المحروق',
+      id: '21',
+    },
+    {
+      name: 'الفخراني',
+      id: '212',
+    },
+    {
+      name: 'طيبة',
+      id: '33',
+    },
+  ];
+
   rememberMe: boolean = false;
   setRememberMe(key: string, value: string) {
     if (this.rememberMe) {
@@ -99,7 +190,24 @@ export class LoginComponent {
   signupErrors!: any;
   userImg: any;
   userImgCropped: any;
+
+  form: any = {
+    errors: null,
+    message: null,
+  };
+  reset() {
+    this.form = {
+      errors: null,
+      message: null,
+    };
+  }
   login(data: any) {
+    this.reset();
+    this.loading.form = true;
+    setTimeout(() => {
+      this.loading.form = false;
+      this.form.message = true;
+    }, 1000);
     // this.startPost = true;
     // this.auth.loging(data).subscribe({
     //   next: (token: any) => {
@@ -112,25 +220,48 @@ export class LoginComponent {
     //   },
     // });
   }
-  signup(data: any) {
-    // this.auth.signup(data).subscribe({
-    //   next: (res: any) => {
-    //     localStorage.setItem('token', res.token);
-    //     // this.uploudFile();
-    //     this.startPost = false;
-    //     // console.log(token);
-    //   },
-    //   error: (err) => {
-    //     // this.changeFormStatus(true);
-    //     this.startPost = false;
-    //     this.signupErrors = err.error.errors;
-    //     console.log(err);
-    //   },
-    // });
+  loading: any = {
+    form: false,
+    page: false,
+  };
+  signup() {
+    this.api.post('member', {}).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('token', res.token);
+        // this.uploudFile();
+        this.startPost = false;
+        // console.log(token);
+      },
+      error: (err) => {
+        // this.changeFormStatus(true);
+        this.startPost = false;
+        if ((err.status = 422)) {
+          this.form.errors = err.error;
+        } else {
+          this.form.message = err.message;
+        }
+        console.log(err);
+      },
+    });
   }
   // handle(event: any) {
   //   this.userImg = event.target.files;
   // }
+
+  getSelect() {
+    this.api.get('select/convoys').subscribe({
+      next: (data: any) => {
+        this.consvoys = data;
+      },
+      error: (err) => {},
+    });
+    this.api.get('select/committees').subscribe({
+      next: (data: any) => {
+        this.committees = data;
+      },
+      error: (err) => {},
+    });
+  }
 
   userImgBox: boolean = false;
   userImgBoxReady: boolean = false;

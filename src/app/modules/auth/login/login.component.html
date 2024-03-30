@@ -17,13 +17,9 @@
         3
       </div>
     </div>
-    <div *ngIf="formType == 'login'">
-      <div class="formImg">
-        <lord-icon colors="primary:#3f3f46,secondary:#fb923c" trigger="loop" delay="1500"
-          src="assets/lottie/login.json"></lord-icon>
-      </div>
+    <div class="overflow-hidden" *ngIf="formType == 'login'">
       <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-        <div>
+        <div class="flex flex-col gap-4">
           <div class="px-4 my-5 capitalize font-bold text-zinc-600">
             <h2 class="text-4xl">تسجيل الدخول</h2>
           </div>
@@ -36,8 +32,9 @@
                 الالكترونى</label>
               <fa-icon [icon]="emailIcon"></fa-icon>
             </div>
-            <p>
-              <span>* هذا الحقل مطلوب</span>
+            <p *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+              <span *ngIf="loginForm.controls.email.errors?.['required']">* هذا الحقل مطلوب</span>
+              <span *ngIf="loginForm.controls.email.errors?.['email']">*بريد الكترونى غير صالح</span>
             </p>
           </div>
           <div class="formInput"
@@ -45,211 +42,234 @@
             <div>
               <input id="loginPassword" autocomplete="false" #password (focus)="changeFormStatus(false)"
                 (change)="setRememberMe('password', password.value)" formControlName="password" [type]="type">
-              <label [ngClass]="{active:loginForm.controls.password.value != ''}" for="loginPassword">Enter Your
-                password</label>
-              <fa-icon *ngIf="type =='password'" [icon]="eay" (click)="this.type = 'text'"></fa-icon>
-              <fa-icon *ngIf="type =='text'" [icon]="eayslash" (click)="this.type = 'password'"></fa-icon>
+              <label [ngClass]="{active:loginForm.controls.password.value != ''}" for="loginPassword">
+                كلمة المرور</label>
+              <fa-icon [icon]="password.type == 'text'? eay : eayslash"
+                (click)="password.type == 'text' ? password.type = 'password' : password.type = 'text'"></fa-icon>
+              <!-- <fa-icon *ngIf="type =='text'" [icon]="eayslash" (click)="this.type = 'password'"></fa-icon> -->
             </div>
-            <p>
-              <span>* هذا الحقل مطلوب</span>
+            <p *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
+              <span *ngIf="loginForm.controls.password.errors?.['required']">* هذا الحقل مطلوب</span>
             </p>
           </div>
-          <div class="flex justify-between py-3 px-4 pt-0">
-            <label [ngClass]="{active:rememberMe}" class="checkBoxLable" for="rememberMe">
-              <div>
-                <div></div>
-              </div>
-              <span>Remember Me</span>
-            </label>
-            <input [(ngModel)]="rememberMe" class="hidden" type="checkbox" id="rememberMe"
-              [ngModelOptions]="{standalone: true}">
-            <button>Forget Password ?</button>
+          <div class="flex justify-between ">
+            <div class="formCheck">
+              <input [(ngModel)]="rememberMe" type="checkbox" id="rememberMe" [ngModelOptions]="{standalone: true}">
+              <label for="rememberMe">
+                تذكرنى
+              </label>
+            </div>
+            <button>نسيت كلمة المرور ؟</button>
           </div>
-
-          <div class="mt-5 formInput">
-            <button class="toNextBtn" (click)="log(email)" type="submit"><span *ngIf="startPost"></span>
-              <div *ngIf="!startPost">Login</div>
+          <div class="formInput">
+            <button class="toNextBtn" type="submit">
+              <span *ngIf="loading.form"></span>
+              <div *ngIf="!loading.form">تسجيل الدخول</div>
             </button>
-            <p [ngClass]="{error:loginInvalid}" class="text-red-500 text-center py-3 overflow-hidden "><span>Please
-                Check
-                Your email
-                or password</span></p>
+            <p *ngIf="form.message" class="text-red-500 text-center py-3 overflow-hidden ">
+              خطأ في البريد الالكترونى او كلمة المرور </p>
           </div>
         </div>
-
-        <!-- <span routerLink="/login">Register</span>
-      <div [ngClass]="{active:loginInvalid}" class="error ">
-        Please check your email or pass
-      </div> -->
       </form>
-    </div>
-    <div *ngIf="formType == 'signup'">
+      <app-svg-animated class="md:hidden absolute -z-50"></app-svg-animated>
       <div class="formImg">
         <lord-icon colors="primary:#3f3f46,secondary:#fb923c" trigger="loop" delay="1500"
-          src="assets/lottie/singup.json"></lord-icon>
+          src="assets/lottie/login.json"></lord-icon>
       </div>
-      <form class="" [formGroup]="signupForm" (ngSubmit)="signup(signupForm.value)">
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="overflow-hidden" *ngIf="formType == 'signup'">
+      <form [formGroup]="signupForm" (ngSubmit)="signup()">
         <div [ngClass]="{hide:signupStep != 0}">
-          <div class="px-4 my-5 capitalize font-bold text-zinc-600">
-            <span class="text-zinc-400">start For free</span>
-            <h2 class="text-3xl">Create new account <span class="text-7xl text-cyan-400 leading-5">.</span></h2>
-            <h6 class="text-zinc-400 font-medium">already a member ? <button
-                class="duration-300 text-cyan-400 font-semibold" routerLink="/login">Login</button>
+          <div class="px-4 my-5 font-bold text-zinc-600">
+            <h2 class="text-3xl">انشاء حساب جديد <span class="text-7xl text-cyan-400 leading-5">.</span></h2>
+            <h6 class="text-zinc-400 font-medium">لديك حساب بالفعل ؟ <button
+                class="duration-300 text-cyan-400 font-semibold" routerLink="/login">تسجيل الدخول</button>
             </h6>
           </div>
-          <div class="flex justify-between gap-4">
+          <div class="grid sm:grid-cols-2 gap-4">
             <div class="formInput"
-              [ngClass]="{active:signupForm.controls.firstName.valid,error:signupForm.controls.firstName.errors?.['required']&& signupForm.controls.firstName.touched || signupErrors?.firstName }">
-              <div> <input id="firstName" formControlName="firstName" type="text" (focus)="removeError('firstName')">
-                <label [ngClass]="{active:signupForm.controls.firstName.value != ''}" for="firstName">First name</label>
+              [ngClass]="{active:signupForm.controls.firstNameAr.valid,error:signupForm.controls.firstNameAr.errors?.['required']&& signupForm.controls.firstNameAr.touched || signupErrors?.firstNameAr }">
+              <div> <input id="firstNameAr" formControlName="firstNameAr" type="text"
+                  (focus)="removeError('firstNameAr')">
+                <label [ngClass]="{active:signupForm.controls.firstNameAr.value != ''}" for="firstNameAr">
+                  الاسم الاول عربي
+                </label>
                 <fa-icon [icon]="contactIcon"></fa-icon>
               </div>
-              <p>
-                <span *ngIf="signupForm.controls.firstName.errors?.['required']">* First name is
-                  required</span>
-                <span *ngIf="signupErrors?.firstName">* First name is
-                  required</span>
+              <p
+                *ngIf="signupForm.controls.firstNameAr.touched && signupForm.controls.firstNameAr.invalid || form.errors?.firstNameAr">
+                <span *ngIf="signupForm.controls.firstNameAr.errors?.['required']">* هذا الحقل مطلوب</span>
+                <span *ngIf="form.errors?.['name.first.ar']">{{form.errors?.['name.first.ar'].message}}</span>
               </p>
             </div>
             <div class="formInput"
-              [ngClass]="{active:signupForm.controls.lastName.valid,error:signupForm.controls.lastName.errors?.['required']&& signupForm.controls.lastName.touched  || signupErrors?.lastName}">
-              <div> <input id="lastName" formControlName="lastName" type="text" (focus)="removeError('lastName')">
-                <label [ngClass]="{active:signupForm.controls.lastName.value != ''}" for="lastName">last name</label>
+              [ngClass]="{active:signupForm.controls.lastNameAr.valid,error:signupForm.controls.lastNameAr.errors?.['required']&& signupForm.controls.lastNameAr.touched || signupErrors?.lastNameAr }">
+              <div> <input id="lastNameAr" formControlName="lastNameAr" type="text" (focus)="removeError('lastNameAr')">
+                <label [ngClass]="{active:signupForm.controls.lastNameAr.value != ''}" for="lastNameAr">
+                  الاسم الثانى عربي
+                </label>
                 <fa-icon [icon]="contactIcon"></fa-icon>
               </div>
-              <p>
-                <span *ngIf="signupForm.controls.firstName.errors?.['required']">* last name is
-                  required</span>
-                <span *ngIf="signupErrors?.firstName">* last name is
-                  required</span>
+              <p
+                *ngIf="signupForm.controls.lastNameAr.touched && signupForm.controls.lastNameAr.invalid || form.errors?.lastNameAr">
+                <span *ngIf="signupForm.controls.lastNameAr.errors?.['required']">* هذا الحقل مطلوب</span>
+                <span *ngIf="form.errors?.['name.last.ar']">{{form.errors?.['name.last.ar'].message}}</span>
               </p>
             </div>
-          </div>
-          <div class="formInput"
-            [ngClass]="{active:signupForm.controls.email.valid && !signupEmailDublicated,error:signupForm.controls.email.invalid && signupForm.controls.email.touched || signupForm.controls.email.valid && signupEmailDublicated || signupErrors?.email}">
-            <div> <input (blur)="checkEmail()" (focus)="signupEmailDublicated=false ;removeError('email')"
-                id="signupEmail" formControlName="email" type="email">
-              <label [ngClass]="{active:signupForm.controls.email.value != ''}" for="signupEmail">Enter Your
-                Email</label>
-              <fa-icon [icon]="emailIcon"></fa-icon>
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.firstNameEn.valid,error:signupForm.controls.firstNameEn.errors?.['required']&& signupForm.controls.firstNameEn.touched  || signupErrors?.firstNameEn}">
+              <div> <input id="firstNameEn" formControlName="firstNameEn" type="text"
+                  (focus)="removeError('firstNameEn')">
+                <label [ngClass]="{active:signupForm.controls.firstNameEn.value != ''}" for="firstNameEn">
+                  الاسم الاول انجليزى
+                </label>
+                <fa-icon [icon]="contactIcon"></fa-icon>
+              </div>
+              <p
+                *ngIf="signupForm.controls.firstNameEn.touched && signupForm.controls.firstNameEn.invalid || form.errors?.firstNameEn">
+                <span *ngIf="signupForm.controls.firstNameEn.errors?.['required']">* هذا الحقل مطلوب</span>
+                <span *ngIf="form.errors?.['name.first.ar']">{{form.errors?.['name.first.ar'].message}}</span>
+              </p>
             </div>
-            <p>
-              <span *ngIf="signupForm.controls.email.errors?.['required']" [@fadeInOut]>* this
-                field is
-                required</span>
-              <span *ngIf="signupForm.controls.email.errors?.['email']" [@fadeInOut]>* Enter Valid Email</span>
-              <span *ngIf="signupErrors?.email" [@fadeInOut]>* Enter Valid Email</span>
-              <span *ngIf="signupEmailDublicated" [@fadeInOut]>* this email is already exist <button
-                  class="text-cyan-400 underline" (click)="formType='login'">Login!</button></span>
-            </p>
-          </div>
-          <div class="formInput"
-            [ngClass]="{active:signupForm.controls.password.valid,error:signupForm.controls.password.invalid&& signupForm.controls.password.touched || signupErrors?.password}">
-            <div> <input id="signupPassword" formControlName="password" [type]="type" (focus)="removeError('password')">
-              <label [ngClass]="{active:signupForm.controls.password.value != ''}" for="signupPassword">Enter Your
-                password</label>
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.lastNameEn.valid,error:signupForm.controls.lastNameEn.errors?.['required']&& signupForm.controls.lastNameEn.touched  || signupErrors?.lastNameEn}">
+              <div> <input id="lastNameEn" formControlName="lastNameEn" type="text" (focus)="removeError('lastNameEn')">
+                <label [ngClass]="{active:signupForm.controls.lastNameEn.value != ''}" for="lastNameEn">
+                  الاسم الثانى انجليزى
 
-              <fa-icon *ngIf="type =='password'" [icon]="eay" (click)="this.type = 'text'"></fa-icon>
-              <fa-icon *ngIf="type =='text'" [icon]="eayslash" (click)="this.type = 'password'"></fa-icon>
+                </label>
+                <fa-icon [icon]="contactIcon"></fa-icon>
+              </div>
+              <p
+                *ngIf="signupForm.controls.lastNameEn.touched && signupForm.controls.lastNameEn.invalid || form.errors?.lastNameEn">
+                <span *ngIf="signupForm.controls.lastNameEn.errors?.['required']">* هذا الحقل مطلوب</span>
+                <span *ngIf="form.errors?.['name.last.ar']">{{form.errors?.['name.last.ar'].message}}</span>
+              </p>
             </div>
-            <p>
-              <span *ngIf="signupForm.controls.password.errors?.['required']">* this
-                field is
-                required</span>
-              <span *ngIf="signupForm.controls.password.errors?.['minlength']">* minimum password length is
-                {{signupForm.controls.password.errors?.['minlength'].requiredLength}} You enterd
-                {{signupForm.controls.password.errors?.['minlength'].actualLength}}</span>
-              <span *ngIf="signupErrors?.password">* enter strong password</span>
-            </p>
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.email.valid && !signupEmailDublicated,error:signupForm.controls.email.invalid && signupForm.controls.email.touched || signupForm.controls.email.valid && signupEmailDublicated || signupErrors?.email}">
+              <div> <input (blur)="checkEmail()" (focus)="signupEmailDublicated=false ;removeError('email')"
+                  id="signupEmail" formControlName="email" type="email">
+                <label [ngClass]="{active:signupForm.controls.email.value != ''}" for="signupEmail">
+                  البريد الالكترونى
+                </label>
+                <fa-icon [icon]="emailIcon"></fa-icon>
+              </div>
+              <p *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid || form.errors?.email">
+                <span *ngIf="signupForm.controls.email.errors?.['required']">* هذا الحقل مطلوب</span>
+                <span *ngIf="form.errors?.email">{{form.errors?.email.message}}</span>
+              </p>
+            </div>
+            <div class="formInput"
+              [ngClass]="{active:signupForm.controls.password.valid,error:signupForm.controls.password.invalid&& signupForm.controls.password.touched || signupErrors?.password}">
+              <div> <input id="signupPassword" #password formControlName="password" type="password"
+                  (focus)="removeError('password')">
+                <label [ngClass]="{active:signupForm.controls.password.value != ''}" for="signupPassword">
+                  كلمة المرور</label>
+                <fa-icon [icon]="password.type == 'text'? eay : eayslash"
+                  (click)="password.type == 'text' ? password.type = 'password' : password.type = 'text'"></fa-icon>
+              </div>
+              <p
+                *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid || form.errors?.password">
+                <span *ngIf="signupForm.controls.password.errors?.['required']">* هذا الحقل مطلوب</span>
+                <span *ngIf="form.errors?.password">{{form.errors?.password.message}}</span>
+              </p>
+            </div>
+          </div>
+          <div class="mt-5 flex form-btns gap-3">
+            <div role="button" class="toNextBtn" (click)="signupStep = 1">
+              التالى</div>
           </div>
         </div>
-        <div [ngClass]="{hide:signupStep!=1}">
+        <div class="grid gap-4" [ngClass]="{hide:signupStep != 1}">
+          <div class="grid sm:grid-cols-2">
+
+          </div>
+          <div class="formInput">
+            <span>اللجنة</span>
+            <ng-select formControlName="committee" required>
+              <ng-option *ngFor="let committee of committees" [value]="committee.id">{{committee.name}}</ng-option>
+            </ng-select>
+            <p
+              *ngIf="signupForm.controls.committee.touched && signupForm.controls.committee.invalid || form.errors?.committee">
+              <span *ngIf="signupForm.controls.committee.errors?.['required']">* هذا الحقل مطلوب</span>
+              <span *ngIf="form.errors?.committee">{{form.errors?.committee.message}}</span>
+            </p>
+          </div>
+          <div class="formInput mt-4">
+            <span>القوافل الطبية</span>
+            <ng-select t formControlName="consvoys" required [multiple]="true">
+              <ng-option *ngFor="let consvoy of consvoys" [value]="consvoy.id">{{consvoy.name}}</ng-option>
+            </ng-select>
+            <p
+              *ngIf="signupForm.controls.consvoys.touched && signupForm.controls.consvoys.invalid || form.errors?.consvoys">
+              <span *ngIf="signupForm.controls.consvoys.errors?.['required']">* هذا الحقل مطلوب</span>
+              <span *ngIf="form.errors?.consvoys">{{form.errors?.consvoys.message}}</span>
+            </p>
+          </div>
+          <div class="mt-5 flex form-btns gap-3">
+            <div role="button" class="toNextBtn" (click)="signupStep = 0 ">عودة
+            </div>
+            <div role="button" class="toNextBtn" (click)="signupStep = 2">
+              التالى</div>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2" [ngClass]="{hide:signupStep!=2}">
           <div class="formInput"
-            [ngClass]="{active:signupForm.controls.phone.valid,error:signupForm.controls.phone.invalid && signupForm.controls.phone.touched || signupErrors?.phone}">
-            <div> <input id="signupPhone" formControlName="phone" type="tel" (focus)="removeError('phone')">
-              <label [ngClass]="{active:signupForm.controls.phone.value != ''}" for="signupPhone">Enter Your
-                Phone Number</label>
-              <fa-icon [icon]="PhoneIcon"></fa-icon>
-            </div>
-            <p>
-              <span *ngIf="signupForm.controls.phone.errors?.['required']" [@fadeInOut]>* this
-                field is
-                required</span>
-              <span *ngIf="signupErrors?.phone" [@fadeInOut]>* this is invalid phone number</span>
-            </p>
-          </div>
-          <div class="flex justify-between gap-4">
-            <div class="formInput"
-              [ngClass]="{active:signupForm.controls.country.valid,error:signupForm.controls.country.errors?.['required']&& signupForm.controls.country.touched || signupErrors?.country}">
-              <div> <input id="country" formControlName="country" type="text" (focus)="removeError('country')">
-                <label [ngClass]="{active:signupForm.controls.country.value != ''}" for="country">country</label>
-                <fa-icon [icon]="locationIcon"></fa-icon>
-              </div>
-              <p>
-                <span *ngIf="signupForm.controls.country.errors?.['required']">* country name is
-                  required</span>
-                <span *ngIf="signupErrors?.country">* country name is
-                  required</span>
-              </p>
-            </div>
-            <div class="formInput"
-              [ngClass]="{active:signupForm.controls.governate.valid,error:signupForm.controls.governate.errors?.['required']&& signupForm.controls.governate.touched || signupErrors?.governate}">
-              <div> <input id="governate" formControlName="governate" type="text" (focus)="removeError('governate')">
-                <label [ngClass]="{active:signupForm.controls.governate.value != ''}" for="governate">governate</label>
-                <fa-icon [icon]=" governateIcon"></fa-icon>
-              </div>
-              <p>
-                <span *ngIf="signupForm.controls.governate.errors?.['required']">* governate name is
-                  required</span>
-                <span *ngIf="signupErrors?.governate">* governate name is
-                  required</span>
-              </p>
+            [ngClass]="{active:signupForm.controls.whatsapp.valid,error:signupForm.controls.whatsapp.invalid && signupForm.controls.whatsapp.touched || signupErrors?.whatsapp}">
+            <div> <input dir="rtl" placeholder="اختياري" id="signupwhatsapp" formControlName="whatsapp" type="tel"
+                (focus)="removeError('whatsapp')">
+              <label [ngClass]="{active:signupForm.controls.whatsapp.value != ''}" for="signupwhatsapp">
+                رقم الواتساب</label>
+              <fa-icon [icon]="whatsappIcon"></fa-icon>
             </div>
           </div>
-          <div class="flex justify-between gap-4">
-            <div class="formInput"
-              [ngClass]="{active:signupForm.controls.city.valid,error:signupForm.controls.city.errors?.['required']&& signupForm.controls.city.touched || signupErrors?.governate}">
-              <div> <input id="city" formControlName="city" type="text" (focus)="removeError('city')">
-                <label [ngClass]="{active:signupForm.controls.city.value != ''}" for="city">city</label>
-                <fa-icon [icon]="cityIcon"></fa-icon>
-              </div>
-              <p>
-                <span *ngIf="signupForm.controls.city.errors?.['required']">* city name is
-                  required</span>
-                <span *ngIf="signupErrors?.city">* city name is
-                  required</span>
-              </p>
-            </div>
-            <div class="formInput"
-              [ngClass]="{active:signupForm.controls.street.valid,error:signupForm.controls.street.errors?.['required']&& signupForm.controls.street.touched || signupErrors?.street}">
-              <div> <input id="street" formControlName="street" type="text" (focus)="removeError('street')">
-                <label [ngClass]="{active:signupForm.controls.street.value != ''}" for="street">street</label>
-                <fa-icon [icon]="streetIcon"></fa-icon>
-              </div>
-              <p>
-                <span *ngIf="signupForm.controls.street.errors?.['required']">* street name is
-                  required</span>
-                <span *ngIf="signupErrors?.street">* street name is
-                  required</span>
-              </p>
+          <div class="formInput"
+            [ngClass]="{active:signupForm.controls.facebook.valid,error:signupForm.controls.facebook.invalid && signupForm.controls.facebook.touched || signupErrors?.facebook}">
+            <div> <input dir="rtl" placeholder="اختياري" id="signupfacebook" formControlName="facebook" type="tel"
+                (focus)="removeError('facebook')">
+              <label [ngClass]="{active:signupForm.controls.facebook.value != ''}" for="signupfacebook">
+                رابط فيسبوك</label>
+              <fa-icon [icon]="facebookIcon"></fa-icon>
             </div>
           </div>
-          <div class="formNumber"
-            [ngClass]="{active:signupForm.controls.age.valid,error:signupForm.controls.age.invalid && signupForm.controls.age.touched || signupErrors?.age}">
-            <div> <input id="age" formControlName="age" min="0" type="number" (focus)="removeError('age')">
-              <label [ngClass]="{active:signupForm.controls.age.value != null }" for="age">age</label>
-              <!-- <fa-icon [icon]=" governateIcon"></fa-icon> -->
+          <div class="formInput"
+            [ngClass]="{active:signupForm.controls.instagram.valid,error:signupForm.controls.instagram.invalid && signupForm.controls.instagram.touched || signupErrors?.instagram}">
+            <div> <input dir="rtl" placeholder="اختياري" id="signupinstagram" formControlName="instagram" type="tel"
+                (focus)="removeError('instagram')">
+              <label [ngClass]="{active:signupForm.controls.instagram.value != ''}" for="signupinstagram">
+                رابط انستجرام</label>
+              <fa-icon [icon]="instagramIcon"></fa-icon>
             </div>
-            <p>
-              <span *ngIf="signupForm.controls.age.errors?.['required']">* age is
-                required</span>
-              <span *ngIf="signupForm.controls.age.errors?.['min']">* age muste be larger than
-                {{signupForm.controls.age.errors?.['min'].min - 1}}</span>
-              <span *ngIf="signupErrors?.age">* invalid age</span>
-            </p>
+          </div>
+          <div class="formInput"
+            [ngClass]="{active:signupForm.controls.twitter.valid,error:signupForm.controls.twitter.invalid && signupForm.controls.twitter.touched || signupErrors?.twitter}">
+            <div> <input dir="rtl" placeholder="اختياري" id="signuptwitter" formControlName="twitter" type="tel"
+                (focus)="removeError('twitter')">
+              <label [ngClass]="{active:signupForm.controls.twitter.value != ''}" for="signuptwitter">
+                رابط تويتر</label>
+              <fa-icon [icon]="twitterIcon"></fa-icon>
+            </div>
+          </div>
+
+          <div class="mt-5 flex form-btns gap-3">
+            <div role="button" class="toNextBtn" (click)="signupStep = 1 ">عودة
+            </div>
+            <div role="button" class="toNextBtn" (click)="signupStep = 3">
+              التالى</div>
           </div>
         </div>
-        <div [ngClass]="{hide:signupStep!=2}">
+        <div [ngClass]="{hide:signupStep!=3}">
           <div class="flex justify-center gap-4 py-3 items-center">
 
             <div class="formRadio"
@@ -319,17 +339,22 @@
             </div>
           </div>
         </div>
-        <div class="mt-5 flex form-btns gap-3">
+        <!-- <div class="mt-5 flex form-btns gap-3">
           <div role="button" *ngIf="signupStep > 0" class="toNextBtn" (click)="signupStep = signupStep - 1 ">Previous
           </div>
           <div role="button" *ngIf="signupStep < 2" class="toNextBtn" (click)="signupStep = signupStep + 1">
             Next</div>
-          <button class="toNextBtn disabled:cursor-not-allowed" *ngIf="signupStep == 2" (click)="this.startPost = true"
+          <button class="toNextBtn disabled:cursor-not-allowed" *ngIf="signupStep == 2" (click)="signup()"
             type="submit"><span *ngIf="startPost"></span>
             <div *ngIf="!startPost">signup</div>
           </button>
-        </div>
+        </div> -->
       </form>
+      <app-svg-animated class="md:hidden absolute -z-50"></app-svg-animated>
+      <div class="formImg">
+        <lord-icon colors="primary:#3f3f46,secondary:#fb923c" trigger="loop" delay="1500"
+          src="assets/lottie/singup.json"></lord-icon>
+      </div>
     </div>
   </div>
 </div>

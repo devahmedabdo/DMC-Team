@@ -1,0 +1,37 @@
+<div class="product duration-300 hover:shadow-xl p-3 bg-zinc-50 max-w-md mx-auto relative rounded-3xl">
+  <div *ngIf="details.disscount > 0"
+    class="sale  text-sm z-10 text-center absolute top-[-10px] right-7 flex flex-col bg-cyan-400 text-white leading-4 font-bold w-10">
+    <span class="pt-2 bg-cyan-400">{{details.disscount}}%</span>
+    <span class="text-xs pb-2 bg-cyan-400">OFF</span>
+  </div>
+  <div class="product-images relative overflow-hidden aspect-square rounded-xl">
+
+    <img [src]="details.image1" alt="product image one">
+    <img [src]="details.image2" alt="product image two">
+    <div class="btns">
+      <div data-text="اضافة للسلة" data-text-stored="ازالة من السلة" [ngClass]="{cart:details.cart}">
+        <div></div>
+        <fa-icon (click)="storeProduct(details,'cart' )" style="--d:1" [icon]="cart"></fa-icon>
+      </div>
+      <div data-text="quick view">
+        <fa-icon style="--d:2" [icon]="quickView"></fa-icon>
+      </div>
+      <div data-text="compare" data-text-stored="remove from compare" [ngClass]="{compare:details.compare}">
+        <div></div>
+        <fa-icon (click)="storeProduct(details,'compare' )" style="--d:3" [icon]="copmare"></fa-icon>
+      </div>
+      <div data-text="add to favourite" data-text-stored="remove from favourite" [ngClass]="{liked:details.favourite}">
+        <div></div>
+        <fa-icon (click)="storeProduct(details,'favourite' )" style="--d:4" [icon]="heart"></fa-icon>
+      </div>
+    </div>
+  </div>
+  <div class="type">
+    <span *ngFor="let type of details.tags">{{type}}</span>
+  </div>
+
+  <h3 (click)="storeSinglProduct(details)">{{details.name}}</h3>
+  <h4><span>{{details.price | currency}}</span> <span *ngIf="details.disscount > 0"
+      class="line-through">{{(details.price * 100) /
+      (100 - details.disscount) | currency}}</span></h4>
+</div>

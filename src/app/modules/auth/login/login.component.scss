@@ -1,15 +1,15 @@
 .login {
   .container {
-    min-height: calc(100vh - var(--header-height));
+    min-height: 100dvh;
     .signup-progress {
-      @apply justify-between z-0  w-11/12;
+      @apply justify-between z-0  w-11/12 flex-row;
       &::after {
         content: "";
         @apply absolute top-0 h-full bg-cyan-400 duration-300 -z-10;
         width: var(--w);
       }
       > div {
-        @apply cursor-pointer w-10 h-10 flex items-center justify-center border-2 duration-300 mb-[-18px] bg-zinc-50 rounded-full;
+        @apply cursor-pointer w-10 h-10 flex items-center justify-center border-2 duration-300 bg-zinc-50 rounded-full;
         &.active {
           @apply border-cyan-400 text-cyan-400 bg-white;
         }
@@ -19,15 +19,15 @@
       }
     }
     > div {
-      @apply w-full flex flex-wrap-reverse gap-16 justify-center items-center;
+      @apply w-full flex gap-16 justify-center items-center flex-col md:flex-row;
       .formImg {
-        @apply w-11/12 max-w-md min-w-[300px] flex justify-center;
+        @apply w-11/12 max-w-md min-w-[300px] justify-center hidden md:flex;
         lord-icon {
           @apply w-72 h-72 md:scale-125;
         }
       }
       form {
-        @apply w-11/12 max-w-md min-w-[300px] flex relative flex-col min-h-[520px] justify-end;
+        @apply md:w-11/12 w-full md:max-w-md min-w-[300px] flex relative flex-col min-h-[520px] justify-end;
         h2 {
           @apply font-bold uppercase my-4;
         }
@@ -50,9 +50,9 @@
             @apply rounded-full w-6 block h-6 border border-t-transparent border-white animate-spin;
           }
         }
-        > div:not(.form-btns) {
-          @apply absolute top-0 left-0 w-full duration-300 flex flex-col justify-center;
-          height: calc(100% - 60px);
+        > div {
+          @apply absolute justify-start md:justify-center overflow-auto top-0 left-0 w-full duration-300 flex flex-col;
+          height: 100%;
           &.hide {
             @apply opacity-0 -translate-x-full;
           }

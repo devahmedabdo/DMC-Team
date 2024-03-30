@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { defineElement } from 'lord-icon-element';
 import lottie from 'lottie-web';
 // import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './modules/shared/shared.module';
 import {
   FaIconLibrary,
   FontAwesomeModule,
@@ -29,6 +29,8 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 // import Swiper from 'swiper';
 // register Swiper custom elements
 import { register } from 'swiper/element/bundle';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiService } from './services/api.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -39,8 +41,9 @@ import { register } from 'swiper/element/bundle';
     SharedModule,
     FontAwesomeModule,
     // Swiper
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [ApiService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
