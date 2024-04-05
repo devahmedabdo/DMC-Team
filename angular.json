@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "DMC-V2": {
+    "DMC-V2.0": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,10 +24,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [
-              "src/styles.scss",
-              "../node_modules/ngx-select-dropdown/dist/assets/style.css"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {

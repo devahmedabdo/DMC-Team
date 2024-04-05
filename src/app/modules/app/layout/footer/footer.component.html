@@ -7,7 +7,7 @@
       <div class="flex flex-wrap gap-2 links">
         <div class="h-10 w-10 text-2xl" *ngFor="let link of links">
           <fa-icon [style]="'--color:'+link.color"
-            class="rounded-xl h-full w-full flex justify-center items-center duration-300 text-zinc-700"
+            class="rounded-xl cursor-pointer h-full w-full flex justify-center items-center duration-300 text-zinc-700"
             [icon]="link.icon">
             <a [href]="link.link"></a>
           </fa-icon>

@@ -13,6 +13,9 @@ import { ToTopComponent } from './layout/to-top/to-top.component';
 import { register } from 'swiper/element/bundle';
 import { ProductComponent } from '../app/components/product/product.component';
 import { CardComponent } from '../app/components/card/card.component';
+import { CartComponent } from './view/cart/cart.component';
+import { LikedComponent } from './view/liked/liked.component';
+import { NavigatorComponent } from './components/navigator/navigator.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { CardComponent } from '../app/components/card/card.component';
     ToTopComponent,
     ProductComponent,
     CardComponent,
+    CartComponent,
+    LikedComponent,
+    NavigatorComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule, AppRoutingModule, SharedModule],

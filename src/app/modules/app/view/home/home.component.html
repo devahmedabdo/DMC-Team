@@ -1,3 +1,7 @@
+<div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
+  <app-product [details]="product" *ngFor="let product of products"></app-product>
+
+</div>
 <div>
   <div class="container py-10 grid md:grid-cols-2 content-center gap-10 justify-between items-center landing">
     <div>
@@ -62,4 +66,9 @@
 <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
   <app-product [details]="product" *ngFor="let product of products"></app-product>
 
+</div>
+
+<h1 class="text-5xl" appTitle> نحن قريق طبي</h1>
+<div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
+  <app-card [details]="product" *ngFor="let product of products"></app-card>
 </div>

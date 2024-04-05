@@ -1,0 +1,12 @@
+<div class="bg-zinc-900 text-white py-24 text-center ">
+  <h1 class="text-4xl md:text-8xl my-10 font-bold" *ngIf="title">
+    {{title}}
+  </h1>
+  <div class="flex justify-center items-center gap-2">
+    <button routerLink=""><fa-icon [icon]="home"></fa-icon></button>
+    <ng-container *ngFor="let rout of routes">
+      <span> / </span>
+      <button [routerLink]="rout.rout ? [rout.rout]: []">{{rout.name}} </button>
+    </ng-container>
+  </div>
+</div>

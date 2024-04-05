@@ -1,6 +1,6 @@
 <header class="px-3 md:px-9 py-2 flex justify-between bg-white border-b border-neutral-200 relative container">
   <div>
-    <img class="w-24" src="assets/main/logo.svg" alt="logo"><span nz-icon nzType="down"></span>
+    <img class="w-24" src="assets/main/logo.svg" alt="logo">
   </div>
   <div class="flex flex-grow menu duration-300" [ngClass]="{active:activeMenu}">
     <nav class="flex gap-4 flex-grow justify-center items-center">
@@ -10,12 +10,12 @@
       </a>
     </nav>
     <div class="flex gap-4 items-center btns">
-      <button>
-        <span>1</span>
+      <button routerLink="/liked">
+        <span *ngIf="liked">{{liked > 9 ? '+9': liked }}</span>
         <img src="assets/icons/heart.svg" alt="favourit icon">
       </button>
-      <button>
-        <span>9</span>
+      <button routerLink="/cart">
+        <span *ngIf="cart">{{cart > 9 ? '+9': cart }}</span>
         <img src="assets/icons/shopping-cart.svg" alt="favourit icon">
       </button>
       <button>

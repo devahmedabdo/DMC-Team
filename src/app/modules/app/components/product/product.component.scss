@@ -63,7 +63,6 @@
           }
         }
         &.cart,
-        &.compare,
         &.liked {
           &::after {
             content: attr(data-text-stored);
@@ -110,44 +109,11 @@
       }
     }
   }
-  .type {
-    @apply uppercase flex justify-center gap-2 text-xs pt-5;
-    span {
-      @apply hover:text-cyan-400 cursor-pointer duration-300;
-    }
-  }
-  .review {
-    @apply relative my-5 h-5;
-    .review-star {
-      @apply w-[116px] relative;
-      > div {
-        @apply absolute text-xl text-cyan-400;
-        &.get-review {
-          @apply overflow-hidden flex;
-          width: var(--w);
-        }
-      }
-    }
-    > span {
-      @apply absolute right-0 capitalize;
-    }
-  }
+
   h3 {
-    @apply font-semibold text-zinc-700 hover:text-cyan-400 cursor-pointer duration-300;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  }
-  h4 {
-    @apply flex justify-between font-bold py-2;
-    span {
-      &:first-child {
-        @apply text-cyan-400;
-      }
-      &:nth-child(2) {
-        @apply text-zinc-400;
-      }
-    }
   }
 }

@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 // import { ProductsService } from 'src/app/services/products.service';
 // import { CartService } from './../../services/cart.service';
 import { Router } from '@angular/router';
+import { DmcService } from 'src/app/services/dmc.service';
 // import { Product } from 'src/app/interfaces/product';
 // import { StorageService } from './../../services/storage.service';
 @Component({
@@ -22,14 +23,15 @@ import { Router } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   // clickEventSubscribtion: Subscription;
-  emptyStar = emptyStar;
-  star = faStar;
-  quickView = faSearch;
+  // emptyStar = emptyStar;
+  // star = faStar;
+  // quickView = faSearch;
   cart = faShoppingBag;
-  copmare = faArrowsV;
+  // copmare = faArrowsV;
   heart = faHeart;
   constructor(
     // private product: ProductsService,
+    private dmc: DmcService,
     // private cartService: CartService,
     public router: Router // private storage: StorageService
   ) {
@@ -40,72 +42,31 @@ export class ProductComponent implements OnInit {
   }
 
   @Input() details!: any;
-  storeProduct(index: any, position: string) {
-    // this.product.storeProduct(index, position);
-    // this.cartService.setItems();
+  storeProduct(product: any, position: string) {
+    this.dmc.appendItem(position, product);
+    this.dmc.stored[position].next();
+    this.details[position] = true;
   }
-  storeSinglProduct(details: any) {
-    // this.storage.storageItem('singlProduct', JSON.stringify(details));
-    // window.localStorage.setItem('singlProduct', await );
-    this.router.navigateByUrl('product');
+  removeProduct(id: any, position: string) {
+    let products: any[] = this.dmc.getItem(position) || [];
+    let productIndex = products.findIndex((ele) => ele._id == id);
+    products.splice(productIndex, 1);
+    this.dmc.setItem(position, products);
+    this.dmc.stored[position].next();
+    this.details[position] = false;
   }
-  // setKeys() {
-  //   let liked = this.storage.getStoredItem('favourite') || [];
-  //   let compare = this.storage.getStoredItem('compare') || [];
-  //   let cart = this.storage.getStoredItem('cart') || [];
-  //   let setKey = (arr: any[], key: string) => {
-  //     if (arr.length == 0) {
-  //       this.details[key] = false;
-  //     }
-  //     arr.forEach(async () => {
-  //       let strArr = await JSON.stringify(arr);
-  //       let strProd = await JSON.stringify(this.details.name);
-  //       if (strArr.includes(strProd)) {
-  //         this.details[key] = true;
-  //       } else {
-  //         this.details[key] = false;
-  //       }
-  //     });
-  //   };
-  //   [liked, compare, cart].forEach(async (e) => {
-  //     if (e == liked) {
-  //       setKey(e, 'favourite');
-  //     } else if (e == compare) {
-  //       setKey(e, 'compare');
-  //     } else if (e == cart) {
-  //       setKey(e, 'cart');
-  //     }
-  //   });
-  // }
-  // async setKeys() {
-  //   let liked = await this.product.getStoreProduct('favourite');
-  //   let compare = await this.product.getStoreProduct('compare');
-  //   let cart = await this.product.getStoreProduct('cart');
-  //   let setKey = (arr: any[], key: string) => {
-  //     if (arr.length == 0) {
-  //       this.details[key] = false;
-  //     }
-  //     arr.forEach(async () => {
-  //       let strArr = await JSON.stringify(arr);
-  //       let strProd = await JSON.stringify(this.details.name);
-  //       if (strArr.includes(strProd)) {
-  //         this.details[key] = true;
-  //       } else {
-  //         this.details[key] = false;
-  //       }
-  //     });
-  //   };
-  //   [liked, compare, cart].forEach(async (e) => {
-  //     if (e == liked) {
-  //       setKey(e, 'favourite');
-  //     } else if (e == compare) {
-  //       setKey(e, 'compare');
-  //     } else if (e == cart) {
-  //       setKey(e, 'cart');
-  //     }
-  //   });
-  // }
-  async ngOnInit() {
+
+  check(arr: any[], id: any): boolean {
+    let isExist = arr.find((ele) => ele._id == id);
+    return Boolean(isExist);
+  }
+
+  ngOnInit() {
+    this.details.cart = this.check(this.dmc.getItem('cart'), this.details._id);
+    this.details.liked = this.check(
+      this.dmc.getItem('liked'),
+      this.details._id
+    );
     // this.product.getProductStatus(this.details);
     // this.setKeys();
   }
