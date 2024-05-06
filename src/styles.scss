@@ -52,6 +52,7 @@
     body {
       overflow-x: hidden;
       font-family: "ElMessiri";
+      @apply bg-neutral-50;
       input:-internal-autofill-selected {
         appearance: unset !important;
         color: unset !important;

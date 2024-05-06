@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="overflow-hidden" *ngIf="formType == 'login'">
-      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+      <form [formGroup]="loginForm" (change)="saveData(loginForm.value)" (ngSubmit)="login(loginForm.value)">
         <div class="flex flex-col gap-4">
           <div class="px-4 my-5 capitalize font-bold text-zinc-600">
             <h2 class="text-4xl">تسجيل الدخول</h2>
@@ -27,7 +27,7 @@
             [ngClass]="{active:loginForm.controls.email.valid,error:loginForm.controls.email.errors?.['required']&& loginForm.controls.email.touched}">
             <div>
               <input #email value="asd" id="loginEmail" (focus)="changeFormStatus(false)" [autocomplete]="'off'"
-                formControlName="email" type="email" (change)="setRememberMe('email', email.value)">
+                formControlName="email" type="email">
               <label [ngClass]="{active:loginForm.controls.email.value != ''}" for="loginEmail">البريد
                 الالكترونى</label>
               <fa-icon [icon]="emailIcon"></fa-icon>
@@ -41,7 +41,7 @@
             [ngClass]="{active:loginForm.controls.password.valid,error:loginForm.controls.password.errors?.['required'] && loginForm.controls.password.touched}">
             <div>
               <input id="loginPassword" autocomplete="false" #password (focus)="changeFormStatus(false)"
-                (change)="setRememberMe('password', password.value)" formControlName="password" [type]="type">
+                formControlName="password" [type]="type">
               <label [ngClass]="{active:loginForm.controls.password.value != ''}" for="loginPassword">
                 كلمة المرور</label>
               <fa-icon [icon]="password.type == 'text'? eay : eayslash"
@@ -54,7 +54,7 @@
           </div>
           <div class="flex justify-between ">
             <div class="formCheck">
-              <input [(ngModel)]="rememberMe" type="checkbox" id="rememberMe" [ngModelOptions]="{standalone: true}">
+              <input formControlName="rememberMe" type="checkbox" id="rememberMe" name="rememberMe">
               <label for="rememberMe">
                 تذكرنى
               </label>

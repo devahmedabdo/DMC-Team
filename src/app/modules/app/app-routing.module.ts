@@ -4,6 +4,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './view/home/home.component';
 import { CartComponent } from './view/cart/cart.component';
 import { LikedComponent } from './view/liked/liked.component';
+import { ConvoysComponent } from './view/convoys/convoys.component';
+import { DetailsComponent } from './view/convoys/details/details.component';
 
 const routes: Routes = [
   {
@@ -16,12 +18,13 @@ const routes: Routes = [
       },
       {
         path: 'convoys',
-        component: HomeComponent,
+        component: ConvoysComponent,
       },
       {
-        path: 'convoy',
-        component: HomeComponent,
+        path: 'convoys/:id',
+        component: DetailsComponent,
       },
+
       {
         path: 'cart',
         component: CartComponent,

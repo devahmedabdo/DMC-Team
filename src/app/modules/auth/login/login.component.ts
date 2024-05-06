@@ -78,6 +78,7 @@ export class LoginComponent {
       [Validators.required, Validators.email],
     ],
     password: [localStorage.getItem('password') || '', [Validators.required]],
+    rememberMe: [false],
   });
 
   signupForm = this.fb.group({
@@ -176,10 +177,10 @@ export class LoginComponent {
     },
   ];
 
-  rememberMe: boolean = false;
-  setRememberMe(key: string, value: string) {
-    if (this.rememberMe) {
-      // this.storage.storageItem(key, value);
+  saveData(data: any) {
+    if (data.rememberMe) {
+      localStorage.setItem('password', data.password);
+      localStorage.setItem('email', data.email);
     }
   }
   loginInvalid: boolean = false;
@@ -204,21 +205,21 @@ export class LoginComponent {
   login(data: any) {
     this.reset();
     this.loading.form = true;
-    setTimeout(() => {
-      this.loading.form = false;
-      this.form.message = true;
-    }, 1000);
-    // this.startPost = true;
-    // this.auth.loging(data).subscribe({
-    //   next: (token: any) => {
-    //     localStorage.setItem('token', token);
-    //     this.startPost = false;
-    //   },
-    //   error: (err) => {
-    //     this.changeFormStatus(true);
-    //     this.startPost = false;
-    //   },
-    // });
+    console.log(data);
+    this.startPost = true;
+    this.api.post('member/login', data).subscribe({
+      next: (token: any) => {
+        console.log(token);
+        // localStorage.setItem('token', token);
+        this.startPost = false;
+        this.loading.form = false;
+      },
+      error: (err) => {
+        this.changeFormStatus(true);
+        this.loading.form = false;
+        this.startPost = false;
+      },
+    });
   }
   loading: any = {
     form: false,

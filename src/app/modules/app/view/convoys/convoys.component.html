@@ -1,0 +1,9 @@
+<div class="my-40 flex justify-center gap-40 flex-wrap">
+  <div class="convoy" *ngFor="let item of data" [attr.data-order]="item.description.order">
+    <div class="w-full h-full bg-neutral-100 pt-36 rounded-3xl">
+      <span>{{item.description.address}}</span><br>
+      <span class="order">{{item.description.order}}</span>
+      <span>{{item.description.date | date:"dd-MM-YYYY"}}</span>
+    </div>
+  </div>
+</div>
