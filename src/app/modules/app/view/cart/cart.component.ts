@@ -1,6 +1,7 @@
 import { DmcService } from 'src/app/services/dmc.service';
 import { Component } from '@angular/core';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { ProductComponent } from '../../components/product/product.component';
 
 @Component({
   selector: 'app-cart',
@@ -27,5 +28,13 @@ export class CartComponent {
     this.products.splice(productIndex, 1);
     this.dmc.setItem(position, this.products);
     this.dmc.stored.cart.next();
+  }
+  updateProduct(product: any) {
+    console.log('changed');
+    product.quantity = +product.quantity || 1;
+    let cart: any[] = this.dmc.getItem('cart') || [];
+    let productIndex = cart.findIndex((ele) => ele._id == product._id);
+    cart[productIndex] = product;
+    this.dmc.setItem('cart', cart);
   }
 }

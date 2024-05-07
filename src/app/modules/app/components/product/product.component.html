@@ -6,11 +6,11 @@
   </div>
   <div class="product-images relative overflow-hidden aspect-square rounded-xl">
 
-    <img [src]="details.photos[1]" alt="product image two">
-    <img [src]="details.photos[0]" alt="product image one">
+    <img [src]=" details.photos[1]" alt="product image two">
+    <img [src]=" details.photos[0]" alt="product image one">
     <div class="btns">
       <div data-text="اضافة للسلة" data-text-stored="ازالة من السلة" [ngClass]="{cart:details?.cart}">
-        <fa-icon (click)="details?.cart ? removeProduct(details._id,'cart' ) :storeProduct(details,'cart' )"
+        <fa-icon (click)="details?.cart ? removeProduct(details._id,'cart' ) :storeProduct(details,'cart',1 )"
           style="--d:1" [icon]="cart"></fa-icon>
       </div>
       <div data-text="اضافة للمفضلة" data-text-stored="ازالة من المفضلة" [ngClass]="{liked:details?.liked}">

@@ -16,6 +16,8 @@ import { CardComponent } from '../app/components/card/card.component';
 import { CartComponent } from './view/cart/cart.component';
 import { LikedComponent } from './view/liked/liked.component';
 import { NavigatorComponent } from './components/navigator/navigator.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GalleryComponent } from './view/gallery/gallery.component';
 
 @NgModule({
   declarations: [
@@ -31,9 +33,16 @@ import { NavigatorComponent } from './components/navigator/navigator.component';
     CartComponent,
     LikedComponent,
     NavigatorComponent,
+    GalleryComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, AppRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    AppRoutingModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class AppModule {
   constructor() {

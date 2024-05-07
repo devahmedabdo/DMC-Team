@@ -22,27 +22,16 @@ import { DmcService } from 'src/app/services/dmc.service';
   styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit {
-  // clickEventSubscribtion: Subscription;
-  // emptyStar = emptyStar;
-  // star = faStar;
-  // quickView = faSearch;
   cart = faShoppingBag;
-  // copmare = faArrowsV;
   heart = faHeart;
   constructor(
-    // private product: ProductsService,
     private dmc: DmcService,
-    // private cartService: CartService,
     public router: Router // private storage: StorageService
-  ) {
-    // this.clickEventSubscribtion = this.cartService.getItems().subscribe(() => {
-    //   this.product.getProductStatus(this.details);
-    //   // this.setKeys();
-    // });
-  }
+  ) {}
 
   @Input() details!: any;
-  storeProduct(product: any, position: string) {
+  storeProduct(product: any, position: string, qty?: number) {
+    if (qty) product.quantity = qty;
     this.dmc.appendItem(position, product);
     this.dmc.stored[position].next();
     this.details[position] = true;
@@ -56,15 +45,21 @@ export class ProductComponent implements OnInit {
     this.details[position] = false;
   }
 
-  check(arr: any[], id: any): boolean {
-    let isExist = arr.find((ele) => ele._id == id);
-    return Boolean(isExist);
+  check(arr: any[] = [], id: any): boolean {
+    if (arr.length) {
+      let isExist = arr.find((ele) => ele._id == id);
+      return Boolean(isExist);
+    }
+    return false;
   }
 
   ngOnInit() {
-    this.details.cart = this.check(this.dmc.getItem('cart'), this.details._id);
+    this.details.cart = this.check(
+      this.dmc.getItem('cart') || [],
+      this.details._id
+    );
     this.details.liked = this.check(
-      this.dmc.getItem('liked'),
+      this.dmc.getItem('liked') || [],
       this.details._id
     );
     // this.product.getProductStatus(this.details);

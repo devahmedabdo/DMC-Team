@@ -22,8 +22,8 @@ export class HeaderComponent {
       link: 'convoys',
     },
     {
-      name: 'نجاح العملاء',
-      link: '/clientSuccess',
+      name: 'المشاريع',
+      link: 'projects',
     },
     // {
     //   name: 'التأهيل',
@@ -37,12 +37,12 @@ export class HeaderComponent {
     //   name: 'التسويق',
     //   link: 'marketing',
     // },
-    {
-      name: 'المبيعات',
-      link: 'sales',
-    },
+    // {
+    //   name: 'المبيعات',
+    //   link: 'sales',
+    // },
   ];
-  @Input() activeMenu!: boolean;
+  @Input() activeMenu: boolean = false;
   @Output() activeMenuChange = new EventEmitter<boolean>();
   loading: boolean = false;
 

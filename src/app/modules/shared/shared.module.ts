@@ -7,8 +7,14 @@ import { SvgAnimatedComponent } from './components/svg-animated/svg-animated.com
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TitleDirective } from './directives/title.directive';
 import { RevealDirective } from './directives/reveal.directive';
+import { IncrementDirective } from './directives/increment.directive';
 @NgModule({
-  declarations: [SvgAnimatedComponent, TitleDirective, RevealDirective],
+  declarations: [
+    SvgAnimatedComponent,
+    TitleDirective,
+    RevealDirective,
+    IncrementDirective,
+  ],
   imports: [
     CommonModule,
     ImageCropperModule,
@@ -22,6 +28,8 @@ import { RevealDirective } from './directives/reveal.directive';
     SvgAnimatedComponent,
     NgSelectModule,
     TitleDirective,
+    IncrementDirective,
+    RevealDirective,
   ],
 })
 export class SharedModule {}

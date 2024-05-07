@@ -95,18 +95,159 @@
   }
 }
 @layer components {
+  .section-bg {
+    background: url(assets/main/section-bg.svg) no-repeat;
+    // background-position: bottom left;
+    &.tr {
+      background-position: top right !important;
+    }
+    &.tl {
+      background-position: top left !important;
+    }
+    &.br {
+      background-position: bottom right !important;
+    }
+    &.bl {
+      background-position: bottom left !important;
+    }
+  }
+
   .title {
-    @apply pt-24 text-center capitalize;
-    > h2 {
-      @apply relative text-3xl font-bold px-5 w-fit  mx-auto duration-300 cursor-pointer;
-    }
-    p {
-      @apply py-2 text-zinc-400;
+    @apply py-10 text-3xl xl:text-5xl text-center font-bold relative;
+    &::after {
+      content: attr(data-text);
+      font-size: 80px;
+      font-weight: bolder;
+      z-index: -1;
+      position: absolute;
+      opacity: 0.1;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 0%;
     }
   }
-  .shop-btn {
-    @apply py-2 px-5 bg-cyan-900 hover:bg-cyan-400 text-white duration-300 uppercase;
+  .btn {
+    @apply outline-0 border hover:bg-neutral-50 active:bg-neutral-100 border-neutral-200 bg-white flex justify-center items-center gap-4 duration-300 rounded-xl;
+    img {
+      width: 24px;
+    }
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.06);
+    padding: 8px 16px;
+    user-select: none;
+    svg {
+      @apply duration-300 stroke-neutral-900;
+    }
+    &.nostroke {
+      svg {
+        stroke: none;
+      }
+    }
+    &:disabled {
+      @apply bg-neutral-300    text-neutral-300   border-neutral-300 cursor-not-allowed;
+    }
+
+    &.icon {
+      padding: 8px;
+    }
+    &.block {
+      display: flex !important;
+      width: 100%;
+      text-align: center;
+    }
+    &.link {
+      border-color: transparent;
+      box-shadow: unset;
+      &:hover {
+        @apply bg-neutral-50;
+      }
+      &:active {
+        @apply bg-neutral-100;
+      }
+    }
+    &.rounded {
+      border-radius: 100% !important;
+      padding: 4px !important;
+    }
+    &.cyan {
+      @apply bg-cyan-500 border-cyan-500 text-white;
+
+      svg {
+        @apply stroke-white;
+      }
+      &:hover {
+        @apply bg-cyan-700 border-cyan-700;
+      }
+      &:active {
+        @apply bg-cyan-900 border-cyan-900;
+      }
+      &.link {
+        background: transparent;
+        border: 1px solid transparent;
+        @apply text-cyan-500;
+        svg {
+          @apply stroke-cyan-500;
+        }
+        &:hover {
+          @apply bg-cyan-50 border-cyan-50;
+        }
+        &:active {
+          @apply bg-cyan-100 border-cyan-100;
+        }
+      }
+      &.outline {
+        svg {
+          @apply stroke-cyan-500;
+        }
+        @apply text-cyan-500 border-cyan-50 bg-white hover:bg-cyan-50 active:text-white active:bg-cyan-300;
+
+        &:active {
+          svg {
+            stroke: #fff;
+          }
+        }
+      }
+    }
+    &.red {
+      @apply bg-red-500 border-red-500 text-white;
+
+      svg {
+        @apply stroke-white;
+      }
+      &:hover {
+        @apply bg-red-700 border-red-700;
+      }
+      &:active {
+        @apply bg-red-900 border-red-900;
+      }
+      &.link {
+        background: transparent;
+        border: 1px solid transparent;
+        @apply text-red-500;
+        svg {
+          @apply stroke-red-500;
+        }
+        &:hover {
+          @apply bg-red-50 border-red-50;
+        }
+        &:active {
+          @apply bg-red-100 border-red-100;
+        }
+      }
+      &.outline {
+        svg {
+          @apply stroke-red-500;
+        }
+        @apply text-red-500 border-red-50 bg-white hover:bg-red-50 active:text-white active:bg-red-300;
+
+        &:active {
+          svg {
+            stroke: #fff;
+          }
+        }
+      }
+    }
   }
+
   .checkBoxLable {
     @apply flex gap-2 items-center cursor-pointer select-none;
     > div {
@@ -279,4 +420,33 @@
 .ng-dropdown-panel {
   border-radius: 12px;
   overflow: hidden;
+}
+// scroll animation
+.rReveal,
+.lReveal,
+.tReveal,
+.bReveal {
+  opacity: 0;
+  transition: var(--long-duration, 0.5s);
+}
+
+.rReveal {
+  transform: translateX(70px) translateY(0px);
+}
+
+.lReveal {
+  transform: translateX(-70px) translateY(0px);
+}
+
+.tReveal {
+  transform: translateY(-70px) translateX(0px);
+}
+
+.bReveal {
+  transform: translateY(70px) translateX(0px);
+}
+
+.reveal {
+  transform: translateX(0px) translateY(0px);
+  opacity: 1;
 }

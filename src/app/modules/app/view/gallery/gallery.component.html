@@ -1,0 +1,4 @@
+<app-navigator [routes]="navigator" title="الجاليري"></app-navigator>
+<div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
+  <app-product reveal="b" [details]="product" *ngFor="let product of products"></app-product>
+</div>

@@ -1,30 +1,42 @@
+:host {
+  overflow: hidden;
+  width: 100%;
+  display: block;
+}
 .landing {
-  min-height: calc(100vh - 57px);
-  .landingImg {
-    user-select: none;
-    img:not(.landin-img) {
-      position: absolute;
-      width: 20%;
-      animation: heartOne 5s infinite alternate ease-in-out;
-      &:nth-of-type(2) {
-        bottom: 0;
-        left: 0;
-        transform: rotateY(180deg) rotateZ(0deg) translateY(0px);
-        animation: heartTwo 4s infinite alternate ease-in-out;
-      }
-      &:nth-of-type(3) {
-        left: 0;
-        transform: rotateY(180deg) rotateZ(335deg) scale(1.5);
-        filter: blur(2px);
-        animation: heartThree 4s infinite alternate ease-in-out;
-      }
-      &:nth-of-type(4) {
-        bottom: 0;
-        z-index: -1;
-        transform: scale(1.4) rotateY(0deg) rotateZ(334deg) scale(1.5)
-          translate(0px, -20px);
-        filter: blur(2px);
-        animation: heartFour 5s infinite alternate ease-in-out;
+  > div {
+    min-height: calc(100vh - 57px);
+    // h1 {
+    //   background: -webkit-linear-gradient(292deg, #eee, #333);
+    //   -webkit-background-clip: text;
+    //   -webkit-text-fill-color: transparent;
+    // }
+    .landingImg {
+      user-select: none;
+      img:not(.landin-img) {
+        position: absolute;
+        width: 20%;
+        animation: heartOne 5s infinite alternate ease-in-out;
+        &:nth-of-type(2) {
+          bottom: 0;
+          left: 0;
+          transform: rotateY(180deg) rotateZ(0deg) translateY(0px);
+          animation: heartTwo 4s infinite alternate ease-in-out;
+        }
+        &:nth-of-type(3) {
+          left: 0;
+          transform: rotateY(180deg) rotateZ(335deg) scale(1.5);
+          filter: blur(2px);
+          animation: heartThree 4s infinite alternate ease-in-out;
+        }
+        &:nth-of-type(4) {
+          bottom: 0;
+          z-index: -1;
+          transform: scale(1.4) rotateY(0deg) rotateZ(334deg) scale(1.5)
+            translate(0px, -20px);
+          filter: blur(2px);
+          animation: heartFour 5s infinite alternate ease-in-out;
+        }
       }
     }
   }
@@ -66,3 +78,26 @@ svg {
       translate(0px, 0px);
   }
 }
+
+// .doc-box {
+//   background: url(../../../../../assets/main/doc-bg.jpg) no-repeat center center /
+//       cover,
+//     #fff;
+//   background-attachment: fixed;
+//   clip-path: polygon(0% 10%, 50% 0%, 100% 10%, 100% 100%, 0% 100%);
+
+//   &::after {
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     background-color: rgba(
+//       0,
+//       0,
+//       0,
+//       0.7
+//     ); /* Adjust the alpha value to control the darkness */
+//   }
+// }

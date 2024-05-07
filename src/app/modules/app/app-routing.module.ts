@@ -6,6 +6,7 @@ import { CartComponent } from './view/cart/cart.component';
 import { LikedComponent } from './view/liked/liked.component';
 import { ConvoysComponent } from './view/convoys/convoys.component';
 import { DetailsComponent } from './view/convoys/details/details.component';
+import { GalleryComponent } from './view/gallery/gallery.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'liked',
         component: LikedComponent,
+      },
+      {
+        path: 'gallery',
+        component: GalleryComponent,
       },
     ],
   },

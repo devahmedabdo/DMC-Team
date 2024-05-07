@@ -4,22 +4,29 @@ import {
   Renderer2,
   OnInit,
   OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
 
 @Directive({
-  selector: '[appTitle]',
+  selector: '[textEffect]',
 })
-export class TitleDirective implements OnInit, OnDestroy {
+export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
   private intervalId: any;
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      console.log(this.elementRef.nativeElement.getBoundingClientRect().height);
+      this.renderer.addClass(this.elementRef.nativeElement, 'opacity-0');
+      // this.elementRef.nativeElement.style.height =
+      //   this.elementRef.nativeElement.getBoundingClientRect().height + 'px';
+    }, 11);
+  }
   text: string = '';
   ngOnInit() {
-    this.renderer.addClass(this.elementRef.nativeElement, 'opacity-0');
-    this.checkScrollPosition(); // Check initial scroll position
-
     // Listen to scroll events
     window.addEventListener('scroll', this.checkScrollPosition.bind(this));
+    this.checkScrollPosition();
   }
 
   ngOnDestroy() {
@@ -30,9 +37,6 @@ export class TitleDirective implements OnInit, OnDestroy {
   private checkScrollPosition() {
     const element = this.elementRef.nativeElement;
     this.text = element.innerText;
-
-    // this.renderer.setProperty(this.elementRef.nativeElement, 'innerText', '');
-
     const rect = element.getBoundingClientRect();
     if (
       rect.top - document.documentElement.clientHeight < -100 &&
@@ -56,11 +60,10 @@ export class TitleDirective implements OnInit, OnDestroy {
         if (!index) {
           this.renderer.removeClass(this.elementRef.nativeElement, 'opacity-0');
         }
-
         index++;
       } else {
         clearInterval(this.intervalId);
       }
-    }, 300);
+    }, 30);
   }
 }

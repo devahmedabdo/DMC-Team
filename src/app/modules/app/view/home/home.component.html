@@ -1,18 +1,17 @@
-<div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
-  <app-product [details]="product" *ngFor="let product of products"></app-product>
-
-</div>
-<div>
-  <div class="container py-10 grid md:grid-cols-2 content-center gap-10 justify-between items-center landing">
+<div class="landing relative">
+  <div class="container py-10 grid md:grid-cols-2 content-center gap-10 justify-between items-center  ">
     <div>
       <div class="font-bold text-2xl md:text-3xl text-center leading-normal ">
-        <h1 class="font-extrabold text-5xl md:text-7xl lg:text-8xl font-leigo">DMC</h1>
-        <h2 class="mt-3 font-leigo">Delengat Medical Committee</h2>
-        <h2 class="mt-4">لجنة الدلنجات الطبية</h2>
+        <h1 reveal="b" class="font-extrabold text-5xl md:text-7xl lg:text-8xl font-leigo">
+          <span class="hover:text-cyan-500 hover:duration-75 duration-1000">D</span>
+          <span class="hover:text-cyan-500 hover:duration-75 duration-1000">M</span>
+          <span class="hover:text-cyan-500 hover:duration-75 duration-1000">C</span>
+        </h1>
+        <h2 reveal="b" class="mt-3 font-leigo">Delengat Medical Committee</h2>
+        <h2 reveal="b" class="mt-4">لجنة الدلنجات الطبية</h2>
       </div>
     </div>
-    <div class="relative landingImg">
-
+    <div class="relative landingImg" reveal="l">
       <img src="assets/main/heart.png" alt="">
       <img src="assets/main/heart.png" alt="">
       <img src="assets/main/heart.png" alt="">
@@ -20,7 +19,62 @@
       <img class="landin-img" src="assets/main/landing.png" alt="">
     </div>
   </div>
+  <!-- <img src="assets/main/landing-bg.png" class="landing-bg absolute left-0 top-0 w-full h-full -z-10" /> -->
 </div>
+<!-- numbers -->
+<div class="py-24 section-bg  md:mt-20">
+  <div class="flex justify-center flex-wrap gap-4  container">
+    <div *ngFor="let number of numbers;let i=index" reveal="b" [delay]="i"
+      class="w-[calc(25%_-_16px)]  hover:text-cyan-500 hover:bg-white hover:shadow-xl p-10 px-12 min-w-fit text-center  ">
+      <span appIncrement="{{number.number}}" max="55" class="font-black text-5xl font-leigo">{{number.number}}</span>
+      <span class="block mt-4 text-2xl font-medium">{{number.name}}</span>
+    </div>
+  </div>
+</div>
+<div class="py-40 section-bg bl">
+  <div class="container">
+    <h2 class="title" reveal="b" data-text="خدماتنا">خدماتنا</h2>
+    <div class="flex justify-center flex-wrap py-20">
+      <div *ngFor="let serv of services" reveal="b"
+        class="flex flex-col items-center text-center min-w-72 gap-4 p-10 basis-[calc(33.33%_-_16px)]">
+        <lord-icon src="assets/lottie/services/{{serv.icon}}.json" trigger="loop" delay="2000"
+          style="width:100px;height:100px">
+        </lord-icon>
+        <span class="font-bold text-lg">{{serv.title}}</span>
+        <p class="text-neutral-500 ">{{serv.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-20">
+  <h2 class="title" reveal="b" data-text="من نحن">من نحن ؟</h2>
+
+  <div class="grid gap-20 md:grid-cols-2 items-center mt-10">
+    <img reveal="r" src="assets/main/who-dmc.png" alt="">
+    <div class="flex-col gap-4 flex justify-center items-center text-center md:text-start md:items-start">
+      <p class="text-xl xl:text-2xl" reveal="b"> فريق عمل تطوعي من طلاب الكليات الطبية بالدلنجات ومؤسسة غير ربحية هدفها
+        نشر
+        الوعي وتوفير
+        الرعاية الصحية لغير القادرين
+        بالتعاون مع خيرة أطباء الدلنجات وتنظيم بعض الأنشطة الإجتماعية كالندوات والمؤتمرات وحملات الكساء وغيرها من
+        المشاريع
+        الخيرية.</p>
+      <button routerLink="aboutUs" reveal="b" class="btn cyan min-w-40">المزيد</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- <div class="doc-box my-40 relative py-40">
+  <div class="container text-white z-10 relative text-center">
+    <h2 class="title">التعاقدات</h2>
+    <p class="text-3xl">تعاقدات مختلفه مع جميع القطاعات الطبية</p>
+  </div>
+</div> -->
+
+
+
+
 <!-- <div>
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 561">
     <g transform="translate(960,280.5) scale(1,1) translate(-960,-280.5)">
@@ -63,12 +117,12 @@
 </div> -->
 
 <!-- <p style="height: 900vh;">home works!</p> -->
-<div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
-  <app-product [details]="product" *ngFor="let product of products"></app-product>
+<!-- <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
+  <app-product reveal="t" [details]="product" *ngFor="let product of products"></app-product>
 
 </div>
 
-<h1 class="text-5xl" appTitle> نحن قريق طبي</h1>
+
 <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
   <app-card [details]="product" *ngFor="let product of products"></app-card>
-</div>
+</div> -->

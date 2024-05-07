@@ -1,9 +1,11 @@
-div {
-  background: url(../../../../../assets/main/section.jpg) center center
-    no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  button {
-    @apply cursor-pointer text-lg uppercase duration-300 hover:text-cyan-300;
+:host {
+  > div {
+    background: url(../../../../../assets/main/section.jpg) center center
+      no-repeat;
+    background-size: cover;
+    // background-attachment: fixed;
+    button {
+      @apply cursor-pointer text-lg uppercase duration-300 hover:text-cyan-300;
+    }
   }
 }

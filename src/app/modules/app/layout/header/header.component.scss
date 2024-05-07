@@ -1,7 +1,11 @@
+:host {
+  z-index: 50;
+  position: relative;
+}
 .menu {
   nav {
     a {
-      @apply py-1  duration-300 text-neutral-900 transition-colors relative;
+      // @apply py-1  duration-300 text-neutral-900 transition-colors relative;
       &::after {
         @apply absolute top-full w-0 duration-300 h-0.5 rounded-full bg-cyan-600 right-0;
         content: "";
@@ -31,8 +35,9 @@
     }
   }
   @media (max-width: 983px) {
-    @apply absolute top-full  w-full flex flex-col z-50 p-3 left-full bg-white;
-    height: calc(100vh - 81px);
+    @apply fixed top-0 w-full -z-10 flex flex-col p-3 left-full bg-white;
+    height: 100dvh;
+    padding: 80px 30px 16px;
     nav {
       @apply flex-col justify-start items-start border-b border-neutral-200;
       a {
@@ -62,7 +67,14 @@
       nav {
         a {
           @apply translate-y-0 opacity-100;
+          &::after {
+            @apply size-3 top-1/2 -translate-y-1/2;
+          }
         }
+      }
+      .btns {
+        padding-top: 16px;
+        justify-content: center;
       }
     }
   }
