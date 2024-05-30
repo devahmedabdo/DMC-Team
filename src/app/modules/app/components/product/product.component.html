@@ -1,13 +1,13 @@
-<div class="product duration-300 hover:shadow-xl p-3 bg-zinc-50 max-w-md mx-auto relative rounded-3xl">
+<div class="product duration-300 shadow-md hover:shadow-xl p-3 bg-white max-w-md mx-auto relative rounded-xl">
   <div *ngIf="details.disscount > 0"
     class="sale  text-sm z-10 text-center absolute top-[-10px] right-7 flex flex-col bg-cyan-400 text-white leading-4 font-bold w-10">
     <span class="pt-2 bg-cyan-400">{{((details.price / details.disscount)*100).toFixed(0)}}%</span>
     <span class="text-xs pb-2 bg-cyan-400">OFF</span>
   </div>
-  <div class="product-images relative overflow-hidden aspect-square rounded-xl">
+  <div class="product-images relative overflow-hidden aspect-square rounded-xl grayscale-[50%] hover:grayscale-0">
 
-    <img [src]=" details.photos[1]" alt="product image two">
-    <img [src]=" details.photos[0]" alt="product image one">
+    <img [src]=" details?.photos[1]" alt="product image two">
+    <img [src]=" details?.photos[0]" alt="product image one">
     <div class="btns">
       <div data-text="اضافة للسلة" data-text-stored="ازالة من السلة" [ngClass]="{cart:details?.cart}">
         <fa-icon (click)="details?.cart ? removeProduct(details._id,'cart' ) :storeProduct(details,'cart',1 )"
@@ -20,7 +20,8 @@
     </div>
   </div>
 
-  <h3 class="mt-4 font-semibold text-zinc-700 hover:text-cyan-400 cursor-pointer duration-300">{{details.name}}</h3>
+  <h3 class="line-clamp-1" routerLink="/gallery/{{details._id}}"
+    class="mt-4 font-semibold text-zinc-700 hover:text-cyan-400 cursor-pointer duration-300">{{details.name}}</h3>
   <h4 class="flex justify-between font-bold py-2">
     <span class="text-cyan-400">{{details.price | currency:'ج.م'}}</span>
     <span *ngIf="details.disscount > 0" class="line-through text-zinc-400">{{(details.price * 100) /

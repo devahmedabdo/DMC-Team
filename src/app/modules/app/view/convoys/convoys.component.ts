@@ -104,7 +104,7 @@ export class ConvoysComponent {
       },
     };
     this.data = data.items;
-    return;
+    // return;
     this.api.get('activeConvoys?page=' + page).subscribe((data: any) => {
       console.log(data);
       this.data = data.items;

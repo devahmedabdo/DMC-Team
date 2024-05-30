@@ -18,29 +18,17 @@ export class HeaderComponent {
       link: 'gallery',
     },
     {
-      name: 'القزافل',
+      name: 'القوافل',
       link: 'convoys',
     },
     {
       name: 'المشاريع',
       link: 'projects',
     },
-    // {
-    //   name: 'التأهيل',
-    //   link: 'qualification',
-    // },
-    // {
-    //   name: 'التذاكر',
-    //   link: 'tickets',
-    // },
-    // {
-    //   name: 'التسويق',
-    //   link: 'marketing',
-    // },
-    // {
-    //   name: 'المبيعات',
-    //   link: 'sales',
-    // },
+    {
+      name: 'من نحن',
+      link: 'aboutus',
+    },
   ];
   @Input() activeMenu: boolean = false;
   @Output() activeMenuChange = new EventEmitter<boolean>();

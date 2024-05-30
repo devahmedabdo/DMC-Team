@@ -20,14 +20,16 @@ export class RevealDirective implements OnInit, OnDestroy {
       this.reveal + 'Reveal'
     );
     window.addEventListener('scroll', this.checkPosition.bind(this));
-    this.checkPosition();
+    setTimeout(() => {
+      this.checkPosition();
+    }, 300);
   }
   ngOnDestroy() {
     window.removeEventListener('scroll', this.checkPosition.bind(this));
   }
   checkPosition() {
     const rect = this.elementRef.nativeElement.getBoundingClientRect();
-    if (rect.top - document.documentElement.clientHeight < -200) {
+    if (rect.top - document.documentElement.clientHeight < -100) {
       setTimeout(() => {
         this.renderer.addClass(this.elementRef.nativeElement, 'reveal');
       }, this.delay * 50);

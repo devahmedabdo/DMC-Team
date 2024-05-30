@@ -39,7 +39,7 @@ export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
     this.text = element.innerText;
     const rect = element.getBoundingClientRect();
     if (
-      rect.top - document.documentElement.clientHeight < -100 &&
+      rect.top - document.documentElement.clientHeight < -200 &&
       !this.started
     ) {
       this.startWriteEffect(this.text);

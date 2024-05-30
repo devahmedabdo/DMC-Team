@@ -18,6 +18,10 @@ import { LikedComponent } from './view/liked/liked.component';
 import { NavigatorComponent } from './components/navigator/navigator.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GalleryComponent } from './view/gallery/gallery.component';
+import { ProductDetailsComponent } from './view/gallery/product-details/product-details.component';
+import { PaginationBtnComponent } from './components/pagination-btn/pagination-btn.component';
+import { ProjectsComponent } from './view/projects/projects.component';
+import { DetailsComponent as ProjectDetails } from './view/projects/details/details.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,10 @@ import { GalleryComponent } from './view/gallery/gallery.component';
     LikedComponent,
     NavigatorComponent,
     GalleryComponent,
+    ProductDetailsComponent,
+    PaginationBtnComponent,
+    ProjectsComponent,
+    ProjectDetails,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

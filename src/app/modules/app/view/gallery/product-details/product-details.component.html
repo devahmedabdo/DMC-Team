@@ -1,0 +1,27 @@
+<app-navigator [routes]="navigator" [title]="product.name"></app-navigator>
+
+<div class="grid md:grid-cols-2 gap-40 py-20 container">
+  <div>
+    <swiper-container dir="ltr" class="md:max-w-96 max-w-72" effect="cards">
+      <swiper-slide class="w-52 h-[500px]" *ngFor="let photo of product.photos">
+        <img class="w-full h-full object-cover rounded-xl" [src]="photo" alt="">
+      </swiper-slide>
+    </swiper-container>
+  </div>
+  <div class="flex flex-col gap-6">
+    <h2 class="text-4xl font-bold">{{product.name}}</h2>
+    <span class="text-cyan-500 text-2xl">
+      {{product.price | currency:'ج.م'}}
+      <span *ngIf="product.disscount" class="text-neutral-400 line-through">
+        {{product.disscount | currency:'ج.م'}}
+      </span>
+    </span>
+    <p>نؤمن بأن الرعاية الصحية الأساسية يجب أن تكون متاحة للجميع بغض النظر عن ظروفهم المالية. ومن أجل تحقيق هذا الهدف،
+      نتخذ
+      قرارًا جريئًا بتوجيه كامل الأرباح التي نحققها من بيع منتجاتنا نحو تمويل الخدمات الطبية والرعاية الصحية للفقراء.
+    </p>
+
+  </div>
+
+
+</div>

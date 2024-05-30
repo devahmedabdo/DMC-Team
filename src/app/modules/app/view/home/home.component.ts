@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { DmcService } from 'src/app/services/dmc.service';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private dmc: DmcService) {}
   text: any = '';
   landing: any[] = [{}];
   // ngAfterViewInit(): void {
@@ -27,18 +28,59 @@ export class HomeComponent {
     {
       name: 'قوافل طبية',
       number: 18,
+      icon: 'ambulance',
     },
     {
       name: 'مقالات طبية',
       number: 20,
+      icon: 'document',
     },
     {
       name: 'حالات رعاية',
       number: 400,
+      icon: 'fever',
     },
     {
       name: 'مشاريع رعاية',
       number: 12,
+      icon: 'suitcase',
+    },
+  ];
+  donations: any[] = [
+    {
+      method: 'فودافون كاش',
+      project: 'الرعايه',
+      value: '01233242332',
+    },
+
+    {
+      method: 'فودافون كاش',
+      project: 'القوافل',
+      value: '01546765761',
+    },
+
+    {
+      method: 'انستاباي',
+      project: 'الرعايه',
+      value: '01567563434435',
+    },
+
+    {
+      method: 'فودافون كاش',
+      project: 'السونار',
+      value: '01231231231',
+    },
+
+    {
+      method: 'فودافون كاش',
+      project: 'السونار',
+      value: '01231231231',
+    },
+
+    {
+      method: 'الرعاية الصحية',
+      project: 'الادوات المدرسية',
+      value: '01231231231',
     },
   ];
   services: any[] = [
@@ -73,4 +115,8 @@ export class HomeComponent {
       title: 'قليل منك حياة',
     },
   ];
+  copy(text: any) {
+    this.dmc.message('تم النسخ', 'info', undefined, 'info');
+    window.navigator.clipboard.writeText(text);
+  }
 }

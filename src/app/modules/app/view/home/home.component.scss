@@ -5,7 +5,7 @@
 }
 .landing {
   > div {
-    min-height: calc(100vh - 57px);
+    // min-height: calc(100vh - 57px);
     // h1 {
     //   background: -webkit-linear-gradient(292deg, #eee, #333);
     //   -webkit-background-clip: text;
@@ -101,3 +101,43 @@ svg {
 //     ); /* Adjust the alpha value to control the darkness */
 //   }
 // }
+.asd {
+  background: url(../../../../../assets/main/sec-bg.png) no-repeat;
+}
+.donationBox {
+  transition: 0.3s;
+  background-color: white;
+  &::after {
+    @apply bg-cyan-500;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100%;
+    transform: scale(1.05);
+    opacity: 0.4;
+    transition: 0.3s;
+    border-radius: 12px;
+    z-index: -1;
+  }
+  &:hover {
+    box-shadow: -12px 12px 20px #00000017;
+    &::after {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+  fa-icon {
+    clip-path: polygon(
+      75% 0%,
+      25% 0%,
+      0% 50%,
+      0% 50%,
+      25% 100%,
+      75% 100%,
+      100% 50%,
+      100% 50%
+    );
+  }
+}

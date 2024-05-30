@@ -24,7 +24,7 @@ export class IncrementDirective {
     const isInView =
       element.getBoundingClientRect().top -
         document.documentElement.clientHeight <
-      -200;
+      -100;
 
     if (isInView && !this.started) {
       this.started = true;

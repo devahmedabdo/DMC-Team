@@ -7,6 +7,9 @@ import { LikedComponent } from './view/liked/liked.component';
 import { ConvoysComponent } from './view/convoys/convoys.component';
 import { DetailsComponent } from './view/convoys/details/details.component';
 import { GalleryComponent } from './view/gallery/gallery.component';
+import { ProductDetailsComponent } from './view/gallery/product-details/product-details.component';
+import { ProjectsComponent } from './view/projects/projects.component';
+import { DetailsComponent as ProjectDetails } from './view/projects/details/details.component';
 
 const routes: Routes = [
   {
@@ -37,6 +40,18 @@ const routes: Routes = [
       {
         path: 'gallery',
         component: GalleryComponent,
+      },
+      {
+        path: 'gallery/:id',
+        component: ProductDetailsComponent,
+      },
+      {
+        path: 'projects',
+        component: ProjectsComponent,
+      },
+      {
+        path: 'projects/:id',
+        component: ProjectDetails,
       },
     ],
   },

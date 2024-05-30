@@ -14,13 +14,27 @@ export class GalleryComponent {
     // },
   ];
   products: any[] = [];
+  error: any;
+  pagination: any = {
+    page: 1,
+    limit: 3,
+    total: 0,
+  };
+  loading: boolean = false;
   constructor(private api: ApiService) {
     this.get();
   }
-  get() {
-    this.api.get('products').subscribe({
+  get(page: number = 1) {
+    this.loading = true;
+    this.error = false;
+    this.api.get('products?page=' + page).subscribe({
       next: (data: any) => {
-        this.products = data.items;
+        this.loading = false;
+        this.products = [...this.products, ...data.items];
+        this.pagination = data.pagination;
+      },
+      error: (err: any) => {
+        this.error = err;
       },
     });
   }

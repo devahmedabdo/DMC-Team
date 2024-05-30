@@ -31,6 +31,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { register } from 'swiper/element/bundle';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
+import { ToastNoAnimationModule } from 'ngx-toastr';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -42,6 +43,7 @@ import { ApiService } from './services/api.service';
     FontAwesomeModule,
     // Swiper
     HttpClientModule,
+    ToastNoAnimationModule.forRoot(),
   ],
   providers: [ApiService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

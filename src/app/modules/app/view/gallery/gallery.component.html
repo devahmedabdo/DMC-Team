@@ -1,4 +1,37 @@
-<app-navigator [routes]="navigator" title="الجاليري"></app-navigator>
-<div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2   gap-4 md:px-5 mt-10 container">
-  <app-product reveal="b" [details]="product" *ngFor="let product of products"></app-product>
+<div
+  class="container min-h-[calc(100vh_-_57px)] py-10 grid md:grid-cols-2 content-center gap-10 justify-between items-center  ">
+  <div class="font-bold text-2xl md:text-3xl text-center leading-normal ">
+    <h1 class="font-extrabold text-5xl md:text-7xl lg:text-8xl font-leigo" reveal="b">
+      <span class="hover:text-cyan-500 hover:duration-75 duration-1000">G</span>
+      <span class="hover:text-cyan-500 hover:duration-75 duration-1000">a</span>
+      <span class="hover:text-cyan-500 hover:duration-75 duration-1000">l</span>
+      <span class="hover:text-cyan-500 hover:duration-75 duration-1000">l</span>
+      <span class="hover:text-cyan-500 hover:duration-75 duration-1000">e</span>
+      <span class="hover:text-cyan-500 hover:duration-75 duration-1000">r</span>
+      <span class="hover:text-cyan-500 hover:duration-75 duration-1000">y</span>
+    </h1>
+    <h2 reveal="b" [delay]="2" class="mt-3 font-leigo">Delengat Medical Committee</h2>
+    <h2 reveal="b" [delay]="3" class="mt-4">لجنة الدلنجات الطبية</h2>
+  </div>
+  <img reveal="l" class="mix-blend-darken" src="assets/main/gallery2.png" alt="">
+</div>
+<div class="my-20">
+  <div class="container">
+    <h2 class="title" reveal="b" data-text="ليه جاليري">ليه جاليري ؟</h2>
+    <p textEffect class="text-xl text-neutral-700 font-medium text-center mx-auto max-w-4xl">
+      نحن هنا لتوفير الدعم الصحي والطبي لأولئك الذين يعانون من الفقر والحاجة في مجتمعنا. نحن نؤمن بأن الرعاية الصحية
+      الأساسية
+      يجب أن تكون متاحة للجميع بغض النظر عن ظروفهم المالية. ومن أجل تحقيق هذا الهدف، نتخذ قرارًا جريئًا بتوجيه كامل
+      الأرباح
+      التي نحققها من بيع منتجاتنا نحو تمويل الخدمات الطبية والرعاية الصحية للفقراء.
+    </p>
+  </div>
+</div>
+
+<div class="my-10">
+  <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-y-10  gap-4 md:px-5 mt-40 container">
+    <app-product reveal="b" [details]="product" *ngFor="let product of products"></app-product>
+  </div>
+  <app-pagination-btn class="mt-10 block" *ngIf="pagination.page * pagination.limit < pagination.total"
+    [loading]="loading" [pagination]="pagination" (pageChange)="get($event)"></app-pagination-btn>
 </div>

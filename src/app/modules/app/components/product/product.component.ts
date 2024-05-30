@@ -35,6 +35,7 @@ export class ProductComponent implements OnInit {
     this.dmc.appendItem(position, product);
     this.dmc.stored[position].next();
     this.details[position] = true;
+    this.dmc.message('تم اضافة المنتج', 'info', undefined, 'info');
   }
   removeProduct(id: any, position: string) {
     let products: any[] = this.dmc.getItem(position) || [];
@@ -43,6 +44,7 @@ export class ProductComponent implements OnInit {
     this.dmc.setItem(position, products);
     this.dmc.stored[position].next();
     this.details[position] = false;
+    this.dmc.message('تم ازالة المنتج', 'info', undefined, 'delete');
   }
 
   check(arr: any[] = [], id: any): boolean {
