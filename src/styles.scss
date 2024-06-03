@@ -69,8 +69,9 @@
       @apply bg-cyan-500 text-white;
     }
     * {
+      user-select: none;
       &::-webkit-scrollbar {
-        @apply bg-transparent w-2;
+        @apply bg-transparent w-2 h-1.5;
       }
       &::-webkit-scrollbar-thumb {
         @apply bg-cyan-500 rounded-lg hover:bg-cyan-300 active:bg-cyan-800 duration-300;
@@ -128,7 +129,7 @@
     }
   }
   .btn {
-    @apply outline-0 border hover:bg-neutral-50 active:bg-neutral-100 border-neutral-200 bg-white flex justify-center items-center gap-4 duration-300 rounded-xl;
+    @apply outline-0 disabled:grayscale border hover:bg-neutral-50 active:bg-neutral-100 border-neutral-200 bg-white flex justify-center items-center gap-4 duration-300 rounded-xl;
     img {
       width: 24px;
     }

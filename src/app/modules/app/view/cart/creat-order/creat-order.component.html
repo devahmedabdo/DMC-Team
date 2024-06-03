@@ -1,0 +1,155 @@
+<app-navigator [routes]="navigator" title="السلة"></app-navigator>
+
+<div class="bg-white">
+  <div class="grid md:grid-cols-2 container gap-6 py-10">
+    <div *ngIf="error" class="md:col-span-2 rounded-lg p-2 text-center bg-red-50 text-red-500">
+      {{error}}
+    </div>
+    <div class="overflow-auto px-2">
+
+      <h3 class="text-2xl font-bold mb-3">
+        تفاصيل الطلب
+      </h3>
+      <div class="w-full p-3">
+        <div class="relative overflow-x-auto shadow-md rounded-lg">
+          <table class="w-full text-right text-sm text-gray-500 ">
+            <thead class="text-xs text-gray-700 bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3">
+                  المنتج
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  السعر
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  الكمية
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  الاجمالي
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b hover:bg-neutral-100" *ngFor="let prod of products">
+                <td class="p-2 px-6">{{prod.name}}</td>
+                <td class="p-2 px-6">{{prod.price}}</td>
+                <td class="p-2 px-6">{{prod.quantity}}</td>
+                <td class="p-2 px-6">{{prod.price * prod.quantity}}</td>
+              </tr>
+              <tr>
+                <td class="p-2 px-6" colspan="3">الاجمالي</td>
+                <td class="p-2 px-6">{{totalPrice}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 class="text-2xl font-bold mb-3">
+        بيانات الطلب
+      </h3>
+      <form #orderForm="ngForm" class="flex flex-col gap-2" (ngSubmit)="order(orderForm.value)">
+
+        <div class="formInput"
+          [ngClass]="{active:name.control.valid,error:name.control.invalid && name.control.touched}">
+          <div>
+            <input #name="ngModel" required ngModel id="ordername" type="text" name="name">
+            <label [ngClass]="{active:name.control.value}" for="ordername">الاسم</label>
+            <fa-icon [icon]="contactIcon"></fa-icon>
+          </div>
+          <p *ngIf="phone.control.touched && phone.control.invalid">
+            <span *ngIf="phone.control.errors?.['required']">* هذا الحقل مطلوب</span>
+          </p>
+        </div>
+
+        <div class="formInput"
+          [ngClass]="{active:email.control.valid,error:email.control.invalid && email.control.touched}">
+          <div>
+            <input #email="ngModel" email required ngModel id="orderEmail" type="email" name="email">
+            <label [ngClass]="{active:email.control.value}" for="orderEmail">البريد
+              الالكترونى</label>
+            <fa-icon [icon]="emailIcon"></fa-icon>
+          </div>
+          <p *ngIf="email.control.touched && email.control.invalid">
+            <span *ngIf="email.control.errors?.['required']">* هذا الحقل مطلوب</span>
+            <span *ngIf="email.control.errors?.['email']">*بريد الكترونى غير صالح</span>
+          </p>
+        </div>
+
+        <div class="formInput"
+          [ngClass]="{active:phone.control.valid,error:phone.control.invalid && phone.control.touched}">
+          <div>
+            <input #phone="ngModel" required ngModel id="orderphone" type="text" name="phone">
+            <label [ngClass]="{active:phone.control.value}" for="orderphone">رقم الهاتف</label>
+            <fa-icon [icon]="whatsappIcon"></fa-icon>
+          </div>
+          <p *ngIf="phone.control.touched && phone.control.invalid">
+            <span *ngIf="phone.control.errors?.['required']">* هذا الحقل مطلوب</span>
+          </p>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:phone_2.control.valid,error:phone_2.control.invalid && phone_2.control.touched}">
+          <div>
+            <input #phone_2="ngModel" required ngModel id="orderphone_2" type="text" name="phone_2">
+            <label [ngClass]="{active:phone_2.control.value}" for="orderphone_2">رقم الهاتف الاحتياطي</label>
+            <fa-icon [icon]="whatsappIcon"></fa-icon>
+          </div>
+          <p *ngIf="phone_2.control.touched && phone_2.control.invalid">
+            <span *ngIf="phone_2.control.errors?.['required']">* هذا الحقل مطلوب</span>
+          </p>
+        </div>
+
+        <div class="formInput"
+          [ngClass]="{active:city.control.valid,error:city.control.invalid && city.control.touched}">
+          <div>
+            <input #city="ngModel" required ngModel id="ordercity" type="text" name="city">
+            <label [ngClass]="{active:city.control.value}" for="ordercity">المدينة</label>
+            <fa-icon [icon]="cityIcon"></fa-icon>
+          </div>
+          <p *ngIf="city.control.touched && city.control.invalid">
+            <span *ngIf="city.control.errors?.['required']">* هذا الحقل مطلوب</span>
+          </p>
+        </div>
+
+        <div class="formInput"
+          [ngClass]="{active:street.control.valid,error:street.control.invalid && street.control.touched}">
+          <div>
+            <input #street="ngModel" required ngModel id="orderstreet" type="text" name="street">
+            <label [ngClass]="{active:street.control.value}" for="orderstreet">الشارع</label>
+            <fa-icon [icon]="streetIcon"></fa-icon>
+          </div>
+          <p *ngIf="street.control.touched && street.control.invalid">
+            <span *ngIf="street.control.errors?.['required']">* هذا الحقل مطلوب</span>
+          </p>
+        </div>
+
+        <button [disabled]="orderForm.invalid || !products.length" type="submit" class="btn  cyan mx-auto w-48"
+          [ngClass]="{'pl-9':loading}">
+          <span *ngIf="loading" class="size-5 rounded-full border border-t-transparent animate-spin"></span>
+          <span>تأكيد</span>
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<!-- {
+    name: 
+    email: {
+     
+    phone:  
+    phone_2:  
+    city:  
+    street: 
+   
+
+    products: [
+      {
+        product: _id
+        total:  
+      },
+    ],
+  }, -->

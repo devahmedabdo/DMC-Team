@@ -11,19 +11,7 @@ export class HomeComponent {
   constructor(private api: ApiService, private dmc: DmcService) {}
   text: any = '';
   landing: any[] = [{}];
-  // ngAfterViewInit(): void {
-  //   this.swiper = new Swiper(
-  //     this.elementRef.nativeElement.querySelector('.swiper-container'),
-  //     {
-  //       // Optional Swiper configuration
-  //       loop: true, // example option
-  //       pagination: {
-  //         el: '.swiper-pagination',
-  //         clickable: true,
-  //       },
-  //     }
-  //   );
-  // }
+
   numbers: any[] = [
     {
       name: 'قوافل طبية',
@@ -37,7 +25,7 @@ export class HomeComponent {
     },
     {
       name: 'حالات رعاية',
-      number: 400,
+      number: 43,
       icon: 'fever',
     },
     {

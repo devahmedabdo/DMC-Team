@@ -1,7 +1,5 @@
 import { DmcService } from 'src/app/services/dmc.service';
 import { Component } from '@angular/core';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { ProductComponent } from '../../components/product/product.component';
 
 @Component({
   selector: 'app-cart',
@@ -22,7 +20,6 @@ export class CartComponent {
       name: 'السلة',
     },
   ];
-
   removeProduct(id: any, position: string) {
     let productIndex = this.products.findIndex((ele) => ele._id == id);
     this.products.splice(productIndex, 1);

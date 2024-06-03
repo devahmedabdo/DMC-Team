@@ -26,7 +26,7 @@
           <div class="formInput"
             [ngClass]="{active:loginForm.controls.email.valid,error:loginForm.controls.email.errors?.['required']&& loginForm.controls.email.touched}">
             <div>
-              <input #email value="asd" id="loginEmail" (focus)="changeFormStatus(false)" [autocomplete]="'off'"
+              <input #email id="loginEmail" (focus)="changeFormStatus(false)" [autocomplete]="'off'"
                 formControlName="email" type="email">
               <label [ngClass]="{active:loginForm.controls.email.value != ''}" for="loginEmail">البريد
                 الالكترونى</label>
