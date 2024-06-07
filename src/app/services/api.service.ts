@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  apiUrl: any = 'http://127.0.0.1:3001/';
-  // apiUrl: any = 'https://dmc-dashboard.vercel.app/';
+  // apiUrl: any = 'http://127.0.0.1:3001/';
+  apiUrl: any = 'https://dmc-dashboard.vercel.app/';
   get(url: any) {
     return this.http.get(this.apiUrl + url);
   }
