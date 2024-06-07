@@ -9,16 +9,25 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DetailsComponent {
   get() {
-    this.api.get('product/' + this.id).subscribe({
+    this.api.get('project/' + this.id).subscribe({
       next: (data: any) => {
-        this.product = data;
+        this.project = data;
       },
     });
   }
   id: any;
-  product: any;
+  project: any;
   constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.get();
   }
+  navigator: any[] = [
+    {
+      name: 'المشاريع',
+      rout: '/projects',
+    },
+    // {
+    //   name: '',
+    // },
+  ];
 }

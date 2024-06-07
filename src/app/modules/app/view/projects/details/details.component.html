@@ -1,1 +1,39 @@
-<p>details works!</p>
+<!-- <app-navigator [routes]="navigator" [title]="project?.title"></app-navigator> -->
+<app-page-landing [page]="project?.type"></app-page-landing>
+<div class="my-5">
+  <div class="text-center my-10">
+    <h2 class="text-2xl font-bold mb-2">مشروع {{project?.title}}</h2>
+    <span class="text-xl">{{project?.date | date:'dd-MM-YYYY'}}</span>
+  </div>
+  <div class="flex flex-wrap  mt-4 lg:justify-start justify-center gap-4">
+    <ng-container *ngFor="let number of project.numbers;">
+      <div *ngIf="number.count" reveal="b"
+        class="text-center p-4 border border-dotted rounded-xl basis-full sm:basis-1/3 lg:basis-1/4 md:basis-1/3 flex-grow">
+        <span appIncrement="{{number.count}}" [max]="55"
+          class="font-black text-3xl font-leigo w-20 text-cyan-500">{{number.count}}</span>
+        <span class="block mt-2 text-lg font-medium">{{number.label}}</span>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<h3 class="title mt-20" data-text="صور المشروع">
+  الصور
+</h3>
+
+<div class="my-10 mx-auto max-w-4xl px-4">
+  <swiper-container class="mySwiper rounded-lg overflow-hidden w-full" thumbs-swiper=".mySwiper2" space-between="10"
+    zoom="true">
+    <swiper-slide *ngFor="let photo of project?.photos;let i = index">
+      <div class="swiper-zoom-container  aspect-video">
+        <img class="rounded-lg object-cover w-full h-full" src="{{photo}}" />
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  <swiper-container class="mySwiper2 mt-4 w-full" space-between="10" slides-per-view="4" free-mode="true"
+    watch-slides-progress="true">
+    <swiper-slide *ngFor="let photo of project?.photos;let i = index">
+      <img class="rounded-lg aspect-video object-cover" src="{{photo}}" />
+    </swiper-slide>
+  </swiper-container>
+</div>

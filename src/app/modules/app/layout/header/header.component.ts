@@ -27,7 +27,7 @@ export class HeaderComponent {
     },
     {
       name: 'من نحن',
-      link: 'aboutus',
+      link: 'about',
     },
   ];
   @Input() activeMenu: boolean = false;

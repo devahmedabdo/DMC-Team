@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   faFacebookF,
   faInstagram,
@@ -12,13 +12,14 @@ import {
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
+  @Input() user: any;
   color_1: any = '#164e63';
   color_2: any = '#009fc1';
   team: any = {
     date: new Date(
       'Mon Jan 01 2018 02:00:00 GMT+0200 (Eastern European Standard Time)'
     ),
-    convoys_count: 20,
+    convoys_count: 4,
   };
   icons: any = {
     'facebook-f': faFacebookF,
@@ -34,35 +35,7 @@ export class CardComponent {
     return key as IconName;
   }
   constructor() {}
-  user: any = {
-    name: {
-      first: {
-        ar: 'أحمد',
-        en: 'Ahmed',
-      },
-      last: {
-        ar: 'عبده',
-        en: 'Abdo',
-      },
-    },
-    email: 'devahmedabdo@gmail.com',
-    joinDate:
-      'Mon Jan 01 2019 02:00:00 GMT+0200 (Eastern European Standard Time)',
-    socialAccounts: {
-      'facebook-f': 'facebook.com/awdwdawd',
-      whatsapp: '322352352',
-      instagram: 'awdawd',
-      twitter: 'awdawd',
-    },
-    faculty: 'science',
-    password: '12345qwe',
-    committee: 'لجنة الميديا',
-    image: 'assets/user.png',
-    showImg: false,
-    convoys: [6, 7, 8, 9, 0, 3, 3, 3, 4, 43],
-    card: false,
-    status: false,
-  };
+
   year_count: any;
   year_diffrent: any;
   convoys_diffrent: any;

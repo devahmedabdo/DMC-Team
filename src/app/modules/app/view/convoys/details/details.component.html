@@ -1,1 +1,83 @@
-<p (click)="get()">details works!</p>
+<app-navigator [routes]="navigator" [title]="convoy?.description?.address"></app-navigator>
+<div class="container" *ngIf="convoy">
+  <div class="my-5">
+    <div class="text-center my-10">
+      <h2 class="text-2xl font-bold mb-2">قافلة {{convoy?.description?.address}}</h2>
+      <span class="text-xl">{{convoy?.description?.date | date:'dd-MM-YYYY'}}</span>
+    </div>
+    <div class="flex flex-wrap  mt-4 lg:justify-start justify-center gap-4">
+      <ng-container *ngFor="let number of convoy.numbers;">
+        <div *ngIf="number.total" reveal="b"
+          class="text-center p-4 border border-dotted rounded-xl basis-full sm:basis-1/3 lg:basis-1/4 md:basis-1/3 flex-grow">
+          <span appIncrement="{{number.total}}" [max]="55"
+            class="font-black text-3xl font-leigo w-20 text-cyan-500">{{number.total}}</span>
+          <span class="block mt-2 text-lg font-medium">حالة {{number.specialization.name}}</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <h3 class="title mt-20" data-text="الاطباء المشاركون">
+    التخصصات
+  </h3>
+  <div class="grid xl:grid-cols-3 md:grid-cols-2 gap-4 md:px-5 container">
+    <div
+      class="bg-white rounded-2xl relative shadow-xl my-12 mx-3 text-center px-4
+       before:content_[''] before:-z-10 before:absolute
+        before:w-3/4 before:h-10 before:-top-5 before:bg-cyan-500 before:left-1/2  before:rounded-xl  before:-translate-x-1/2"
+      *ngFor="let spe of convoy.numbers">
+      <!-- <div class="-start-5 absolute -mt-5 rounded-full w-24 shadow-lg p-4 mx-auto bg-cyan-500">
+      </div> -->
+      <img class="absolute mt-5 w-28 opacity-20 rotate-12"
+        src="assets\icons\specializations/{{spe.specialization.icon}}" alt="">
+      <span class="font-bold bg-cyan-500 text-white rounded-b-full w-fit py-2 px-10 mx-auto text-lg line-clamp-1">قسم
+        {{spe.specialization.name}}</span>
+      <div class="p-2 h-36 overflow-auto flex flex-col gap-1 text-lg font-medium my-5 text-center">
+        <span> د.الصياد جمال </span>
+        <span> د.محمود جبريل </span>
+        <span> د.محمود جبريل </span>
+        <span> د.محمد سلامة </span>
+        <span> د.باسم شلبى </span>
+        <!-- <span *ngFor="let doc of spe.collabs">{{doc.name}} </span> -->
+      </div>
+      <span class="bg-cyan-500  rounded-t-full w-1/2 mx-auto block h-6"></span>
+    </div>
+  </div>
+
+
+  <h3 class="title mt-20" data-text="الاعضاء المشاركون">
+    الاعضاء
+  </h3>
+  <div class="flex flex-wrap justify-center gap-4 md:px-5 mb-40 ">
+    <app-card class="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 scale-90" [user]="member"
+      *ngFor="let member of members"></app-card>
+  </div>
+  <app-pagination-btn class="my-10 block" *ngIf="pagination.page * pagination.limit < pagination.total"
+    [loading]="loading" [pagination]="pagination" (pageChange)="getMember($event)"></app-pagination-btn>
+
+
+  <h3 class="title mt-20" data-text="صور القافلة">
+    الصور
+  </h3>
+
+  <div class="my-10 mx-auto max-w-4xl  px-4">
+
+    <swiper-container class="mySwiper rounded-lg overflow-hidden w-full" thumbs-swiper=".mySwiper2" space-between="10"
+      zoom="true">
+      <swiper-slide *ngFor="let photo of convoy?.photos;let i = index">
+        <div class="swiper-zoom-container  aspect-video">
+          <img class="rounded-lg object-cover w-full h-full" src="{{photo}}" />
+        </div>
+      </swiper-slide>
+
+    </swiper-container>
+    <swiper-container class="mySwiper2 mt-4 w-full" space-between="10" slides-per-view="4" free-mode="true"
+      watch-slides-progress="true">
+      <swiper-slide *ngFor="let photo of convoy?.photos;let i = index">
+        <img class="rounded-lg aspect-video object-cover" src="{{photo}}" />
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+
+</div>

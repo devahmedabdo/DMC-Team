@@ -22,7 +22,7 @@ import { DmcService } from 'src/app/services/dmc.service';
   styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit {
-  cart = faShoppingBag;
+  // cart = faShoppingBag;
   heart = faHeart;
   constructor(
     private dmc: DmcService,
@@ -30,37 +30,21 @@ export class ProductComponent implements OnInit {
   ) {}
 
   @Input() details!: any;
-  storeProduct(product: any, position: string, qty?: number) {
-    if (qty) product.quantity = qty;
-    this.dmc.appendItem(position, product);
-    this.dmc.stored[position].next();
+  storeProduct(product: any, position: string) {
+    this.dmc.storeProduct(product, position, 1);
     this.details[position] = true;
-    this.dmc.message('تم اضافة المنتج', 'info', undefined, 'info');
   }
   removeProduct(id: any, position: string) {
-    let products: any[] = this.dmc.getItem(position) || [];
-    let productIndex = products.findIndex((ele) => ele._id == id);
-    products.splice(productIndex, 1);
-    this.dmc.setItem(position, products);
-    this.dmc.stored[position].next();
+    this.dmc.removeProduct(id, position);
     this.details[position] = false;
-    this.dmc.message('تم ازالة المنتج', 'info', undefined, 'delete');
-  }
-
-  check(arr: any[] = [], id: any): boolean {
-    if (arr.length) {
-      let isExist = arr.find((ele) => ele._id == id);
-      return Boolean(isExist);
-    }
-    return false;
   }
 
   ngOnInit() {
-    this.details.cart = this.check(
+    this.details.cart = this.dmc.check(
       this.dmc.getItem('cart') || [],
       this.details._id
     );
-    this.details.liked = this.check(
+    this.details.liked = this.dmc.check(
       this.dmc.getItem('liked') || [],
       this.details._id
     );

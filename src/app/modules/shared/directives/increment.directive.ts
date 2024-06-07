@@ -30,7 +30,7 @@ export class IncrementDirective {
       this.started = true;
       let index = 1;
       this.intervalId = setInterval(() => {
-        if (index < this.appIncrement) {
+        if (index <= this.appIncrement) {
           this.setNumber(index);
           index++;
         } else {

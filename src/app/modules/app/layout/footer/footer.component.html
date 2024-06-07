@@ -1,8 +1,7 @@
-<!-- <app-animated-bg></app-animated-bg> -->
 <footer class="bg-zinc-900 pt-5">
   <div class="container p-5 text-zinc-400 grid gap-3">
-    <div>
-      <img class="w-24 brightness-0 invert" src="assets/main/logo.svg" alt="Diamond Logo">
+    <div class="flex flex-col gap-3 items-start">
+      <img class="w-24 brightness-0 invert" src="assets/main/logo.svg" alt="DMC Logo">
       <p>فريق لجنة الدلنجات الطبية
         <br>
         فريق عمل تطوعي من طلاب الكليات الطبية بالدلنجات ومؤسسة غير ربحية هدفها نشر الوعي وتوفير الرعاية الصحية لغير
@@ -18,37 +17,26 @@
         </div>
       </div>
     </div>
-    <div>
-      <h6>SHOPPING ONLINE</h6>
-      <a href="">
-        Jewellery Materials</a>
-      <a href="">Sizing Children’s Jewellery</a>
-      <a href="">Delivery & Returns</a>
-      <a href="">Order Tracking</a>
-      <a href="">Order Tracking</a>
-      <a href="">FAQs</a>
+
+    <div class="flex flex-col gap-3 items-start">
+      <h6 class="font-bold py-3 text-zinc-50">من نحن</h6>
+      <a class="hover:text-white duration-300" routerLink="/about">عن الفريق</a>
+      <a class="hover:text-white duration-300" routerLink="/convoys">قوافلنا</a>
+      <a class="hover:text-white duration-300" routerLink="/projects">مشاريعنا الخيرية</a>
     </div>
-    <div>
-      <h6>ABOUT US</h6>
-      <a href="">Our Story</a>
-      <a href="">Gift Wrap</a>
-      <a href="">Engraving</a>
-      <a href="">Jewellery Care</a>
-      <a href="">World of Molly Brown London</a>
-      <a href="">DELIVERY</a>
-    </div>
-    <div>
-      <h6>ACCOUNT</h6>
-      <span>Head Office: 785 15h Street, Office 478 Berlin, De 81566</span>
-      <a href="tel:0123456778">Tel: 0123456778</a>
-      <a href="mailto:hello@aro-jewelry.com">Email: hello@aro-jewelry.com</a>
+    <div class="flex flex-col gap-3 items-start">
+      <h6 class="font-bold py-3 text-zinc-50">تسوق معنا</h6>
+      <a class="hover:text-white duration-300" routerLink="/gallery">المتجر</a>
     </div>
   </div>
-  <span class="text-zinc-500 block py-5 text-center border-t border-zinc-500 capitalize">
+  <span class="text-zinc-500 block pt-5 text-center border-t border-zinc-500 capitalize">
 
     <span class="capitalize text-cyan-400 "> DMC TEAM </span>. جميع الحقوق محفوظة.
     &copy;
     <span>{{year}}</span>
 
+  </span>
+  <span class="text-zinc-500 block py-2 text-center border-zinc-500 capitalize">
+    Developed With <span class="text-red-500">&#x2764;</span> By <a href="wa.me/+201114345007">Ahmed Abdo</a>
   </span>
 </footer>

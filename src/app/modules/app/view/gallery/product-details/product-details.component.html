@@ -1,19 +1,19 @@
-<app-navigator [routes]="navigator" [title]="product.name"></app-navigator>
+<app-navigator [routes]="navigator" [title]="product?.name"></app-navigator>
 
 <div class="grid md:grid-cols-2 gap-40 py-20 container">
   <div>
-    <swiper-container dir="ltr" class="md:max-w-96 max-w-72" effect="cards">
-      <swiper-slide class="w-52 h-[500px]" *ngFor="let photo of product.photos">
+    <swiper-container dir="ltr" class="md:max-w-96 max-w-72" effect="cards" autoplay-delay="5000">
+      <swiper-slide class="sm:w-52 w-44 h-96 sm:h-[500px]" *ngFor="let photo of product?.photos">
         <img class="w-full h-full object-cover rounded-xl" [src]="photo" alt="">
       </swiper-slide>
     </swiper-container>
   </div>
   <div class="flex flex-col gap-6">
-    <h2 class="text-4xl font-bold">{{product.name}}</h2>
+    <h2 class="text-4xl font-bold">{{product?.name}}</h2>
     <span class="text-cyan-500 text-2xl">
-      {{product.price | currency:'ج.م'}}
-      <span *ngIf="product.disscount" class="text-neutral-400 line-through">
-        {{product.disscount | currency:'ج.م'}}
+      {{product?.price | currency:'ج.م'}}
+      <span *ngIf="product?.disscount" class="text-neutral-400 line-through">
+        {{product?.disscount | currency:'ج.م'}}
       </span>
     </span>
     <p>نؤمن بأن الرعاية الصحية الأساسية يجب أن تكون متاحة للجميع بغض النظر عن ظروفهم المالية. ومن أجل تحقيق هذا الهدف،
@@ -21,7 +21,40 @@
       قرارًا جريئًا بتوجيه كامل الأرباح التي نحققها من بيع منتجاتنا نحو تمويل الخدمات الطبية والرعاية الصحية للفقراء.
     </p>
 
+    <div class="flex flex-wrap gap-2">
+      <button
+        class="px-3 py-2 rounded-lg bg-cyan-50 text-cyan-500 hover:bg-cyan-500 hover:text-white  flex gap-2 items-center duration-300"
+        (click)="product?.cart ? removeProduct(product._id,'cart' ) :storeProduct(product,'cart' )">
+        <fa-icon [icon]="'shopping-bag'"></fa-icon>
+        {{product?.cart ? 'ازالة من السلة':'اضافة للسلة'}}
+
+      </button>
+      <button
+        class="px-3 py-2 rounded-lg bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white  flex gap-2 items-center duration-300"
+        (click)="product?.liked ? removeProduct(product._id,'liked' ) : storeProduct(product,'liked' )">
+        <fa-icon [icon]="'heart'"></fa-icon>
+        {{product?.cart ? 'ازالة من المفضلة':'اضافة للمفضلة'}}
+      </button>
+
+    </div>
+
   </div>
-
-
+</div>
+<div class="mt-10 container pb-20" *ngIf="product?.testimonials.length">
+  <div>
+    <h2 class="title" data-text="اراء عملاؤنا">
+      التقييمات
+    </h2>
+  </div>
+  <swiper-container dir="ltr" effect="fade" autoplay-delay="5000" pagination-el=".swiper-pagination"
+    pagination-dynamicBullets="true" pagination-dynamicMainBullets="true" pagination-clickable="true">
+    <swiper-slide class="" *ngFor="let opinion of product?.testimonials">
+      <div class="text-center">
+        <span class="font-bold text-2xl opacity-0 translate-y-5 duration-500">{{opinion.name}}</span>
+        <p class="text-neutral-500 text-lg max-w-2xl mx-auto mt-3 opacity-0 translate-y-5 duration-500">
+          {{opinion.testimonial}}</p>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  <div class="swiper-pagination"></div>
 </div>

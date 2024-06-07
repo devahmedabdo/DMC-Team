@@ -10,12 +10,12 @@
     <img [src]=" details?.photos[0]" alt="product image one">
     <div class="btns">
       <div data-text="اضافة للسلة" data-text-stored="ازالة من السلة" [ngClass]="{cart:details?.cart}">
-        <fa-icon (click)="details?.cart ? removeProduct(details._id,'cart' ) :storeProduct(details,'cart',1 )"
-          style="--d:1" [icon]="cart"></fa-icon>
+        <fa-icon (click)="details?.cart ? removeProduct(details._id,'cart' ) :storeProduct(details,'cart' )"
+          style="--d:1" [icon]="'shopping-bag'"></fa-icon>
       </div>
       <div data-text="اضافة للمفضلة" data-text-stored="ازالة من المفضلة" [ngClass]="{liked:details?.liked}">
         <fa-icon (click)="details?.liked ? removeProduct(details._id,'liked' ) : storeProduct(details,'liked' )"
-          style="--d:2" [icon]="heart"></fa-icon>
+          style="--d:2" [icon]="'heart'"></fa-icon>
       </div>
     </div>
   </div>

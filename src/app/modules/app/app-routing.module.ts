@@ -11,6 +11,7 @@ import { ProductDetailsComponent } from './view/gallery/product-details/product-
 import { ProjectsComponent } from './view/projects/projects.component';
 import { DetailsComponent as ProjectDetails } from './view/projects/details/details.component';
 import { CreatOrderComponent } from './view/cart/creat-order/creat-order.component';
+import { AboutComponent } from './view/about/about.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
       {
         path: 'projects/:id',
         component: ProjectDetails,
+      },
+      {
+        path: 'about',
+        component: AboutComponent,
       },
     ],
   },

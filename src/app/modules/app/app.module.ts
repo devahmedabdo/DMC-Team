@@ -23,6 +23,8 @@ import { PaginationBtnComponent } from './components/pagination-btn/pagination-b
 import { ProjectsComponent } from './view/projects/projects.component';
 import { DetailsComponent as ProjectDetails } from './view/projects/details/details.component';
 import { CreatOrderComponent } from './view/cart/creat-order/creat-order.component';
+import { PageLandingComponent } from './components/page-landing/page-landing.component';
+import { AboutComponent } from './view/about/about.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { CreatOrderComponent } from './view/cart/creat-order/creat-order.compone
     ProjectsComponent,
     ProjectDetails,
     CreatOrderComponent,
+    PageLandingComponent,
+    AboutComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

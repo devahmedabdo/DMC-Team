@@ -1,1 +1,23 @@
-<p>projects works!</p>
+<app-page-landing page="projects"></app-page-landing>
+<div class="container">
+  <h2 class="title" reveal="b" data-text="مشاريعنا" (click)="get()">مشاريعنا</h2>
+  <p textEffect reveal="b" class="text-xl text-neutral-700 font-medium text-center mx-auto max-w-4xl">
+    مشروع قليل منك حياة لهم والذي يستهدف الطبقه الأكثر إحتياجا من المجتمع وإمدادهم بجزء بسيط جدا بجزء من إحتياجاتهم
+    والذي قد
+    يساهم في جعل يومهم أفضل
+  </p>
+</div>
+<div class="my-20 flex justify-center gap-10 flex-wrap">
+  <div reveal="b" class="shadowBox cursor-pointer after:bg-gradient-to-tr after:from-cyan-700 after:to-cyan-950"
+    *ngFor="let item of data" routerLink="/projects/{{item._id}}">
+    <div
+      class="flex flex-col justify-center gap-2 relative z-10 bg-neutral-100 rounded-3xl py-10 hover:border-cyan-700 duration-300 border border-transparent">
+      <span class="bg-cyan-700  rounded-b-full w-1/2 mx-auto block h-6 top-0 left-1/2 -translate-x-1/2 absolute"></span>
+      <span class="font-bold text-cyan-700 text-xl line-clamp-1">{{item.title}}</span>
+      <span class="font-bold text-neutral-500 line-clamp-1">{{item.address}}</span>
+      <span>{{item.date | date:"dd-MM-YYYY"}}</span>
+    </div>
+  </div>
+</div>
+<app-pagination-btn class="my-10 block" *ngIf="pagination.page * pagination.limit < pagination.total"
+  [loading]="loading" [pagination]="pagination" (pageChange)="get($event)"></app-pagination-btn>

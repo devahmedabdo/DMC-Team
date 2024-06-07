@@ -29,7 +29,7 @@ export class HomeComponent {
       icon: 'fever',
     },
     {
-      name: 'مشاريع رعاية',
+      name: 'مشاريع خيرية',
       number: 12,
       icon: 'suitcase',
     },

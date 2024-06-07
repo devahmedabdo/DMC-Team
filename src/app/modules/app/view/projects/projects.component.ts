@@ -1,10 +1,35 @@
 import { Component } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss']
+  styleUrls: ['./projects.component.scss'],
 })
 export class ProjectsComponent {
-
+  constructor(private api: ApiService) {
+    this.get();
+  }
+  data: any[] = [];
+  error: any;
+  pagination: any = {
+    page: 1,
+    limit: 3,
+    total: 0,
+  };
+  loading: boolean = false;
+  get(page: number = 1) {
+    this.loading = true;
+    this.error = false;
+    this.api.get('projects?page=' + page).subscribe({
+      next: (data: any) => {
+        this.loading = false;
+        this.data = [...this.data, ...data.items];
+        this.pagination = data.pagination;
+      },
+      error: (err: any) => {
+        this.error = err;
+      },
+    });
+  }
 }

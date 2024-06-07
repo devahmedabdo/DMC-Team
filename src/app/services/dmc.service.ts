@@ -83,4 +83,25 @@ export class DmcService {
       console.log(e);
     }
   }
+  check(arr: any[] = [], id: any): boolean {
+    if (arr.length) {
+      let isExist = arr.find((ele) => ele._id == id);
+      return Boolean(isExist);
+    }
+    return false;
+  }
+  storeProduct(product: any, position: string, qty?: number) {
+    if (qty) product.quantity = qty;
+    this.appendItem(position, product);
+    this.stored[position].next();
+    this.message('تم اضافة المنتج', 'info', undefined, 'info');
+  }
+  removeProduct(id: any, position: string) {
+    let products: any[] = this.getItem(position) || [];
+    let productIndex = products.findIndex((ele) => ele._id == id);
+    products.splice(productIndex, 1);
+    this.setItem(position, products);
+    this.stored[position].next();
+    this.message('تم ازالة المنتج', 'info', undefined, 'delete');
+  }
 }
