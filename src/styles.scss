@@ -434,34 +434,34 @@
 }
 
 // scroll animation
-// .rReveal,
-// .lReveal,
-// .tReveal,
-// .bReveal {
-//   opacity: 0;
-//   transition: var(--long-duration, 0.5s);
-// }
+.rReveal,
+.lReveal,
+.tReveal,
+.bReveal {
+  opacity: 0;
+  transition: var(--long-duration, 0.5s);
+}
 
-// .rReveal {
-//   transform: translateX(70px) translateY(0px);
-// }
+.rReveal {
+  transform: translateX(70px) translateY(0px);
+}
 
-// .lReveal {
-//   transform: translateX(-70px) translateY(0px);
-// }
+.lReveal {
+  transform: translateX(-70px) translateY(0px);
+}
 
-// .tReveal {
-//   transform: translateY(-70px) translateX(0px);
-// }
+.tReveal {
+  transform: translateY(-70px) translateX(0px);
+}
 
-// .bReveal {
-//   transform: translateY(70px) translateX(0px);
-// }
+.bReveal {
+  transform: translateY(70px) translateX(0px);
+}
 
-// .reveal {
-//   transform: translateX(0px) translateY(0px);
-//   opacity: 1;
-// }
+.reveal {
+  transform: translateX(0px) translateY(0px);
+  opacity: 1;
+}
 .shadowBox {
   position: relative;
   z-index: 0;
