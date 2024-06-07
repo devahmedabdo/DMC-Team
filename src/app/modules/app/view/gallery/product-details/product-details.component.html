@@ -33,7 +33,7 @@
         class="px-3 py-2 rounded-lg bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white  flex gap-2 items-center duration-300"
         (click)="product?.liked ? removeProduct(product._id,'liked' ) : storeProduct(product,'liked' )">
         <fa-icon [icon]="'heart'"></fa-icon>
-        {{product?.cart ? 'ازالة من المفضلة':'اضافة للمفضلة'}}
+        {{product?.liked ? 'ازالة من المفضلة':'اضافة للمفضلة'}}
       </button>
 
     </div>

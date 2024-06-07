@@ -20,10 +20,9 @@ export class CartComponent {
       name: 'السلة',
     },
   ];
-  removeProduct(id: any, position: string) {
-    let productIndex = this.products.findIndex((ele) => ele._id == id);
-    this.products.splice(productIndex, 1);
-    this.dmc.setItem(position, this.products);
+  removeProduct(index: any) {
+    this.products.splice(+index, 1);
+    this.dmc.setItem('cart', this.products);
     this.dmc.stored.cart.next();
   }
   updateProduct(product: any) {

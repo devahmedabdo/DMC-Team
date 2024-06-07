@@ -5,12 +5,6 @@
 }
 .landing {
   > div {
-    // min-height: calc(100vh - 57px);
-    // h1 {
-    //   background: -webkit-linear-gradient(292deg, #eee, #333);
-    //   -webkit-background-clip: text;
-    //   -webkit-text-fill-color: transparent;
-    // }
     .landingImg {
       user-select: none;
       img:not(.landin-img) {
@@ -79,35 +73,8 @@ svg {
   }
 }
 
-// .doc-box {
-//   background: url(../../../../../assets/main/doc-bg.jpg) no-repeat center center /
-//       cover,
-//     #fff;
-//   background-attachment: fixed;
-//   clip-path: polygon(0% 10%, 50% 0%, 100% 10%, 100% 100%, 0% 100%);
-
-//   &::after {
-//     content: "";
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     background-color: rgba(
-//       0,
-//       0,
-//       0,
-//       0.7
-//     ); /* Adjust the alpha value to control the darkness */
-//   }
-// }
-.asd {
-  background: url(../../../../../assets/main/sec-bg.png) no-repeat;
-}
 .donationBox {
-  transition: 0.3s;
-  background-color: white;
-  &::after {
+  &::before {
     @apply bg-cyan-500;
     content: "";
     position: absolute;
@@ -119,11 +86,11 @@ svg {
     opacity: 0.4;
     transition: 0.3s;
     border-radius: 12px;
-    z-index: -1;
+    z-index: -10;
   }
   &:hover {
     box-shadow: -12px 12px 20px #00000017;
-    &::after {
+    &::before {
       transform: scale(1.1);
       opacity: 1;
     }

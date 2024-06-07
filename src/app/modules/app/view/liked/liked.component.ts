@@ -9,7 +9,9 @@ import { DmcService } from 'src/app/services/dmc.service';
 export class LikedComponent {
   products: any[] = [];
   constructor(private dmc: DmcService) {
-    this.products = dmc.getItem('cart');
+    dmc.stored.liked.subscribe(() => {
+      this.products = dmc.getItem('liked') || [];
+    });
   }
   navigator: any[] = [
     {
