@@ -6,32 +6,35 @@
     بالمجان من صيدلية الفريق واجراء تحاليل طبية واشعة باسعار مخفضة
   </p>
 </div>
-<div class="my-20 flex justify-center gap-10 flex-wrap">
-  <div reveal="b" class="shadowBox cursor-pointer after:bg-gradient-to-tr after:from-cyan-700 after:to-cyan-950"
-    *ngFor="let item of data" routerLink="/convoys/{{item._id}}">
-    <div
-      class="relative z-10 bg-neutral-100 rounded-3xl py-10 hover:border-cyan-700 duration-300 border border-transparent">
+<ng-cntainer>
+  <div class="my-20 flex justify-center gap-10 flex-wrap">
+    <div reveal="b" class="shadowBox cursor-pointer after:bg-gradient-to-tr after:from-cyan-700 after:to-cyan-950"
+      *ngFor="let item of data" routerLink="/convoys/{{item._id}}">
       <div
-        class="flex gap-2 justify-center w-3/4 mb-4 py-10 px-4 text-white bg-gradient-to-tr from-cyan-700 to-cyan-950">
-        <svg class="rotate-180" viewBox="0 0 24 24" width="30px" fill="none" xmlns="http://www.w3.org/2000/svg"
-          stroke="#ffffff">
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            <path d="M11 19L17 12L11 5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round">
-            </path>
-            <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="#ffffff" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round"></path>
-          </g>
-        </svg>
-        <span class="text-3xl font-bold">
-          {{item.description.order < 10 ? '0' +item.description.order : item.description.order }} </span>
+        class="relative z-10 bg-neutral-100 rounded-3xl py-10 hover:border-cyan-700 duration-300 border border-transparent">
+        <div
+          class="flex gap-2 justify-center w-3/4 mb-4 py-10 px-4 text-white bg-gradient-to-tr from-cyan-700 to-cyan-950">
+          <svg class="rotate-180" viewBox="0 0 24 24" width="30px" fill="none" xmlns="http://www.w3.org/2000/svg"
+            stroke="#ffffff">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="M11 19L17 12L11 5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round">
+              </path>
+              <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="#ffffff" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+          </svg>
+          <span class="text-3xl font-bold">
+            {{item.description.order < 10 ? '0' +item.description.order : item.description.order }} </span>
+        </div>
+        <span class="font-bold text-cyan-700 text-xl">{{item.description.address}}</span><br>
+        <span>{{item.description.date | date:"dd-MM-YYYY"}}</span>
       </div>
-      <span class="font-bold text-cyan-700 text-xl">{{item.description.address}}</span><br>
-      <span>{{item.description.date | date:"dd-MM-YYYY"}}</span>
     </div>
   </div>
-</div>
-<app-pagination-btn class="my-10 block" *ngIf="pagination.page * pagination.limit < pagination.total"
-  [loading]="loading" [pagination]="pagination" (pageChange)="get($event)"></app-pagination-btn>
+  <app-pagination-btn class="my-10 block" *ngIf="pagination.page * pagination.limit < pagination.total"
+    [loading]="loading" [pagination]="pagination" (pageChange)="get($event)"></app-pagination-btn>
+</ng-cntainer>
+<app-loading *ngIf="loading" heigth="h-24"></app-loading>

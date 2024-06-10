@@ -1,8 +1,10 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 import { ToastrService } from 'ngx-toastr';
-
+type Data = {
+  [key: string]: BehaviorSubject<any>;
+};
 @Injectable({
   providedIn: 'root',
 })
@@ -13,6 +15,8 @@ export class DmcService {
     cart: new BehaviorSubject(null),
     liked: new BehaviorSubject(null),
   };
+
+  data: Data = {};
 
   setItem(key: string, value: any) {
     try {
@@ -66,6 +70,10 @@ export class DmcService {
   getKey(key: string): string {
     return `DMC.${key.split('').reverse().join('')}`;
   }
+  getCookieName(key: string): string {
+    let newName = key.replaceAll('=', 'equalChar');
+    return `DMC.${newName.split('').reverse().join('')}`;
+  }
   messageSounds: any = {
     info: new Audio('assets/sounds/done.mp3'),
     delete: new Audio('assets/sounds/delete.mp3'),
@@ -103,5 +111,61 @@ export class DmcService {
     this.setItem(position, products);
     this.stored[position].next();
     this.message('تم ازالة المنتج', 'info', undefined, 'delete');
+  }
+
+  // Function to set a session cookie
+  setSessionCookie(name: any, value: any) {
+    try {
+      const encryptedValue = encodeURIComponent(
+        CryptoJS.AES.encrypt(JSON.stringify(value), this.encryptKey).toString()
+      );
+      document.cookie = `${this.getCookieName(name)}=${encryptedValue}; path=/`;
+      console.log(`Cookie set: ${this.getCookieName(name)}`);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  //   to get a cookie
+  getCookie(name: any) {
+    try {
+      const _key = this.getCookieName(name);
+      const nameEQ = _key + '=';
+      const ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) {
+          const decryptedData = CryptoJS.AES.decrypt(
+            decodeURIComponent(c.substring(nameEQ.length, c.length)),
+            this.encryptKey
+          ).toString(CryptoJS.enc.Utf8);
+          const _value: any = JSON.parse(decryptedData);
+          return _value;
+        }
+      }
+      return null;
+    } catch (reason) {
+      console.log(reason);
+      return null;
+    }
+  }
+
+  //   to delete a cookie
+  deleteCookie(name: any) {
+    document.cookie = `${this.getCookieName(
+      name
+    )}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    console.log(`Cookie deleted: ${this.getCookieName(name)}`);
+  }
+  clearAllCookies() {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf('=');
+      const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      console.log(`Cleared cookie: ${name}`);
+    }
   }
 }

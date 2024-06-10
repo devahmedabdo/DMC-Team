@@ -8,69 +8,8 @@ import { DmcService } from 'src/app/services/dmc.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private api: ApiService, private dmc: DmcService) {}
-  text: any = '';
-  landing: any[] = [{}];
-
-  numbers: any[] = [
-    {
-      name: 'قوافل طبية',
-      number: 18,
-      icon: 'ambulance',
-    },
-    {
-      name: 'مقالات طبية',
-      number: 20,
-      icon: 'document',
-    },
-    {
-      name: 'حالات رعاية',
-      number: 43,
-      icon: 'fever',
-    },
-    {
-      name: 'مشاريع خيرية',
-      number: 12,
-      icon: 'suitcase',
-    },
-  ];
-  donations: any[] = [
-    {
-      method: 'فودافون كاش',
-      project: 'الرعايه',
-      value: '01233242332',
-    },
-
-    {
-      method: 'فودافون كاش',
-      project: 'القوافل',
-      value: '01546765761',
-    },
-
-    {
-      method: 'انستاباي',
-      project: 'الرعايه',
-      value: '01567563434435',
-    },
-
-    {
-      method: 'فودافون كاش',
-      project: 'السونار',
-      value: '01231231231',
-    },
-
-    {
-      method: 'فودافون كاش',
-      project: 'السونار',
-      value: '01231231231',
-    },
-
-    {
-      method: 'الرعاية الصحية',
-      project: 'الادوات المدرسية',
-      value: '01231231231',
-    },
-  ];
+  numbers: any[] = [];
+  donations: any[] = [];
   services: any[] = [
     {
       icon: 'testTubes',
@@ -83,6 +22,7 @@ export class HomeComponent {
       description:
         'القيام بقوافل طبية في الاماكن الاكثر احتياجا من قري الدلنجات بالتعاون مع نخبة من اطباء الدلنجات ، حيث يتم صرف العلاج بالمجان من صيدلية الفريق واجراء تحاليل طبية واشعة باسعار مخفضة',
       title: 'القوافل طبية',
+      link: '/convoys',
     },
     {
       icon: 'peoplesTalk',
@@ -101,10 +41,29 @@ export class HomeComponent {
       description:
         'مشروع قليل منك حياة لهم والذي يستهدف الطبقه الأكثر إحتياجا من المجتمع وإمدادهم بجزء بسيط جدا بجزء من إحتياجاتهم والذي قد يساهم في جعل يومهم أفضل',
       title: 'قليل منك حياة',
+      link: '/projects',
     },
   ];
+  maxNumber: number = 0;
   copy(text: any) {
     this.dmc.message('تم النسخ', 'info', undefined, 'info');
     window.navigator.clipboard.writeText(text);
+  }
+
+  constructor(private api: ApiService, private dmc: DmcService) {
+    this.get();
+  }
+
+  get() {
+    this.api.get('config').subscribe({
+      next: (data: any) => {
+        this.donations = data.config.donations;
+        this.numbers = data.numbers;
+        this.maxNumber = Math.max(
+          ...data.numbers.map((num: any) => +num.number)
+        );
+      },
+      error: (error: any) => {},
+    });
   }
 }

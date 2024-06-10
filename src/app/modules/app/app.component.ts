@@ -11,13 +11,17 @@ import { DmcService } from 'src/app/services/dmc.service';
 export class AppComponent {
   menu: boolean = false;
   activate() {
-    scrollTo(0, 0);
+    scrollTo({
+      top: 0,
+      behavior: 'instant',
+    });
     this.menu = false;
   }
+  loading: boolean = true;
   get() {
-    this.api.get('config/').subscribe({
+    this.api.get('config').subscribe({
       next: (data: any) => {
-        console.log(data);
+        this.loading = false;
       },
     });
   }

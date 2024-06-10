@@ -16,7 +16,7 @@ export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
   ngAfterViewInit(): void {
     setTimeout(() => {
-      console.log(this.elementRef.nativeElement.getBoundingClientRect().height);
+      // console.log(this.elementRef.nativeElement.getBoundingClientRect().height);
       this.renderer.addClass(this.elementRef.nativeElement, 'opacity-0');
       // this.elementRef.nativeElement.style.height =
       //   this.elementRef.nativeElement.getBoundingClientRect().height + 'px';

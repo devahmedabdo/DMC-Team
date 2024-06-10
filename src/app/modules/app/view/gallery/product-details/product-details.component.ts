@@ -16,9 +16,12 @@ export class ProductDetailsComponent {
     },
   ];
   get() {
+    this.loading = true;
     this.api.get('product/' + this.id).subscribe({
       next: (data: any) => {
-        this.product = data;
+        this.loading = false;
+        this.product = data.product;
+        this.more = data.more;
         this.product.cart = this.dmc.check(
           this.dmc.getItem('cart') || [],
           this.product._id
@@ -32,7 +35,9 @@ export class ProductDetailsComponent {
     });
   }
   id: any;
+  loading: boolean = true;
   product: any;
+  more: any[] = [];
   storeProduct(product: any, position: string) {
     this.dmc.storeProduct(product, position, 1);
     this.product[position] = true;
@@ -48,6 +53,13 @@ export class ProductDetailsComponent {
     private dmc: DmcService
   ) {
     this.id = this.activatedRoute.snapshot.params['id'];
-    this.get();
+    activatedRoute.params.subscribe((param) => {
+      this.id = param['id'];
+      this.get();
+      scrollTo({
+        top: 0,
+        behavior: 'instant',
+      });
+    });
   }
 }

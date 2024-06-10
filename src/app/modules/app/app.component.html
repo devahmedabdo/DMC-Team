@@ -1,4 +1,8 @@
-<app-header [(activeMenu)]="menu"></app-header>
-<router-outlet (activate)="activate()"></router-outlet>
-<app-to-top></app-to-top>
-<app-footer></app-footer>
+<ng-container *ngIf="!loading">
+  <app-header [(activeMenu)]="menu"></app-header>
+  <router-outlet (activate)="activate()"></router-outlet>
+  <app-to-top></app-to-top>
+  <app-footer></app-footer>
+</ng-container>
+
+<app-loading *ngIf="loading"></app-loading>

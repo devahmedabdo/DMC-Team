@@ -8,10 +8,12 @@ export class IncrementDirective {
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
   @Input() appIncrement: any = 0;
-  @Input() max: any = 0;
-  @Input() speed: number = 50;
+  @Input() max: any = 1;
+  @Input() speed: number = 20;
+
   ngOnInit() {
     window.addEventListener('scroll', this.checkScrollPosition.bind(this));
+    this.checkScrollPosition();
   }
 
   ngOnDestroy() {
@@ -28,7 +30,7 @@ export class IncrementDirective {
 
     if (isInView && !this.started) {
       this.started = true;
-      let index = 1;
+      let index = this.appIncrement > 300 ? this.appIncrement - 200 : 0;
       this.intervalId = setInterval(() => {
         if (index <= this.appIncrement) {
           this.setNumber(index);
@@ -36,7 +38,7 @@ export class IncrementDirective {
         } else {
           clearInterval(this.intervalId);
         }
-      }, this.speed * (this.max / this.appIncrement));
+      }, (this.speed * (this.max > 300 ? 200 : this.max)) / (this.appIncrement > 300 ? 200 : this.appIncrement));
     }
   }
 

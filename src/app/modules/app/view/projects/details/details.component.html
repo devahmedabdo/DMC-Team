@@ -1,39 +1,60 @@
-<!-- <app-navigator [routes]="navigator" [title]="project?.title"></app-navigator> -->
-<app-page-landing [page]="project?.type"></app-page-landing>
-<div class="my-5">
-  <div class="text-center my-10">
-    <h2 class="text-2xl font-bold mb-2">مشروع {{project?.title}}</h2>
-    <span class="text-xl">{{project?.date | date:'dd-MM-YYYY'}}</span>
+<ng-container *ngIf="!loading">
+  <app-page-landing [page]="project?.type"></app-page-landing>
+  <div class="my-5">
+    <div class="text-center my-10">
+      <h2 class="text-2xl font-bold mb-2">مشروع {{project?.title}}</h2>
+      <span class="text-xl">{{project?.date | date:'dd-MM-YYYY'}}</span>
+    </div>
+    <div class="flex flex-wrap  mt-4 lg:justify-start justify-center gap-4">
+      <ng-container *ngFor="let number of project?.numbers;">
+        <div *ngIf="number.count" reveal="b"
+          class="text-center p-4 border border-dotted rounded-xl basis-full sm:basis-1/3 lg:basis-1/4 md:basis-1/3 flex-grow">
+          <span appIncrement="{{number.count}}" [max]="maxNumber"
+            class="font-black text-3xl font-leigo w-20 text-cyan-500">0</span>
+          <span class="block mt-2 text-lg font-medium">{{number.label}}</span>
+        </div>
+      </ng-container>
+    </div>
   </div>
-  <div class="flex flex-wrap  mt-4 lg:justify-start justify-center gap-4">
-    <ng-container *ngFor="let number of project.numbers;">
-      <div *ngIf="number.count" reveal="b"
-        class="text-center p-4 border border-dotted rounded-xl basis-full sm:basis-1/3 lg:basis-1/4 md:basis-1/3 flex-grow">
-        <span appIncrement="{{number.count}}" [max]="55"
-          class="font-black text-3xl font-leigo w-20 text-cyan-500">{{number.count}}</span>
-        <span class="block mt-2 text-lg font-medium">{{number.label}}</span>
-      </div>
-    </ng-container>
+  <h3 class="title mt-20" data-text="صور المشروع">
+    الصور
+  </h3>
+  <div class="my-10 mx-auto max-w-4xl px-4">
+    <swiper-container class="mySwiper rounded-lg overflow-hidden w-full" thumbs-swiper=".mySwiper2" space-between="10"
+      zoom="true">
+      <swiper-slide *ngFor="let photo of project?.photos;let i = index">
+        <div class="swiper-zoom-container  aspect-video">
+          <img class="rounded-lg object-cover w-full h-full" src="{{photo}}" />
+        </div>
+      </swiper-slide>
+    </swiper-container>
+    <swiper-container class="mySwiper2 mt-4 w-full" space-between="10" slides-per-view="4" free-mode="true"
+      watch-slides-progress="true">
+      <swiper-slide *ngFor="let photo of project?.photos;let i = index">
+        <img class="rounded-lg aspect-video object-cover" src="{{photo}}" />
+      </swiper-slide>
+    </swiper-container>
   </div>
-</div>
 
-<h3 class="title mt-20" data-text="صور المشروع">
-  الصور
-</h3>
-
-<div class="my-10 mx-auto max-w-4xl px-4">
-  <swiper-container class="mySwiper rounded-lg overflow-hidden w-full" thumbs-swiper=".mySwiper2" space-between="10"
-    zoom="true">
-    <swiper-slide *ngFor="let photo of project?.photos;let i = index">
-      <div class="swiper-zoom-container  aspect-video">
-        <img class="rounded-lg object-cover w-full h-full" src="{{photo}}" />
+  <div class="mt-20 container pb-20" *ngIf="more.length">
+    <h2 class="title" data-text="المزيد من المشاريع">
+      المزيد
+    </h2>
+    <div class="my-20 flex justify-center gap-10 flex-wrap">
+      <div reveal="b" class="shadowBox cursor-pointer after:bg-gradient-to-tr after:from-cyan-700 after:to-cyan-950"
+        *ngFor="let item of more" routerLink="/projects/{{item._id}}">
+        <div
+          class="flex flex-col justify-center gap-2 relative z-10 bg-neutral-100 rounded-3xl py-10 hover:border-cyan-700 duration-300 border border-transparent">
+          <span
+            class="bg-cyan-700  rounded-b-full w-1/2 mx-auto block h-6 top-0 left-1/2 -translate-x-1/2 absolute"></span>
+          <span class="font-bold text-cyan-700 text-xl line-clamp-1">{{item.title}}</span>
+          <span class="font-bold text-neutral-500 line-clamp-1">{{item.address}}</span>
+          <span>{{item.date | date:"dd-MM-YYYY"}}</span>
+        </div>
       </div>
-    </swiper-slide>
-  </swiper-container>
-  <swiper-container class="mySwiper2 mt-4 w-full" space-between="10" slides-per-view="4" free-mode="true"
-    watch-slides-progress="true">
-    <swiper-slide *ngFor="let photo of project?.photos;let i = index">
-      <img class="rounded-lg aspect-video object-cover" src="{{photo}}" />
-    </swiper-slide>
-  </swiper-container>
-</div>
+    </div>
+  </div>
+
+</ng-container>
+
+<app-loading *ngIf="loading"> </app-loading>

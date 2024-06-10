@@ -1,7 +1,8 @@
 <div class="product duration-300 shadow-md hover:shadow-xl p-3 bg-white max-w-md mx-auto relative rounded-xl">
   <div *ngIf="details.disscount > 0"
     class="sale  text-sm z-10 text-center absolute top-[-10px] right-7 flex flex-col bg-cyan-400 text-white leading-4 font-bold w-10">
-    <span class="pt-2 bg-cyan-400">{{((details.price / details.disscount)*100).toFixed(0)}}%</span>
+    <span class="pt-2 bg-cyan-400">{{(((details.disscount - details.price) / details.disscount ) * 100
+      ).toFixed(0)}}%</span>
     <span class="text-xs pb-2 bg-cyan-400">OFF</span>
   </div>
   <div class="product-images relative overflow-hidden aspect-square rounded-xl grayscale-[50%] hover:grayscale-0">

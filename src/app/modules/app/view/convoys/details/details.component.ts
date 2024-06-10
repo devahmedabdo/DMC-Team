@@ -11,12 +11,17 @@ export class DetailsComponent {
   get() {
     this.api.get('convoy/' + this.id).subscribe({
       next: (data: any) => {
+        this.loading.convoys = false;
         data.convoy?.numbers.forEach((number: any) => {
           number.collabs = data.convoy?.collaborators.filter((coll: any) => {
             return coll.specialization == number?.specialization._id;
           });
         });
+        this.maxNumber = Math.max(
+          ...data.convoy.numbers.map((num: any) => +num.total)
+        );
         this.convoy = data.convoy;
+        this.pagination = data.pagination;
         this.members = data.members;
         console.log(data);
       },
@@ -44,23 +49,26 @@ export class DetailsComponent {
     total: 0,
   };
   error: any;
+  maxNumber: number = 0;
   loading: any = {
-    convoy: false,
+    convoys: true,
     members: false,
   };
   getMember(page: number = 1) {
     this.loading.members = true;
     this.error = false;
-    this.api.get('activeConvoys?page=' + page).subscribe({
-      next: (data: any) => {
-        this.loading.members = true;
-        this.members = [...this.members, ...data.items];
-        this.pagination = data.pagination;
-      },
-      error: (err: any) => {
-        this.loading.members = true;
-        this.error = err;
-      },
-    });
+    this.api
+      .get('convoy/members-card/' + this.convoy._id + '?page=' + page)
+      .subscribe({
+        next: (data: any) => {
+          this.loading.members = true;
+          this.members = [...this.members, ...data.items];
+          this.pagination = data.pagination;
+        },
+        error: (err: any) => {
+          this.loading.members = true;
+          this.error = err;
+        },
+      });
   }
 }
