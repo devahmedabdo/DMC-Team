@@ -34,12 +34,7 @@
         <span class="font-bold bg-cyan-500 text-white rounded-b-full w-fit py-2 px-10 mx-auto text-lg line-clamp-1">قسم
           {{spe.specialization.name}}</span>
         <div class="p-2 h-36 overflow-auto flex flex-col gap-1 text-lg font-medium my-5 text-center">
-          <span> د.الصياد جمال </span>
-          <span> د.محمود جبريل </span>
-          <span> د.محمود جبريل </span>
-          <span> د.محمد سلامة </span>
-          <span> د.باسم شلبى </span>
-          <!-- <span *ngFor="let doc of spe.collabs">{{doc.name}} </span> -->
+          <span *ngFor="let doc of spe.collabs">د.{{doc.name}} </span>
         </div>
         <span class="bg-cyan-500  rounded-t-full w-1/2 mx-auto block h-6"></span>
       </div>
