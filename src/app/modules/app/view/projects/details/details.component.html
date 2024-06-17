@@ -16,10 +16,10 @@
       </ng-container>
     </div>
   </div>
-  <h3 class="title mt-20" data-text="صور المشروع">
+  <h3 class="title mt-20" reveal="b" data-text="صور المشروع">
     الصور
   </h3>
-  <div class="my-10 mx-auto max-w-4xl px-4">
+  <div class="my-10 mx-auto max-w-4xl px-4" reveal="b">
     <swiper-container class="mySwiper rounded-lg overflow-hidden w-full" thumbs-swiper=".mySwiper2" space-between="10"
       zoom="true">
       <swiper-slide *ngFor="let photo of project?.photos;let i = index">

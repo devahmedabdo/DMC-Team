@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DmcService } from 'src/app/services/dmc.service';
 
 @Component({
@@ -6,13 +7,9 @@ import { DmcService } from 'src/app/services/dmc.service';
   templateUrl: './liked.component.html',
   styleUrls: ['./liked.component.scss'],
 })
-export class LikedComponent {
+export class LikedComponent implements OnDestroy {
   products: any[] = [];
-  constructor(private dmc: DmcService) {
-    dmc.stored.liked.subscribe(() => {
-      this.products = dmc.getItem('liked') || [];
-    });
-  }
+  subscriptions: Subscription[] = [];
   navigator: any[] = [
     {
       name: 'الجاليري',
@@ -22,4 +19,16 @@ export class LikedComponent {
       name: 'المفضلة',
     },
   ];
+  constructor(private dmc: DmcService) {
+    this.subscriptions.push(
+      dmc.stored.liked.subscribe(() => {
+        this.products = dmc.getItem('liked') || [];
+      })
+    );
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((item) => {
+      item.unsubscribe();
+    });
+  }
 }

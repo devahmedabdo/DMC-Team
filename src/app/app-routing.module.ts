@@ -6,14 +6,22 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppComponent } from './modules/app/app.component';
 import { AppModule } from './modules/app/app.module';
+import { AuthGuard } from './services/gaurd/auth-guard';
 
 const routes: Routes = [
   {
     path: 'login',
+    canActivate: [AuthGuard],
     component: LoginComponent,
   },
   {
     path: 'signup',
+    canActivate: [AuthGuard],
+    component: LoginComponent,
+  },
+  {
+    path: 'reset-password/:token',
+    canActivate: [AuthGuard],
     component: LoginComponent,
   },
   {

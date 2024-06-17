@@ -2,14 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-}
-@layer utilities {
-}
-@layer components {
-}
-
-@import "~@ng-select/ng-select/themes/default.theme.css";
+// @import "~@ng-select/ng-select/themes/default.theme.css";
 @font-face {
   font-family: "ElMessiri";
   src: url("assets/fonts/ElMessiri-Regular.ttf");
@@ -82,7 +75,7 @@
         @apply bg-transparent w-2 h-1.5;
       }
       &::-webkit-scrollbar-thumb {
-        @apply bg-cyan-500 rounded-lg hover:bg-cyan-300 active:bg-cyan-800 duration-300;
+        @apply bg-neutral-300 rounded-lg hover:bg-cyan-300 active:bg-cyan-800 duration-300;
       }
     }
   }
@@ -137,7 +130,7 @@
     }
   }
   .btn {
-    @apply outline-0 disabled:grayscale border hover:bg-neutral-50 active:bg-neutral-100 border-neutral-200 bg-white flex justify-center items-center gap-4 duration-300 rounded-xl;
+    @apply outline-0 disabled:grayscale border hover:bg-neutral-50 active:bg-neutral-100 border-neutral-200 bg-white flex justify-center items-center gap-2 duration-300 rounded-xl;
     img {
       width: 24px;
     }
@@ -281,9 +274,10 @@
   .formInput {
     > div {
       @apply flex items-center relative;
-      input {
+      input,
+      select {
         outline: none !important;
-        @apply accent-cyan-400 w-full border border-transparent font-bold bg-zinc-50 px-5 py-4 pt-6 rounded-2xl duration-300;
+        @apply accent-cyan-400 w-full border border-transparent font-bold bg-neutral-100 px-5 py-4 pt-6 rounded-2xl duration-300;
         &:focus {
           @apply bg-transparent border-cyan-400;
           & + label {
@@ -317,7 +311,7 @@
       }
     }
     > p {
-      @apply px-4 py-1 text-xs text-red-500 h-6 overflow-hidden;
+      @apply px-4 py-1 text-xs text-red-500;
       // span {
       //   @apply translate-y-6 opacity-0 duration-300  block;
       // }
@@ -389,7 +383,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    input[type="checkbox"] {
+    input {
       all: unset;
       display: inline-block;
       width: 16px;
@@ -397,7 +391,7 @@
       border: 1px solid #a3a3a3;
       border-radius: 4px;
     }
-    input[type="checkbox"]:checked {
+    input:checked {
       border-color: transparent;
       @apply bg-cyan-500;
     }
@@ -510,4 +504,7 @@
       inset 14px -26px 29px #fafafa, inset -100px 404px 13px #00000024;
     border: solid #fafafa;
   }
+}
+.imgCropper img {
+  margin: auto;
 }

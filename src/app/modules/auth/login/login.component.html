@@ -1,76 +1,176 @@
 <div class="login">
   <div class="container relative flex flex-wrap-reverse gap-12 items-center justify-center py-14">
-    <div *ngIf="formType == 'signup'" [style]="'--w:'+signupStep / 2 * 100+'%'"
+    <div *ngIf="formType == 'signup'&&acceptSignup" [style]="'--w:'+signupStep / 3 * 100+'%'"
       class="signup-progress h-1 bg-zinc-100 rounded-full justify-between absolute top-8 max-w-3xl">
       <div
-        [ngClass]="{active:signupStep >= 0 ,error:signupErrors?.firstName||signupErrors?.lastName||signupErrors?.email||signupErrors?.password}"
+        [ngClass]="{active:signupStep >= 0 ,error:form.errors?.['name.first.ar'] || form.errors?.['name.first.en'] || form.errors?.['name.last.en']|| form.errors?.['name.last.ar'] ||form.errors?.email||form.errors?.password}"
         (click)="signupStep = 0">
         1
       </div>
-      <div
-        [ngClass]="{active:signupStep >= 1 ,error:signupErrors?.phone||signupErrors?.country||signupErrors?.city||signupErrors?.street||signupErrors?.governate}"
-        (click)="signupStep = 1">
+      <div [ngClass]="{active:signupStep >= 1 ,error:form.errors?.committee}" (click)="signupStep = 1">
         2
       </div>
-      <div [ngClass]="{active:signupStep >= 2 ,error:signupErrors?.gender||signupErrors?.accountType}"
-        (click)="signupStep = 2">
+      <div [ngClass]="{active:signupStep >= 2 ,error:form.errors?.joinDate}" (click)="signupStep = 2">
         3
       </div>
+      <div [ngClass]="{active:signupStep >= 3 ,error:form.errors?.image}" (click)="signupStep = 3">
+        4
+      </div>
     </div>
-    <div class="overflow-hidden" *ngIf="formType == 'login'">
-      <form [formGroup]="loginForm" (change)="saveData(loginForm.value)" (ngSubmit)="login(loginForm.value)">
-        <div class="flex flex-col gap-4">
-          <div class="px-4 my-5 capitalize font-bold text-zinc-600">
-            <h2 class="text-4xl">تسجيل الدخول</h2>
-          </div>
-          <div class="formInput"
-            [ngClass]="{active:loginForm.controls.email.valid,error:loginForm.controls.email.errors?.['required']&& loginForm.controls.email.touched}">
-            <div>
-              <input #email id="loginEmail" (focus)="changeFormStatus(false)" [autocomplete]="'off'"
-                formControlName="email" type="email">
-              <label [ngClass]="{active:loginForm.controls.email.value != ''}" for="loginEmail">البريد
-                الالكترونى</label>
-              <fa-icon [icon]="emailIcon"></fa-icon>
+    <div class="overflow-hidden" *ngIf="formType !== 'signup'">
+      <ng-container *ngIf="status == 'login'">
+        <form [formGroup]="loginForm" (change)="saveData(loginForm.value)" (ngSubmit)="login(loginForm.value)">
+          <div class="flex flex-col gap-4">
+            <div class="px-4 my-5 capitalize font-bold text-zinc-600">
+              <h2 class="text-4xl">تسجيل الدخول</h2>
+              <h6 class="text-zinc-400 font-medium">ليس لديك حساب <button
+                  class="duration-300 text-cyan-400 font-semibold" type="button" routerLink="/signup">تسجيل
+                  جديد</button>
+              </h6>
             </div>
-            <p *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
-              <span *ngIf="loginForm.controls.email.errors?.['required']">* هذا الحقل مطلوب</span>
-              <span *ngIf="loginForm.controls.email.errors?.['email']">*بريد الكترونى غير صالح</span>
-            </p>
-          </div>
-          <div class="formInput"
-            [ngClass]="{active:loginForm.controls.password.valid,error:loginForm.controls.password.errors?.['required'] && loginForm.controls.password.touched}">
-            <div>
-              <input id="loginPassword" autocomplete="false" #password (focus)="changeFormStatus(false)"
-                formControlName="password" [type]="type">
-              <label [ngClass]="{active:loginForm.controls.password.value != ''}" for="loginPassword">
-                كلمة المرور</label>
-              <fa-icon [icon]="password.type == 'text'? eay : eayslash"
-                (click)="password.type == 'text' ? password.type = 'password' : password.type = 'text'"></fa-icon>
-              <!-- <fa-icon *ngIf="type =='text'" [icon]="eayslash" (click)="this.type = 'password'"></fa-icon> -->
+            <div class="formInput"
+              [ngClass]="{active:loginForm.controls.email.valid,error:loginForm.controls.email.errors?.['required']&& loginForm.controls.email.touched}">
+              <div>
+                <input id="loginEmail" [autocomplete]="'off'" formControlName="email" type="email">
+                <label [ngClass]="{active:loginForm.controls.email.value != ''}" for="loginEmail">البريد
+                  الالكترونى</label>
+                <fa-icon [icon]="'mail-bulk'"></fa-icon>
+              </div>
+              <p *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+                <span *ngIf="loginForm.controls.email.errors?.['required']">* هذا الحقل مطلوب</span>
+                <span *ngIf="loginForm.controls.email.errors?.['email']">*بريد الكترونى غير صالح</span>
+              </p>
             </div>
-            <p *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
-              <span *ngIf="loginForm.controls.password.errors?.['required']">* هذا الحقل مطلوب</span>
-            </p>
-          </div>
-          <div class="flex justify-between ">
-            <div class="formCheck">
-              <input formControlName="rememberMe" type="checkbox" id="rememberMe" name="rememberMe">
-              <label for="rememberMe">
-                تذكرنى
-              </label>
+            <div class="formInput"
+              [ngClass]="{active:loginForm.controls.password.valid,error:loginForm.controls.password.errors?.['required'] && loginForm.controls.password.touched}">
+              <div>
+                <input id="loginPassword" autocomplete="false" #password formControlName="password" [type]="type">
+                <label [ngClass]="{active:loginForm.controls.password.value != ''}" for="loginPassword">
+                  كلمة المرور</label>
+                <fa-icon [icon]="password.type == 'text'? 'eye' : 'eye-slash'"
+                  (click)="password.type == 'text' ? password.type = 'password' : password.type = 'text'"></fa-icon>
+              </div>
+              <p *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
+                <span *ngIf="loginForm.controls.password.errors?.['required']">* هذا الحقل مطلوب</span>
+              </p>
             </div>
-            <button>نسيت كلمة المرور ؟</button>
+            <div class="flex justify-between ">
+              <div class="formCheck">
+                <input formControlName="rememberMe" type="checkbox" id="rememberMe" name="rememberMe">
+                <label for="rememberMe">
+                  تذكرنى
+                </label>
+              </div>
+              <button type="button" (click)="status='sendToken'">نسيت كلمة المرور ؟</button>
+            </div>
+            <div class="formInput">
+              <button class="toNextBtn" type="submit">
+                <span *ngIf="loading.form"></span>
+                <div *ngIf="!loading.form">تسجيل الدخول</div>
+              </button>
+              <p *ngIf="form?.message" class="text-red-500 text-center py-3 overflow-hidden ">
+                خطأ في البريد الالكترونى او كلمة المرور </p>
+            </div>
           </div>
-          <div class="formInput">
-            <button class="toNextBtn" type="submit">
-              <span *ngIf="loading.form"></span>
-              <div *ngIf="!loading.form">تسجيل الدخول</div>
-            </button>
-            <p *ngIf="form.message" class="text-red-500 text-center py-3 overflow-hidden ">
-              خطأ في البريد الالكترونى او كلمة المرور </p>
+        </form>
+      </ng-container>
+      <ng-container *ngIf="status == 'sendToken'">
+        <form #sendTokenForm="ngForm" (ngSubmit)="sendToken(sendTokenForm.value)">
+          <div class="flex flex-col gap-4">
+            <div class="px-4 my-5 capitalize font-bold text-zinc-600">
+              <h2 class="text-4xl">اعادة تهيئة كلمة المرور</h2>
+              <h3 (click)="status='login'" class="text-cyan-500 cursor-pointer">
+                تسجبل الدخول
+              </h3>
+            </div>
+            <div class="formInput" [ngClass]="{active:email.valid,error:email.errors?.['required']&& email.touched}">
+              <div>
+                <input id="loginEmail" [autocomplete]="'off'" #email="ngModel" ngModel name="email" type="email">
+                <label [ngClass]="{active:email.control.value != ''}" for="loginEmail">البريد
+                  الالكترونى</label>
+                <fa-icon [icon]="'mail-bulk'"></fa-icon>
+              </div>
+              <p *ngIf="email.touched && email.invalid">
+                <span *ngIf="email.errors?.['required']">* هذا الحقل مطلوب</span>
+                <span *ngIf="email.errors?.['email']">*بريد الكترونى غير صالح</span>
+              </p>
+            </div>
+
+            <div class="formInput">
+              <button class="toNextBtn" type="submit">
+                <span *ngIf="loading.form"></span>
+                <div *ngIf="!loading.form">تاكيد</div>
+              </button>
+              <p *ngIf="form?.message" class="text-red-500 text-center py-3 overflow-hidden ">
+                {{form?.message}} </p>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </ng-container>
+      <ng-container *ngIf="status == 'sendTokenSuccess'">
+        <form class="!justify-center">
+          <h2 class="text-4xl text-center">تم ارسال رابط اعادة تهيئة كلمة المرور</h2>
+          <button class="toNextBtn" type="button" (click)="status='login'">
+            تسجيل الدخول
+          </button>
+
+        </form>
+      </ng-container>
+      <ng-container *ngIf="status == 'reset'">
+        <form #resetForm="ngForm" (ngSubmit)="resetPass(resetForm.value)">
+          <div class="flex flex-col gap-4">
+            <div class="px-4 my-5 capitalize font-bold text-zinc-600">
+              <h2 class="text-4xl">اعادة تهيئة كلمة المرور</h2>
+            </div>
+            <div class="formInput"
+              [ngClass]="{active:newPassword.control.valid,error:newPassword.control.errors?.['required'] && newPassword.control.touched}">
+              <div>
+                <input id="newPassword" autocomplete="false" #password name="newPassword" #newPassword="ngModel" ngModel
+                  required [type]="type">
+                <label [ngClass]="{active:newPassword.control.value != ''}" for="newPassword">
+                  كلمة المرور الجديدة</label>
+                <fa-icon [icon]="password.type == 'text'? 'eye' : 'eye-slash'"
+                  (click)="password.type == 'text' ? password.type = 'password' : password.type = 'text'"></fa-icon>
+              </div>
+              <p *ngIf="newPassword.control.touched && newPassword.control.invalid">
+                <span *ngIf="newPassword.control.errors?.['required']">* هذا الحقل مطلوب</span>
+              </p>
+            </div>
+            <div class="formInput"
+              [ngClass]="{active:confirmNewPassword.control.valid,error:confirmNewPassword.control.errors?.['required'] && confirmNewPassword.control.touched}">
+              <div>
+                <input id="confirmNewPassword" autocomplete="false" #confirmPass name="confirmNewPassword"
+                  #confirmNewPassword="ngModel" ngModel required [type]="type">
+                <label [ngClass]="{active:confirmNewPassword.control.value != ''}" for="confirmNewPassword">
+                  تاكيد كلمة المرور الجديدة</label>
+                <fa-icon [icon]="confirmPass.type =='text'? 'eye' : 'eye-slash'"
+                  (click)="confirmPass.type == 'text' ? confirmPass.type = 'password' : confirmPass.type = 'text'"></fa-icon>
+              </div>
+              <p *ngIf="confirmNewPassword.control.touched && confirmNewPassword.control.invalid">
+                <span *ngIf="confirmNewPassword.control.errors?.['required']">* هذا الحقل مطلوب</span>
+              </p>
+            </div>
+
+            <div class="formInput">
+              <button class="toNextBtn" [disabled]="resetForm.invalid" type="submit">
+                <span *ngIf="loading.form"></span>
+                <div *ngIf="!loading.form">تاكيد</div>
+              </button>
+              <p *ngIf="form.message" class="text-red-500 text-center py-3 overflow-hidden ">
+                {{form.message}} </p>
+            </div>
+          </div>
+        </form>
+      </ng-container>
+      <ng-container *ngIf="status == 'resetSuccess'">
+        <form class="!justify-center">
+          <h2 class="text-4xl text-center">تم اعادة تهيئة كلمة المرور بنجاح</h2>
+          <button class="toNextBtn" type="button" (click)="status='login'">
+            تسجيل الدخول
+          </button>
+
+        </form>
+      </ng-container>
       <app-svg-animated class="md:hidden absolute -z-50"></app-svg-animated>
       <div class="formImg">
         <lord-icon colors="primary:#3f3f46,secondary:#fb923c" trigger="loop" delay="1500"
@@ -82,112 +182,113 @@
 
 
 
-
-
-
-
-
+    <div *ngIf="form.message && formType == 'signup'" class="!block rounded-lg p-2 text-center bg-red-50 text-red-500">
+      {{form.message}}
+    </div>
+    <div *ngIf="!acceptSignup && formType == 'signup'" class="!block rounded-lg p-2 text-center bg-red-50 text-red-500">
+      عذرا استقبال تسجيل الاعضاء متوقف حاليا
+      <button routerLink="/login" class="text-cyan-500 font-bold">تسجبل الدخول</button>
+    </div>
     <div class="overflow-hidden" *ngIf="formType == 'signup'">
-      <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <form [formGroup]="signupForm" *ngIf="acceptSignup" (ngSubmit)="signup(signupForm.value)">
         <div [ngClass]="{hide:signupStep != 0}">
           <div class="px-4 my-5 font-bold text-zinc-600">
             <h2 class="text-3xl">انشاء حساب جديد <span class="text-7xl text-cyan-400 leading-5">.</span></h2>
             <h6 class="text-zinc-400 font-medium">لديك حساب بالفعل ؟ <button
-                class="duration-300 text-cyan-400 font-semibold" routerLink="/login">تسجيل الدخول</button>
+                class="duration-300 text-cyan-400 font-semibold" type="button" routerLink="/login">تسجيل
+                الدخول</button>
             </h6>
           </div>
           <div class="grid sm:grid-cols-2 gap-4">
             <div class="formInput"
-              [ngClass]="{active:signupForm.controls.firstNameAr.valid,error:signupForm.controls.firstNameAr.errors?.['required']&& signupForm.controls.firstNameAr.touched || signupErrors?.firstNameAr }">
-              <div> <input id="firstNameAr" formControlName="firstNameAr" type="text"
-                  (focus)="removeError('firstNameAr')">
-                <label [ngClass]="{active:signupForm.controls.firstNameAr.value != ''}" for="firstNameAr">
+              [ngClass]="{active:signupForm.controls.fNameAr.valid,error:signupForm.controls.fNameAr.errors?.['required']&& signupForm.controls.fNameAr.touched || form.errors?.['name.first.ar'] }">
+              <div> <input id="fNameAr" formControlName="fNameAr" type="text" (focus)="removeError('name.first.ar')">
+                <label [ngClass]="{active:signupForm.controls.fNameAr.value != ''}" for="fNameAr">
                   الاسم الاول عربي
                 </label>
-                <fa-icon [icon]="contactIcon"></fa-icon>
+                <fa-icon [icon]="'contact-card'"></fa-icon>
               </div>
               <p
-                *ngIf="signupForm.controls.firstNameAr.touched && signupForm.controls.firstNameAr.invalid || form.errors?.firstNameAr">
-                <span *ngIf="signupForm.controls.firstNameAr.errors?.['required']">* هذا الحقل مطلوب</span>
-                <span *ngIf="form.errors?.['name.first.ar']">{{form.errors?.['name.first.ar'].message}}</span>
+                *ngIf="signupForm.controls.fNameAr.touched && signupForm.controls.fNameAr.invalid || form.errors?.['name.first.ar']">
+                <span *ngIf="signupForm.controls.fNameAr.errors?.['required'] || form.errors?.['name.first.ar'] ">*
+                  هذا
+                  الحقل مطلوب</span>
               </p>
             </div>
             <div class="formInput"
-              [ngClass]="{active:signupForm.controls.lastNameAr.valid,error:signupForm.controls.lastNameAr.errors?.['required']&& signupForm.controls.lastNameAr.touched || signupErrors?.lastNameAr }">
-              <div> <input id="lastNameAr" formControlName="lastNameAr" type="text" (focus)="removeError('lastNameAr')">
-                <label [ngClass]="{active:signupForm.controls.lastNameAr.value != ''}" for="lastNameAr">
+              [ngClass]="{active:signupForm.controls.lNameAr.valid,error:signupForm.controls.lNameAr.errors?.['required']&& signupForm.controls.lNameAr.touched || form.errors?.['name.last.ar'] }">
+              <div> <input id="lNameAr" formControlName="lNameAr" type="text" (focus)="removeError('name.last.ar')">
+                <label [ngClass]="{active:signupForm.controls.lNameAr.value != ''}" for="lNameAr">
                   الاسم الثانى عربي
                 </label>
-                <fa-icon [icon]="contactIcon"></fa-icon>
+                <fa-icon [icon]="'contact-card'"></fa-icon>
               </div>
               <p
-                *ngIf="signupForm.controls.lastNameAr.touched && signupForm.controls.lastNameAr.invalid || form.errors?.lastNameAr">
-                <span *ngIf="signupForm.controls.lastNameAr.errors?.['required']">* هذا الحقل مطلوب</span>
-                <span *ngIf="form.errors?.['name.last.ar']">{{form.errors?.['name.last.ar'].message}}</span>
+                *ngIf="signupForm.controls.lNameAr.touched && signupForm.controls.lNameAr.invalid || form.errors?.['name.last.ar']">
+                <span *ngIf="signupForm.controls.lNameAr.errors?.['required'] || form.errors?.['name.last.ar']">* هذا
+                  الحقل مطلوب</span>
               </p>
             </div>
             <div class="formInput"
-              [ngClass]="{active:signupForm.controls.firstNameEn.valid,error:signupForm.controls.firstNameEn.errors?.['required']&& signupForm.controls.firstNameEn.touched  || signupErrors?.firstNameEn}">
-              <div> <input id="firstNameEn" formControlName="firstNameEn" type="text"
-                  (focus)="removeError('firstNameEn')">
-                <label [ngClass]="{active:signupForm.controls.firstNameEn.value != ''}" for="firstNameEn">
+              [ngClass]="{active:signupForm.controls.fNameEn.valid,error:signupForm.controls.fNameEn.errors?.['required']&& signupForm.controls.fNameEn.touched  || form.errors?.['name.first.en']}">
+              <div> <input id="fNameEn" formControlName="fNameEn" type="text" (focus)="removeError('name.first.en')">
+                <label [ngClass]="{active:signupForm.controls.fNameEn.value != ''}" for="fNameEn">
                   الاسم الاول انجليزى
                 </label>
-                <fa-icon [icon]="contactIcon"></fa-icon>
+                <fa-icon [icon]="'contact-card'"></fa-icon>
               </div>
               <p
-                *ngIf="signupForm.controls.firstNameEn.touched && signupForm.controls.firstNameEn.invalid || form.errors?.firstNameEn">
-                <span *ngIf="signupForm.controls.firstNameEn.errors?.['required']">* هذا الحقل مطلوب</span>
-                <span *ngIf="form.errors?.['name.first.ar']">{{form.errors?.['name.first.ar'].message}}</span>
+                *ngIf="signupForm.controls.fNameEn.touched && signupForm.controls.fNameEn.invalid || form.errors?.['name.first.en']">
+                <span *ngIf="signupForm.controls.fNameEn.errors?.['required'] || form.errors?.['name.first.ar']">* هذا
+                  الحقل مطلوب</span>
               </p>
             </div>
             <div class="formInput"
-              [ngClass]="{active:signupForm.controls.lastNameEn.valid,error:signupForm.controls.lastNameEn.errors?.['required']&& signupForm.controls.lastNameEn.touched  || signupErrors?.lastNameEn}">
-              <div> <input id="lastNameEn" formControlName="lastNameEn" type="text" (focus)="removeError('lastNameEn')">
-                <label [ngClass]="{active:signupForm.controls.lastNameEn.value != ''}" for="lastNameEn">
+              [ngClass]="{active:signupForm.controls.lNameEn.valid,error:signupForm.controls.lNameEn.errors?.['required']&& signupForm.controls.lNameEn.touched  || form.errors?.['name.last.en']}">
+              <div> <input id="lNameEn" formControlName="lNameEn" type="text" (focus)="removeError('name.last.en')">
+                <label [ngClass]="{active:signupForm.controls.lNameEn.value != ''}" for="lNameEn">
                   الاسم الثانى انجليزى
 
                 </label>
-                <fa-icon [icon]="contactIcon"></fa-icon>
+                <fa-icon [icon]="'contact-card'"></fa-icon>
               </div>
               <p
-                *ngIf="signupForm.controls.lastNameEn.touched && signupForm.controls.lastNameEn.invalid || form.errors?.lastNameEn">
-                <span *ngIf="signupForm.controls.lastNameEn.errors?.['required']">* هذا الحقل مطلوب</span>
-                <span *ngIf="form.errors?.['name.last.ar']">{{form.errors?.['name.last.ar'].message}}</span>
+                *ngIf="signupForm.controls.lNameEn.touched && signupForm.controls.lNameEn.invalid || form.errors?.['name.last.en']">
+                <span *ngIf="signupForm.controls.lNameEn.errors?.['required'] || form.errors?.['name.last.en']">* هذا
+                  الحقل مطلوب</span>
               </p>
             </div>
             <div class="formInput"
-              [ngClass]="{active:signupForm.controls.email.valid && !signupEmailDublicated,error:signupForm.controls.email.invalid && signupForm.controls.email.touched || signupForm.controls.email.valid && signupEmailDublicated || signupErrors?.email}">
-              <div> <input (blur)="checkEmail()" (focus)="signupEmailDublicated=false ;removeError('email')"
-                  id="signupEmail" formControlName="email" type="email">
+              [ngClass]="{active:signupForm.controls.email.valid ,error:signupForm.controls.email.invalid && signupForm.controls.email.touched || signupForm.controls.email.valid  || form.errors?.email}">
+              <div> <input (focus)=" removeError('email')" id="signupEmail" formControlName="email" type="email">
                 <label [ngClass]="{active:signupForm.controls.email.value != ''}" for="signupEmail">
                   البريد الالكترونى
                 </label>
-                <fa-icon [icon]="emailIcon"></fa-icon>
+                <fa-icon [icon]="'mail-bulk'"></fa-icon>
               </div>
               <p *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid || form.errors?.email">
                 <span *ngIf="signupForm.controls.email.errors?.['required']">* هذا الحقل مطلوب</span>
-                <span *ngIf="form.errors?.email">{{form.errors?.email.message}}</span>
+                <span *ngIf="form.errors?.email">{{form.errors?.email?.message}}</span>
               </p>
             </div>
             <div class="formInput"
-              [ngClass]="{active:signupForm.controls.password.valid,error:signupForm.controls.password.invalid&& signupForm.controls.password.touched || signupErrors?.password}">
+              [ngClass]="{active:signupForm.controls.password.valid,error:signupForm.controls.password.invalid&& signupForm.controls.password.touched || form.errors?.password}">
               <div> <input id="signupPassword" #password formControlName="password" type="password"
                   (focus)="removeError('password')">
                 <label [ngClass]="{active:signupForm.controls.password.value != ''}" for="signupPassword">
                   كلمة المرور</label>
-                <fa-icon [icon]="password.type == 'text'? eay : eayslash"
+                <fa-icon [icon]="password.type == 'text'? 'eye' : 'eye-slash'"
                   (click)="password.type == 'text' ? password.type = 'password' : password.type = 'text'"></fa-icon>
               </div>
               <p
                 *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid || form.errors?.password">
                 <span *ngIf="signupForm.controls.password.errors?.['required']">* هذا الحقل مطلوب</span>
-                <span *ngIf="form.errors?.password">{{form.errors?.password.message}}</span>
+                <span *ngIf="form.errors?.password">{{form.errors?.password?.message}}</span>
               </p>
             </div>
           </div>
           <div class="mt-5 flex form-btns gap-3">
-            <div role="button" class="toNextBtn" (click)="signupStep = 1">
+            <div role="button" type="button" class="toNextBtn" (click)="signupStep = 1">
               التالى</div>
           </div>
         </div>
@@ -197,72 +298,91 @@
           </div>
           <div class="formInput">
             <span>اللجنة</span>
-            <ng-select formControlName="committee" required>
-              <ng-option *ngFor="let committee of committees" [value]="committee.id">{{committee.name}}</ng-option>
-            </ng-select>
+            <div>
+
+              <select formControlName="committee" required (change)="removeError('committee')">
+                <option *ngFor="let committee of committees" [value]="committee._id">{{committee.name}}</option>
+              </select>
+            </div>
             <p
               *ngIf="signupForm.controls.committee.touched && signupForm.controls.committee.invalid || form.errors?.committee">
-              <span *ngIf="signupForm.controls.committee.errors?.['required']">* هذا الحقل مطلوب</span>
-              <span *ngIf="form.errors?.committee">{{form.errors?.committee.message}}</span>
+              <span *ngIf="signupForm.controls.committee.errors?.['required'] || form.errors?.committee">* هذا الحقل
+                مطلوب</span>
             </p>
           </div>
-          <div class="formInput mt-4">
+
+          <div class="mt-4px-2">
             <span>القوافل الطبية</span>
-            <ng-select t formControlName="consvoys" required [multiple]="true">
-              <ng-option *ngFor="let consvoy of consvoys" [value]="consvoy.id">{{consvoy.name}}</ng-option>
-            </ng-select>
-            <p
-              *ngIf="signupForm.controls.consvoys.touched && signupForm.controls.consvoys.invalid || form.errors?.consvoys">
-              <span *ngIf="signupForm.controls.consvoys.errors?.['required']">* هذا الحقل مطلوب</span>
-              <span *ngIf="form.errors?.consvoys">{{form.errors?.consvoys.message}}</span>
-            </p>
+            <div class="flex flex-col items-start gap-1  h-32 overflow-auto w-full bg-neutral-100 rounded-xl p-2">
+              <div class="formCheck w-full" *ngFor="let consvoy of consvoys;let i = index">
+                <input (change)="selectChange($event.target,consvoy._id)"
+                  [checked]="selectedConvoys.includes(consvoy._id)" type="checkbox" id="{{consvoy._id}}">
+                <label for="{{consvoy._id}}" class="flex-grow">
+                  {{consvoy?.description?.address}}
+                </label>
+              </div>
+            </div>
           </div>
           <div class="mt-5 flex form-btns gap-3">
-            <div role="button" class="toNextBtn" (click)="signupStep = 0 ">عودة
+            <div role="button" type="button" class="toNextBtn" (click)="signupStep = 0 ">عودة
             </div>
-            <div role="button" class="toNextBtn" (click)="signupStep = 2">
+            <div role="button" type="button" class="toNextBtn" (click)="signupStep = 2">
               التالى</div>
           </div>
         </div>
-        <div class="grid sm:grid-cols-2" [ngClass]="{hide:signupStep!=2}">
+        <div class="!grid grid-cols-1 md:grid-cols-2 gap-2" [ngClass]="{hide:signupStep!=2}">
+          <span class="md:col-span-2">جميع بيانات التواصل اختيارية</span>
           <div class="formInput"
-            [ngClass]="{active:signupForm.controls.whatsapp.valid,error:signupForm.controls.whatsapp.invalid && signupForm.controls.whatsapp.touched || signupErrors?.whatsapp}">
-            <div> <input dir="rtl" placeholder="اختياري" id="signupwhatsapp" formControlName="whatsapp" type="tel"
+            [ngClass]="{active:signupForm.controls.whatsapp.valid,error:signupForm.controls.whatsapp.invalid && signupForm.controls.whatsapp.touched || form.errors?.whatsapp}">
+            <div> <input dir="rtl" id="signupwhatsapp" formControlName="whatsapp" type="tel"
                 (focus)="removeError('whatsapp')">
               <label [ngClass]="{active:signupForm.controls.whatsapp.value != ''}" for="signupwhatsapp">
-                رقم الواتساب</label>
-              <fa-icon [icon]="whatsappIcon"></fa-icon>
+                رقم الواتساب (اختياري)</label>
+              <fa-icon [icon]="['fab','whatsapp']"></fa-icon>
             </div>
           </div>
           <div class="formInput"
-            [ngClass]="{active:signupForm.controls.facebook.valid,error:signupForm.controls.facebook.invalid && signupForm.controls.facebook.touched || signupErrors?.facebook}">
-            <div> <input dir="rtl" placeholder="اختياري" id="signupfacebook" formControlName="facebook" type="tel"
+            [ngClass]="{active:signupForm.controls.facebook.valid,error:signupForm.controls.facebook.invalid && signupForm.controls.facebook.touched || form.errors?.facebook}">
+            <div> <input dir="rtl" id="signupfacebook" formControlName="facebook" type="tel"
                 (focus)="removeError('facebook')">
               <label [ngClass]="{active:signupForm.controls.facebook.value != ''}" for="signupfacebook">
-                رابط فيسبوك</label>
-              <fa-icon [icon]="facebookIcon"></fa-icon>
+                رابط فيسبوك (اختياري)</label>
+              <fa-icon [icon]="['fab','facebook']"></fa-icon>
             </div>
           </div>
           <div class="formInput"
-            [ngClass]="{active:signupForm.controls.instagram.valid,error:signupForm.controls.instagram.invalid && signupForm.controls.instagram.touched || signupErrors?.instagram}">
-            <div> <input dir="rtl" placeholder="اختياري" id="signupinstagram" formControlName="instagram" type="tel"
+            [ngClass]="{active:signupForm.controls.instagram.valid,error:signupForm.controls.instagram.invalid && signupForm.controls.instagram.touched || form.errors?.instagram}">
+            <div> <input dir="rtl" id="signupinstagram" formControlName="instagram" type="tel"
                 (focus)="removeError('instagram')">
               <label [ngClass]="{active:signupForm.controls.instagram.value != ''}" for="signupinstagram">
-                رابط انستجرام</label>
-              <fa-icon [icon]="instagramIcon"></fa-icon>
+                رابط انستجرام (اختياري)</label>
+              <fa-icon [icon]="['fab','instagram']"></fa-icon>
             </div>
           </div>
           <div class="formInput"
-            [ngClass]="{active:signupForm.controls.twitter.valid,error:signupForm.controls.twitter.invalid && signupForm.controls.twitter.touched || signupErrors?.twitter}">
-            <div> <input dir="rtl" placeholder="اختياري" id="signuptwitter" formControlName="twitter" type="tel"
+            [ngClass]="{active:signupForm.controls.twitter.valid,error:signupForm.controls.twitter.invalid && signupForm.controls.twitter.touched || form.errors?.twitter}">
+            <div> <input dir="rtl" id="signuptwitter" formControlName="twitter" type="tel"
                 (focus)="removeError('twitter')">
               <label [ngClass]="{active:signupForm.controls.twitter.value != ''}" for="signuptwitter">
-                رابط تويتر</label>
-              <fa-icon [icon]="twitterIcon"></fa-icon>
+                رابط تويتر (اختياري)</label>
+              <fa-icon [icon]="['fab','twitter']"></fa-icon>
             </div>
           </div>
+          <div class="formInput md:col-span-2"
+            [ngClass]="{active:signupForm.controls.joinDate.valid,error:signupForm.controls.joinDate.invalid && signupForm.controls.joinDate.touched || form.errors?.joinDate}">
+            <div> <input dir="rtl" formControlName="joinDate" placeholder="اختياري" id="signupjoinDate" type="date"
+                (focus)="removeError('joinDate')">
+              <label [ngClass]="{active:signupForm.controls.joinDate.value != ''}" for="signupjoinDate">
+                تاريخ الانضمام</label>
+              <!-- <fa-icon [icon]="'calendar'"></fa-icon> -->
+            </div>
+            <p *ngIf="signupForm.controls.joinDate && signupForm.controls.joinDate || form.errors?.joinDate">
+              <span *ngIf="signupForm.controls.joinDate.errors?.['required'] || form.errors?.joinDate">* هذا الحقل
+                مطلوب</span>
+            </p>
+          </div>
 
-          <div class="mt-5 flex form-btns gap-3">
+          <div class="mt-5 flex form-btns gap-3 md:col-span-2 items-center">
             <div role="button" class="toNextBtn" (click)="signupStep = 1 ">عودة
             </div>
             <div role="button" class="toNextBtn" (click)="signupStep = 3">
@@ -270,85 +390,85 @@
           </div>
         </div>
         <div [ngClass]="{hide:signupStep!=3}">
-          <div class="flex justify-center gap-4 py-3 items-center">
-
-            <div class="formRadio"
-              [ngClass]="{active:signupForm.controls.gender.value == 'male' ,error: signupErrors?.gender}">
-              <input hidden id="maleGneder" formControlName="gender" type="radio" name="gender" value="male">
-              <label for="maleGneder" (click)="removeError('gender')">
-                <fa-icon [icon]="male"></fa-icon>
-                <span>male</span>
-              </label>
-            </div>
-            <span class="font-bold text-zinc-600">OR</span>
-            <div class="formRadio"
-              [ngClass]="{active:signupForm.controls.gender.value == 'female' ,error: signupErrors?.gender}">
-              <input hidden id="femaleGneder" formControlName="gender" type="radio" name="gender" value="female">
-              <label for="femaleGneder" (click)="removeError('gender')">
-                <fa-icon [icon]="female"></fa-icon>
-                <span>female</span>
-              </label>
-            </div>
+          <div class="font-bold mb-4">
+            ملحوظه
+            <br>
+            <ul class="list-item list-disc">
+              <li>
+                جميع البيانات لن تظهر علي الموقع الا في حالة تفعيل ذلك الخيار بالاسفل
+              </li>
+              <li>
+                لا يمكن التسجيل بدون الصوره الشخصبة
+              </li>
+              <li>
+                يمكن اظهار الصوره او حجبها في الموقع وذلك بسبب حاجة لجنة الميديا للصوره
+              </li>
+            </ul>
           </div>
-          <div class="flex justify-center gap-4 py-3 items-center">
-            <div class="formRadio"
-              [ngClass]="{active:signupForm.controls.accountType.value == 'buyer' ,error: signupErrors?.accountType}">
-              <input hidden id="buyerType" formControlName="accountType" type="radio" name="accountType" value="buyer">
-              <label for="buyerType" (click)="removeError('accountType')">
-                <fa-icon [icon]="buyer"></fa-icon>
-                <span>buyer</span>
-              </label>
-            </div> <span class="font-bold text-zinc-600">OR</span>
-            <div class="formRadio"
-              [ngClass]="{active:signupForm.controls.accountType.value == 'seller',error: signupErrors?.accountType }">
-              <input hidden id="sellerType" formControlName="accountType" type="radio" name="accountType"
-                value="seller">
-              <label for="sellerType" (click)="removeError('accountType')">
-                <fa-icon [icon]="seller"></fa-icon>
-                <span>Seller</span>
-              </label>
-            </div>
-          </div>
-          <div>
-            <input id="userImg" #userImgInput type="file" accept=".png,.jpg" (change)="onFileChanged($event)">
-            <label for="userImg">
-              <fa-icon [icon]="camera"></fa-icon>
+          <span class="text-center text-red-500" *ngIf="form.errors?.image">الصورة مطلوبة من أجل التسجيل</span>
+          <div class=" mb-4">
+            <img (click)="userImgBox =true" class="mx-auto w-20 rounded-full  mb-4" src="{{userImgCropped}}" alt="">
+            <input id="userImg" #userImgInput type="file" hidden accept=".png,.jpg"
+              (change)="onFileChanged($event);removeError('image')">
+            <label
+              class="p-4 rounded-xl flex flex-col gap-2 items-center  border border-dotted hover:border-cyan-500 duration-300"
+              for="userImg">
+              <fa-icon [icon]="'camera'"></fa-icon>
+              <span>
+                اضافة صورة شخصية
 
+              </span>
             </label>
-            <div [ngClass]="{active:userImgBox}"
-              class="cropperBox flex justify-center items-center fixed w-full h-screen top-0 left-0 bg-black bg-opacity-40 duration-300 -z-50 opacity-0">
-              <span *ngIf="!userImgBoxReady"
-                class="rounded-full w-6 block h-6 border border-t-transparent border-white animate-spin"></span>
-              <div [ngClass]="{active:userImgBoxReady}"
-                class="flex flex-wrap  gap-5 -z-10 opacity-0 duration-200 relative w-full max-w-2xl  bg-zinc-200">
-                <image-cropper class="imgCropper" [imageChangedEvent]="userImg" [aspectRatio]="1/1"
-                  [maintainAspectRatio]="true" format="png" (imageCropped)="cropImg($event)" (imageLoaded)="imgLoad()"
+            <div *ngIf="userImgBox"
+              class="cropperBox flex flex-col justify-center items-center fixed w-full h-screen top-0 left-0 bg-black bg-opacity-40 duration-300 z-10">
+
+              <div
+                class="flex flex-wrap gap-5 h-96 min-h-60 overflow-auto duration-200 relative w-full max-w-2xl rounded-xl   bg-white">
+
+                <span *ngIf="!userImgBoxReady"
+                  class="rounded-full w-6 m-auto block h-6 border-2 border-t-transparent border-black animate-spin"></span>
+
+                <image-cropper class="imgCropper h-96" [imageChangedEvent]="userImg" [aspectRatio]="1/1" format="png"
+                  [resizeToHeight]="500" [resizeToWidth]="500" (imageCropped)="cropImg($event)"
                   (cropperReady)="initCropper()" (loadImageFailed)="imgFaild()">
 
                 </image-cropper>
-                <div class="flex gap-5 flex-col justify-center">
-                  <img class="w-20 h-20" [src]="userImgCropped" alt="">
-                  <div class="flex gap-5">
-                    <button (click)="userImgInput.click()"><fa-icon [icon]="change"></fa-icon>
-                      <span>change</span></button>
-                    <button (click)="this.userImgBox = false"><fa-icon [icon]="change"></fa-icon><span>
-                        Save</span></button>
-                  </div>
+                <div class="flex gap-2 justify-end py-4 px-2 w-full">
+                  <button type="button" class="btn" (click)="userImgInput.click()">
+                    <fa-icon [icon]="'arrow-rotate-back'"></fa-icon>
+                    <span>تغيير الصورة</span>
+                  </button>
+                  <button type="button" class="btn cyan" (click)="this.userImgBox = false">
+                    <fa-icon [icon]="'check'"></fa-icon>
+                    <span>تأكيد</span></button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- <div class="mt-5 flex form-btns gap-3">
-          <div role="button" *ngIf="signupStep > 0" class="toNextBtn" (click)="signupStep = signupStep - 1 ">Previous
+          <div class="formCheck w-full">
+            <input type="checkbox" id="showImg" formControlName="showImg">
+            <label for="showImg" class="flex-grow">
+              عرض الصورة في الموقع
+            </label>
           </div>
-          <div role="button" *ngIf="signupStep < 2" class="toNextBtn" (click)="signupStep = signupStep + 1">
-            Next</div>
-          <button class="toNextBtn disabled:cursor-not-allowed" *ngIf="signupStep == 2" (click)="signup()"
-            type="submit"><span *ngIf="startPost"></span>
-            <div *ngIf="!startPost">signup</div>
-          </button>
-        </div> -->
+          <div class="formCheck w-full">
+            <input type="checkbox" id="showCard" formControlName="card">
+            <label for="showCard" class="flex-grow">
+              عرض البيانات في الموقع
+            </label>
+          </div>
+
+          <div class="mt-5 flex items-center form-btns gap-3">
+            <div role="button" type="button" class="toNextBtn" (click)="signupStep = signupStep - 1 ">عودة
+            </div>
+            <!-- [disabled]="(signupForm.invalid || !userImgCropped)" -->
+            <button class="toNextBtn disabled:grayscale disabled:cursor-not-allowed"
+              [title]="(signupForm.invalid || !userImgCropped) ? 'برجاء ملء جميع الحقول المطلوبة': ''" type="submit">
+              <span *ngIf="loading.form"></span>
+              <div *ngIf="!loading.form">تسجيل</div>
+            </button>
+          </div>
+        </div>
       </form>
       <app-svg-animated class="md:hidden absolute -z-50"></app-svg-animated>
       <div class="formImg">

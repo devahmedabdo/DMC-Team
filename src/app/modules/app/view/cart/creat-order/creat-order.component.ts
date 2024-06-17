@@ -1,28 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  faWhatsapp,
-  faTwitter,
-  faInstagram,
-  faFacebook,
-} from '@fortawesome/free-brands-svg-icons';
-import {
-  faEye,
-  faEyeSlash,
-  faContactCard,
-} from '@fortawesome/free-regular-svg-icons';
-import {
-  faMailBulk,
-  faLocationDot,
-  faCity,
-  faStreetView,
-  faHome,
-  faMale,
-  faFemale,
-  faUserTie,
-  faBuildingUser,
-  faCamera,
-  faExchange,
-} from '@fortawesome/free-solid-svg-icons';
+import { Component, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { DmcService } from 'src/app/services/dmc.service';
 
@@ -31,15 +10,8 @@ import { DmcService } from 'src/app/services/dmc.service';
   templateUrl: './creat-order.component.html',
   styleUrls: ['./creat-order.component.scss'],
 })
-export class CreatOrderComponent {
+export class CreatOrderComponent implements OnDestroy {
   products: any[] = [];
-  ////////////////////////
-  emailIcon = faMailBulk;
-  contactIcon = faContactCard;
-  whatsappIcon = faWhatsapp;
-
-  cityIcon = faCity;
-  streetIcon = faHome;
   navigator: any[] = [
     {
       name: 'الجاليري',
@@ -50,20 +22,38 @@ export class CreatOrderComponent {
       name: 'السلة',
     },
   ];
-  ////////////////////////
-  constructor(private dmc: DmcService, private api: ApiService) {
-    this.products = dmc.getItem('cart');
-    this.getTotal();
+  loading: boolean = false;
+  error: string = '';
+  totalPrice: number = 0;
+  subscriptions: Subscription[] = [];
+  constructor(
+    private dmc: DmcService,
+    private api: ApiService,
+    private router: Router
+  ) {
+    this.products = dmc.getItem('cart') || [];
+    if (this.products.length) {
+      this.getTotal();
+    } else {
+      this.router.navigate(['/gallery']);
+    }
+    this.subscriptions.push(
+      this.api.get('config').subscribe({
+        next: (data: any) => {
+          if (!data.config.acceptOrder) {
+            this.router.navigate(['/cart']);
+          }
+        },
+        error: (error: any) => {},
+      })
+    );
   }
   getTotal() {
     this.totalPrice = this.products.reduce((pre: any, curr: any) => {
       return pre + curr.quantity * curr.price;
     }, 0);
   }
-  loading: boolean = false;
-  error: string = '';
-  totalPrice: number = 0;
-  order(data: any) {
+  order(form: NgForm) {
     if (this.loading) return;
     this.error = '';
     this.loading = true;
@@ -74,16 +64,26 @@ export class CreatOrderComponent {
         total: prod.quantity,
       });
     });
-    data.products = products;
-    console.log(data);
-    this.api.post('order', data).subscribe(
-      (data: any) => {
-        this.loading = false;
-      },
-      (error: any) => {
-        this.loading = false;
-        this.error = error.error.message || error.message;
-      }
+    form.value.products = products;
+    this.subscriptions.push(
+      this.api.post('order', form.value).subscribe(
+        (data: any) => {
+          this.loading = false;
+          this.dmc.message('تم انشاء طلبك بنجاح', 'info');
+          this.dmc.removeItem('cart');
+          this.dmc.stored.cart.next([]);
+          this.router.navigate(['/gallery']);
+        },
+        (error: any) => {
+          this.loading = false;
+          this.error = error.error.message || error.message;
+        }
+      )
     );
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((item) => {
+      item.unsubscribe();
+    });
   }
 }

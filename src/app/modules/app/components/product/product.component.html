@@ -7,16 +7,23 @@
   </div>
   <div class="product-images relative overflow-hidden aspect-square rounded-xl grayscale-[50%] hover:grayscale-0">
 
-    <img [src]=" details?.photos[1]" alt="product image two">
-    <img [src]=" details?.photos[0]" alt="product image one">
-    <div class="btns">
-      <div data-text="اضافة للسلة" data-text-stored="ازالة من السلة" [ngClass]="{cart:details?.cart}">
-        <fa-icon (click)="details?.cart ? removeProduct(details._id,'cart' ) :storeProduct(details,'cart' )"
-          style="--d:1" [icon]="'shopping-bag'"></fa-icon>
+    <img class="absolute duration-300 w-full h-full object-cover scale-150  opacity-0" [src]=" details?.photos[1]"
+      alt="product image two">
+    <img class="absolute duration-300 w-full h-full object-cover " [src]=" details?.photos[0]" alt="product image one">
+    <div class="btns absolute bottom-5 h-12 w-full flex justify-center gap-2">
+      <div class="relative w-10 h-10 overflow-hidden hover:overflow-visible cursor-pointer" data-text="اضافة للسلة"
+        data-text-stored="ازالة من السلة" [ngClass]="{cart:details?.cart}">
+        <fa-icon
+          class="flex items-center justify-center  translate-y-16 opacity-0 z-20 w-10 h-10 text-center text-xl leading-10 rounded-full relative overflow-hidden  text-cyan-500 bg-cyan-50 duration-300"
+          (click)="details?.cart ? removeProduct(details._id,'cart' ) :storeProduct(details,'cart' )" style="--d:1"
+          [icon]="'shopping-bag'"></fa-icon>
       </div>
-      <div data-text="اضافة للمفضلة" data-text-stored="ازالة من المفضلة" [ngClass]="{liked:details?.liked}">
-        <fa-icon (click)="details?.liked ? removeProduct(details._id,'liked' ) : storeProduct(details,'liked' )"
-          style="--d:2" [icon]="'heart'"></fa-icon>
+      <div class="relative w-10 h-10 overflow-hidden hover:overflow-visible cursor-pointer" data-text="اضافة للمفضلة"
+        data-text-stored="ازالة من المفضلة" [ngClass]="{liked:details?.liked}">
+        <fa-icon
+          class="flex items-center justify-center  translate-y-16 opacity-0 z-20 w-10 h-10 text-center text-xl leading-10 rounded-full relative overflow-hidden  text-cyan-500 bg-cyan-50 duration-300"
+          (click)="details?.liked ? removeProduct(details._id,'liked' ) : storeProduct(details,'liked' )" style="--d:2"
+          [icon]="'heart'"></fa-icon>
       </div>
     </div>
   </div>
@@ -25,7 +32,6 @@
     class="mt-4 font-semibold text-zinc-700 hover:text-cyan-400 cursor-pointer duration-300">{{details.name}}</h3>
   <h4 class="flex justify-between font-bold py-2">
     <span class="text-cyan-400">{{details.price | currency:'ج.م'}}</span>
-    <span *ngIf="details.disscount > 0" class="line-through text-zinc-400">{{(details.price * 100) /
-      (100 - details.disscount) | currency:'ج.م'}}</span>
+    <span *ngIf="details.disscount > 0" class="line-through text-zinc-400">{{details.disscount | currency:'ج.م'}}</span>
   </h4>
 </div>

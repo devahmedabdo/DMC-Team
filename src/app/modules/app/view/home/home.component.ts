@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { DmcService } from 'src/app/services/dmc.service';
 
@@ -7,7 +8,7 @@ import { DmcService } from 'src/app/services/dmc.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
   numbers: any[] = [];
   donations: any[] = [];
   services: any[] = [
@@ -45,25 +46,31 @@ export class HomeComponent {
     },
   ];
   maxNumber: number = 0;
+  subscriptions: Subscription[] = [];
+  constructor(private api: ApiService, private dmc: DmcService) {
+    this.get();
+  }
   copy(text: any) {
     this.dmc.message('تم النسخ', 'info', undefined, 'info');
     window.navigator.clipboard.writeText(text);
   }
-
-  constructor(private api: ApiService, private dmc: DmcService) {
-    this.get();
-  }
-
   get() {
-    this.api.get('config').subscribe({
-      next: (data: any) => {
-        this.donations = data.config.donations;
-        this.numbers = data.numbers;
-        this.maxNumber = Math.max(
-          ...data.numbers.map((num: any) => +num.number)
-        );
-      },
-      error: (error: any) => {},
+    this.subscriptions.push(
+      this.api.get('config').subscribe({
+        next: (data: any) => {
+          this.donations = data.config.donations;
+          this.numbers = data.numbers;
+          this.maxNumber = Math.max(
+            ...data.numbers.map((num: any) => +num.number)
+          );
+        },
+        error: (error: any) => {},
+      })
+    );
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((item) => {
+      item.unsubscribe();
     });
   }
 }

@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navigator',
@@ -9,5 +8,4 @@ import { faHome } from '@fortawesome/free-solid-svg-icons';
 export class NavigatorComponent {
   @Input() routes!: any[];
   @Input() title?: string;
-  home = faHome;
 }

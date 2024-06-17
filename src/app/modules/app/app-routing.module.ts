@@ -12,6 +12,8 @@ import { ProjectsComponent } from './view/projects/projects.component';
 import { DetailsComponent as ProjectDetails } from './view/projects/details/details.component';
 import { CreatOrderComponent } from './view/cart/creat-order/creat-order.component';
 import { AboutComponent } from './view/about/about.component';
+import { AuthGuard } from 'src/app/services/gaurd/auth-guard';
+import { ProfileComponent } from './view/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -62,6 +64,11 @@ const routes: Routes = [
       {
         path: 'about',
         component: AboutComponent,
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [AuthGuard],
       },
     ],
   },

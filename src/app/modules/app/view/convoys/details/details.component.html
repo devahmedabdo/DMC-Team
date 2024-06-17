@@ -2,7 +2,7 @@
   <app-navigator [routes]="navigator" [title]="convoy?.description?.address"></app-navigator>
   <div class="container">
     <div class="my-5">
-      <div class="text-center my-10">
+      <div class="text-center my-10 bReveal" reveal="b">
         <h2 class="text-2xl font-bold mb-2">قافلة {{convoy?.description?.address}}</h2>
         <span class="text-xl">{{convoy?.description?.date | date:'dd-MM-YYYY'}}</span>
       </div>
@@ -18,11 +18,11 @@
       </div>
     </div>
 
-    <h3 class="title mt-20" data-text="الاطباء المشاركون">
+    <h3 class="title mt-20" data-text="الاطباء المشاركون" reveal="b">
       التخصصات
     </h3>
     <div class="flex justify-center flex-wrap gap-10 md:px-5 container">
-      <div
+      <div reveal="b"
         class="basis-full md:basis-[calc(50%_-_40px)] xl:basis-[calc(33%_-_40px)] bg-white rounded-2xl relative shadow-xl   text-center px-4
          before:content_[''] before:-z-10 before:absolute
           before:w-3/4 before:h-10 before:-top-5 before:bg-cyan-500 before:left-1/2  before:rounded-xl  before:-translate-x-1/2"
@@ -46,22 +46,22 @@
     </div>
 
 
-    <h3 class="title mt-20" data-text="الاعضاء المشاركون">
+    <h3 class="title mt-20" data-text="الاعضاء المشاركون" reveal="b">
       الاعضاء
     </h3>
     <div class="flex flex-wrap justify-center gap-4 md:px-5 mb-20 ">
-      <app-card class="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 scale-90" [user]="member"
+      <app-card reveal="b" class="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 scale-90" [user]="member"
         *ngFor="let member of members"></app-card>
     </div>
     <app-pagination-btn class="mb-10 block" *ngIf="pagination.page * pagination.limit < pagination.total"
       [loading]="loading.members" [pagination]="pagination" (pageChange)="getMember($event)"></app-pagination-btn>
 
 
-    <h3 class="title mt-20" data-text="صور القافلة">
+    <h3 class="title mt-20" data-text="صور القافلة" reveal="b">
       الصور
     </h3>
 
-    <div class="my-10 mx-auto max-w-4xl  px-4">
+    <div class="my-10 mx-auto max-w-4xl  px-4" reveal="b">
 
       <swiper-container class="mySwiper rounded-lg overflow-hidden w-full" thumbs-swiper=".mySwiper2" space-between="10"
         zoom="true">

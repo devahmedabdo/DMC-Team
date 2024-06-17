@@ -2,27 +2,28 @@
   <app-navigator [routes]="navigator" [title]="product?.name"></app-navigator>
 
   <div class="grid md:grid-cols-2 gap-40 py-20 container">
-    <div>
+    <div class="rReveal" reveal="r">
       <swiper-container dir="ltr" class="md:max-w-96 max-w-72" effect="cards" autoplay-delay="5000">
         <swiper-slide class="sm:w-52 w-44 h-96 sm:h-[500px]" *ngFor="let photo of product?.photos">
           <img class="w-full h-full object-cover rounded-xl" [src]="photo" alt="">
         </swiper-slide>
       </swiper-container>
     </div>
-    <div class="flex flex-col gap-6">
-      <h2 class="text-4xl font-bold">{{product?.name}}</h2>
-      <span class="text-cyan-500 text-2xl">
+    <div class="flex flex-col items-center md:items-start text-center md:text-start gap-6">
+      <h2 class="text-4xl font-bold bReveal" reveal="b">{{product?.name}}</h2>
+      <span class="text-cyan-500 text-2xl bReveal" reveal="b">
         {{product?.price | currency:'ج.م'}}
         <span *ngIf="product?.disscount" class="text-neutral-400 line-through">
           {{product?.disscount | currency:'ج.م'}}
         </span>
       </span>
-      <p>نؤمن بأن الرعاية الصحية الأساسية يجب أن تكون متاحة للجميع بغض النظر عن ظروفهم المالية. ومن أجل تحقيق هذا الهدف،
+      <p class="bReveal" reveal="b">نؤمن بأن الرعاية الصحية الأساسية يجب أن تكون متاحة للجميع بغض النظر عن ظروفهم
+        المالية. ومن أجل تحقيق هذا الهدف،
         نتخذ
         قرارًا جريئًا بتوجيه كامل الأرباح التي نحققها من بيع منتجاتنا نحو تمويل الخدمات الطبية والرعاية الصحية للفقراء.
       </p>
 
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2 bReveal" reveal="b">
         <button
           class="px-3 py-2 rounded-lg bg-cyan-50 text-cyan-500 hover:bg-cyan-500 hover:text-white  flex gap-2 items-center duration-300"
           (click)="product?.cart ? removeProduct(product._id,'cart' ) :storeProduct(product,'cart' )">
@@ -69,6 +70,4 @@
   </div>
 
 </ng-container>
-<app-loading *ngIf="loading">
-
-</app-loading>
+<app-loading *ngIf="loading"> </app-loading>

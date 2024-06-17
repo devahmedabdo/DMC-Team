@@ -26,6 +26,7 @@ import { CreatOrderComponent } from './view/cart/creat-order/creat-order.compone
 import { PageLandingComponent } from './components/page-landing/page-landing.component';
 import { AboutComponent } from './view/about/about.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { ProfileComponent } from './view/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     PageLandingComponent,
     AboutComponent,
     LoadingComponent,
+    ProfileComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

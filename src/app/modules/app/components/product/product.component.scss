@@ -18,18 +18,9 @@
       @apply w-full h-full bg-zinc-800 bg-opacity-0 top-0 duration-300 absolute;
     }
     img {
-      @apply absolute duration-300 w-full h-full object-cover;
-      &:first-child {
-        @apply scale-150  opacity-0;
-      }
-      &:nth-child(2) {
-        @apply scale-100;
-      }
     }
     .btns {
-      @apply absolute bottom-5 h-12 w-full flex justify-center gap-2;
       > div {
-        @apply relative w-10 h-10 overflow-hidden hover:overflow-visible cursor-pointer;
         &::after {
           content: attr(data-text);
           @apply capitalize -translate-y-[200%] duration-300 bg-cyan-50 absolute -top-0 left-1/2 -translate-x-1/2 opacity-0 w-max z-10 font-semibold text-xs py-1 px-2 rounded-lg;
@@ -47,7 +38,6 @@
           }
         }
         fa-icon {
-          @apply flex items-center justify-center  translate-y-16 opacity-0 z-20 w-10 h-10 text-center text-xl leading-10 rounded-full relative overflow-hidden  text-cyan-500 bg-cyan-50 duration-300;
           transition-property: color, background-color, transform, opacity;
           transition-delay: 0ms, 0ms, calc(var(--d, 0) * 0.05s), 0ms;
           &::after {

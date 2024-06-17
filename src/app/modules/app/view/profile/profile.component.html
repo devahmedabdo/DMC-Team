@@ -1,0 +1,247 @@
+<ng-container *ngIf="!loading.page">
+  <app-navigator *ngIf="member" [title]="member.name.first.ar + ' '+ member.name.last.ar"></app-navigator>
+  <div class="container mb-20">
+    <img
+      class="bg-white md:w-60 w-40 rounded-full aspect-square object-cover shadow-lg border-4 border-white -translate-y-1/2"
+      [src]="member.image" alt="">
+    <form [formGroup]="signupForm" (ngSubmit)="update()">
+      <button class="btn cyan disabled:grayscale disabled:cursor-not-allowed my-3 mr-auto"
+        [title]="(signupForm.invalid || !userImgCropped) ? 'برجاء ملء جميع الحقول المطلوبة': ''" type="submit">
+        <div *ngIf="loading.form" class="size-5 rounded-full border border-t-transparent animate-spin border-white">
+        </div>
+        <div *ngIf="!loading.form">تحديث</div>
+      </button>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.fNameAr.valid,error:signupForm.controls.fNameAr.errors?.['required']&& signupForm.controls.fNameAr.touched || form.errors?.['name.first.ar'] }">
+          <div> <input id="fNameAr" formControlName="fNameAr" type="text" [(ngModel)]="modal.name.first.ar">
+            <label [ngClass]="{active:signupForm.controls.fNameAr.value != ''}" for="fNameAr">
+              الاسم الاول عربي
+            </label>
+            <fa-icon [icon]="'contact-card'"></fa-icon>
+          </div>
+          <p
+            *ngIf="signupForm.controls.fNameAr.touched && signupForm.controls.fNameAr.invalid || form.errors?.['name.first.ar']">
+            <span *ngIf="signupForm.controls.fNameAr.errors?.['required']">* هذا الحقل مطلوب</span>
+            <span *ngIf="form.errors?.['name.first.ar']">{{form.errors?.['name.first.ar']?.message}}</span>
+          </p>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.lNameAr.valid,error:signupForm.controls.lNameAr.errors?.['required']&& signupForm.controls.lNameAr.touched || form.errors?.['name.last.ar'] }">
+          <div> <input id="lNameAr" formControlName="lNameAr" type="text" [(ngModel)]="modal.name.last.ar">
+            <label [ngClass]="{active:signupForm.controls.lNameAr.value != ''}" for="lNameAr">
+              الاسم الثانى عربي
+            </label>
+            <fa-icon [icon]="'contact-card'"></fa-icon>
+          </div>
+          <p
+            *ngIf="signupForm.controls.lNameAr.touched && signupForm.controls.lNameAr.invalid || form.errors?.['name.last.ar']">
+            <span *ngIf="signupForm.controls.lNameAr.errors?.['required']">* هذا الحقل مطلوب</span>
+            <span *ngIf="form.errors?.['name.last.ar']">{{form.errors?.['name.last.ar']?.message}}</span>
+          </p>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.fNameEn.valid,error:signupForm.controls.fNameEn.errors?.['required']&& signupForm.controls.fNameEn.touched  || form.errors?.['name.first.en']}">
+          <div> <input id="fNameEn" formControlName="fNameEn" type="text" [(ngModel)]="modal.name.first.en">
+            <label [ngClass]="{active:signupForm.controls.fNameEn.value != ''}" for="fNameEn">
+              الاسم الاول انجليزى
+            </label>
+            <fa-icon [icon]="'contact-card'"></fa-icon>
+          </div>
+          <p
+            *ngIf="signupForm.controls.fNameEn.touched && signupForm.controls.fNameEn.invalid || form.errors?.['name.first.en']">
+            <span *ngIf="signupForm.controls.fNameEn.errors?.['required']">* هذا الحقل مطلوب</span>
+            <span *ngIf="form.errors?.['name.first.en']">{{form.errors?.['name.first.ar']?.message}}</span>
+          </p>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.lNameEn.valid,error:signupForm.controls.lNameEn.errors?.['required']&& signupForm.controls.lNameEn.touched  || form.errors?.['name.last.en']}">
+          <div> <input id="lNameEn" formControlName="lNameEn" type="text" [(ngModel)]="modal.name.last.en">
+            <label [ngClass]="{active:signupForm.controls.lNameEn.value != ''}" for="lNameEn">
+              الاسم الثانى انجليزى
+
+            </label>
+            <fa-icon [icon]="'contact-card'"></fa-icon>
+          </div>
+          <p
+            *ngIf="signupForm.controls.lNameEn.touched && signupForm.controls.lNameEn.invalid || form.errors?.['name.last.en']">
+            <span *ngIf="signupForm.controls.lNameEn.errors?.['required']">* هذا الحقل مطلوب</span>
+            <span *ngIf="form.errors?.['name.last.en']">{{form.errors?.['name.last.en']?.message}}</span>
+          </p>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.email.valid ,error:signupForm.controls.email.invalid && signupForm.controls.email.touched  || form.errors?.email}">
+          <div> <input id="signupEmail" formControlName="email" type="email" [(ngModel)]="modal.email">
+            <label [ngClass]="{active:signupForm.controls.email.value != ''}" for="signupEmail">
+              البريد الالكترونى
+            </label>
+            <fa-icon [icon]="'mail-bulk'"></fa-icon>
+          </div>
+          <p *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid || form.errors?.email">
+            <span *ngIf="signupForm.controls.email.errors?.['required']">* هذا الحقل مطلوب</span>
+            <span *ngIf="form.errors?.email">{{form.errors?.email?.message}}</span>
+          </p>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.password.valid,error:signupForm.controls.password.invalid&& signupForm.controls.password.touched || form.errors?.password}">
+          <div> <input id="signupPassword" #password formControlName="password" type="password"
+              [(ngModel)]="modal.password">
+            <label [ngClass]="{active:signupForm.controls.password.value != ''}" for="signupPassword">
+              كلمة المرور</label>
+            <fa-icon [icon]="password.type == 'text'? 'eye' : 'eye-slash'"
+              (click)="password.type == 'text' ? password.type = 'password' : password.type = 'text'"></fa-icon>
+          </div>
+          <p
+            *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid || form.errors?.password">
+            <span *ngIf="signupForm.controls.password.errors?.['required']">* هذا الحقل مطلوب</span>
+            <span *ngIf="form.errors?.password">{{form.errors?.password?.message}}</span>
+          </p>
+        </div>
+        <div class="formInput sm:col-span-2"
+          [ngClass]="{active:signupForm.controls.joinDate.valid,error:signupForm.controls.joinDate.invalid && signupForm.controls.joinDate.touched || form.errors?.joinDate}">
+          <div> <input dir="rtl" formControlName="joinDate" placeholder="اختياري" id="signupjoinDate" type="date"
+              [(ngModel)]="modal.joinDate">
+            <label [ngClass]="{active:signupForm.controls.joinDate.value != ''}" for="signupjoinDate">
+              تاريخ الانضمام</label>
+          </div>
+          <p
+            *ngIf="signupForm.controls.joinDate.touched && signupForm.controls.joinDate.invalid  || form.errors?.joinDate">
+            <span *ngIf="signupForm.controls.joinDate.errors?.['required'] || form.errors?.joinDate">* هذا الحقل
+              مطلوب</span>
+          </p>
+        </div>
+        <hr class="my-6 sm:col-span-2">
+
+        <div class="formCheck sm:col-span-2">
+          <input type="checkbox" id="showImg" formControlName="showImg" [(ngModel)]="modal.showImg">
+          <label for="showImg" class="flex-grow">
+            عرض الصورة في الموقع
+          </label>
+        </div>
+        <div class="formCheck sm:col-span-2">
+          <input type="checkbox" id="showCard" formControlName="card" [(ngModel)]="modal.card">
+          <label for="showCard" class="flex-grow">
+            عرض البيانات في الموقع
+          </label>
+        </div>
+      </div>
+      <hr class="my-6">
+      <div class="grid gap-4 ">
+        <div class="formInput">
+          <span class="font-bold">اللجنة</span>
+          <div>
+
+            <select formControlName="committee" [(ngModel)]="modal.committee" required>
+              <option *ngFor="let committee of committees" [value]="committee._id">{{committee.name}}</option>
+            </select>
+          </div>
+          <p
+            *ngIf="signupForm.controls.committee.touched && signupForm.controls.committee.invalid || form.errors?.committee">
+            <span *ngIf="signupForm.controls.committee.errors?.['required'] || form.errors?.committee">* هذا الحقل
+              مطلوب</span>
+          </p>
+        </div>
+        <div>
+          <span class="font-bold">القوافل الطبية</span>
+          <div class="flex flex-col items-start gap-1  h-32 overflow-auto w-full bg-neutral-100 rounded-xl p-2">
+            <div class="formCheck w-full" *ngFor="let consvoy of convoys;let i = index">
+              <input (change)="selectChange($event.target,consvoy._id)" [checked]="modal.convoys.includes(consvoy._id)"
+                type="checkbox" id="{{consvoy._id}}">
+              <label for="{{consvoy._id}}" class="flex-grow">
+                {{consvoy?.description?.address}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="my-6">
+
+      <div class="grid md:grid-cols-2 gap-2 ">
+        <span class="md:col-span-2 font-bold">بيانات التواصل (اختيارية)</span>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.whatsapp.valid,error:signupForm.controls.whatsapp.invalid && signupForm.controls.whatsapp.touched || form.errors?.whatsapp}">
+          <div> <input dir="rtl" id="signupwhatsapp" [(ngModel)]="modal.socialAccounts.whatsapp"
+              formControlName="whatsapp" type="tel">
+            <label [ngClass]="{active:signupForm.controls.whatsapp.value != ''}" for="signupwhatsapp">
+              رقم الواتساب (اختياري)</label>
+            <fa-icon [icon]="['fab','whatsapp']"></fa-icon>
+          </div>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.facebook.valid,error:signupForm.controls.facebook.invalid && signupForm.controls.facebook.touched || form.errors?.facebook}">
+          <div> <input dir="rtl" [(ngModel)]="modal.socialAccounts.facebook" id="signupfacebook"
+              formControlName="facebook" type="tel">
+            <label [ngClass]="{active:signupForm.controls.facebook.value != ''}" for="signupfacebook">
+              رابط فيسبوك (اختياري)</label>
+            <fa-icon [icon]="['fab','facebook']"></fa-icon>
+          </div>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.instagram.valid,error:signupForm.controls.instagram.invalid && signupForm.controls.instagram.touched || form.errors?.instagram}">
+          <div> <input dir="rtl" [(ngModel)]="modal.socialAccounts.instagram" id="signupinstagram"
+              formControlName="instagram" type="tel">
+            <label [ngClass]="{active:signupForm.controls.instagram.value != ''}" for="signupinstagram">
+              رابط انستجرام (اختياري)</label>
+            <fa-icon [icon]="['fab','instagram']"></fa-icon>
+          </div>
+        </div>
+        <div class="formInput"
+          [ngClass]="{active:signupForm.controls.twitter.valid,error:signupForm.controls.twitter.invalid && signupForm.controls.twitter.touched || form.errors?.twitter}">
+          <div> <input dir="rtl" [(ngModel)]="modal.socialAccounts.twitter" id="signuptwitter" formControlName="twitter"
+              type="tel">
+            <label [ngClass]="{active:signupForm.controls.twitter.value != ''}" for="signuptwitter">
+              رابط تويتر (اختياري)</label>
+            <fa-icon [icon]="['fab','twitter']"></fa-icon>
+          </div>
+        </div>
+
+      </div>
+      <hr class="my-6">
+
+      <div class="">
+        <span class="text-center text-red-500" *ngIf="form.errors?.image">الصورة مطلوبة من أجل التسجيل</span>
+        <div class=" mb-4">
+          <input id="userImg" #userImgInput type="file" hidden accept=".png,.jpg" (change)="onFileChanged($event)">
+          <label class="p-4 rounded-xl flex items-center gap-4 border border-dotted hover:border-cyan-500 duration-300"
+            for="userImg">
+            <img class="w-20 rounded-full aspect-square mb-4" src="{{modal.image}}" alt="">
+            <div class="flex flex-col gap-2">
+              <fa-icon [icon]="'camera'"></fa-icon>
+              <span>
+                تغيير الصورة شخصية
+              </span>
+            </div>
+          </label>
+          <div *ngIf="userImgBox"
+            class="cropperBox flex flex-col justify-center items-center fixed w-full h-screen top-0 left-0 bg-black bg-opacity-40 duration-300 z-10">
+
+            <div
+              class="flex flex-wrap gap-5  min-h-60 overflow-auto duration-200 relative w-full max-w-2xl rounded-xl   bg-white">
+
+              <!-- <span *ngIf="!userImgBoxReady"
+                class="rounded-full w-6 m-auto block h-6 border-2 border-t-transparent border-black animate-spin"></span> -->
+
+              <image-cropper class="imgCropper h-96" [imageChangedEvent]="userImg" [aspectRatio]="1/1" format="png"
+                [resizeToHeight]="500" [resizeToWidth]="500" (imageCropped)="cropImg($event)"
+                (cropperReady)="initCropper()" (loadImageFailed)="imgFaild()">
+
+              </image-cropper>
+              <div class="flex gap-2 justify-end py-4 px-2 w-full">
+                <button type="button" class="btn" (click)="userImgInput.click()">
+                  <fa-icon [icon]="'arrow-rotate-back'"></fa-icon>
+                  <span>تغيير الصورة</span>
+                </button>
+                <button type="button" class="btn cyan" (click)="this.userImgBox = false">
+                  <fa-icon [icon]="'check'"></fa-icon>
+                  <span>تأكيد</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+</ng-container>
+<app-loading *ngIf="loading.page"></app-loading>

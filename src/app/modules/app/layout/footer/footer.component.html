@@ -7,17 +7,7 @@
         فريق عمل تطوعي من طلاب الكليات الطبية بالدلنجات ومؤسسة غير ربحية هدفها نشر الوعي وتوفير الرعاية الصحية لغير
         القادرين
       </p>
-      <div class="flex flex-wrap gap-2 links">
-        <div class="h-10 w-10 text-2xl" *ngFor="let link of links">
-          <fa-icon [style]="'--color:'+link.color"
-            class="rounded-xl cursor-pointer h-full w-full flex justify-center items-center duration-300 text-zinc-700"
-            [icon]="link.icon">
-            <a [href]="link.link"></a>
-          </fa-icon>
-        </div>
-      </div>
     </div>
-
     <div class="flex flex-col gap-3 items-start">
       <h6 class="font-bold py-3 text-zinc-50">من نحن</h6>
       <a class="hover:text-white duration-300" routerLink="/about">عن الفريق</a>
@@ -28,13 +18,24 @@
       <h6 class="font-bold py-3 text-zinc-50">تسوق معنا</h6>
       <a class="hover:text-white duration-300" routerLink="/gallery">المتجر</a>
     </div>
+    <div class="flex flex-col gap-3 items-start">
+      <h6 class="font-bold py-3 text-zinc-50">تواصل معنا</h6>
+      <div class="flex flex-wrap gap-2 links">
+        <div class="h-10 w-10 text-2xl" *ngFor="let link of links">
+          <a [href]="link.value"
+            class="rounded-xl cursor-pointer h-full w-full flex justify-center items-center duration-300 text-zinc-700">
+            <svg class="duration-300 w-full h-full fill-neutral-600">
+              <use attr.href="assets/icons/social.svg#{{link.icon}}"></use>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
   <span class="text-zinc-500 block pt-5 text-center border-t border-zinc-500 capitalize">
-
     <span class="capitalize text-cyan-400 "> DMC TEAM </span>. جميع الحقوق محفوظة.
     &copy;
     <span>{{year}}</span>
-
   </span>
   <span class="text-zinc-500 block py-2 text-center border-zinc-500 capitalize">
     Developed With <span class="text-red-500">&#x2764;</span> By <a href="wa.me/+201114345007">Ahmed Abdo</a>

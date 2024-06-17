@@ -52,5 +52,10 @@ export class PageLandingComponent {
       img: 'school',
       dis: 'الادوات المدرسية',
     },
+    other: {
+      name: 'Charity'.split(''),
+      img: 'other',
+      dis: 'المشاريع الخيرية',
+    },
   };
 }

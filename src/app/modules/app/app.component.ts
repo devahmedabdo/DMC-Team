@@ -10,27 +10,28 @@ import { DmcService } from 'src/app/services/dmc.service';
 })
 export class AppComponent {
   menu: boolean = false;
+  loading: boolean = true;
+  constructor(private api: ApiService, private dmc: DmcService) {
+    this.get();
+  }
+  get() {
+    this.api.get('config').subscribe({
+      next: (data: any) => {
+        this.loading = false;
+      },
+      error: (err: any) => {
+        this.dmc.message(
+          'حدث خطأ اثناء جلب بيانات الموقع في حال استمرار المشكله تواصل معنا',
+          'error'
+        );
+      },
+    });
+  }
   activate() {
     scrollTo({
       top: 0,
       behavior: 'instant',
     });
     this.menu = false;
-  }
-  loading: boolean = true;
-  get() {
-    this.api.get('config').subscribe({
-      next: (data: any) => {
-        this.loading = false;
-      },
-    });
-  }
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private api: ApiService,
-    private dmc: DmcService
-  ) {
-    this.get();
   }
 }

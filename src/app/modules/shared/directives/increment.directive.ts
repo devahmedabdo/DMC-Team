@@ -4,23 +4,17 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
   selector: '[appIncrement]',
 })
 export class IncrementDirective {
-  private intervalId: any;
-
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
   @Input() appIncrement: any = 0;
   @Input() max: any = 1;
   @Input() speed: number = 20;
+  private intervalId: any;
+  started: boolean = false;
 
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
   ngOnInit() {
     window.addEventListener('scroll', this.checkScrollPosition.bind(this));
     this.checkScrollPosition();
   }
-
-  ngOnDestroy() {
-    window.removeEventListener('scroll', this.checkScrollPosition.bind(this));
-    clearInterval(this.intervalId);
-  }
-  started: boolean = false;
   private checkScrollPosition() {
     const element = this.elementRef.nativeElement;
     const isInView =
@@ -48,5 +42,9 @@ export class IncrementDirective {
       'innerText',
       number
     );
+  }
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.checkScrollPosition.bind(this));
+    clearInterval(this.intervalId);
   }
 }

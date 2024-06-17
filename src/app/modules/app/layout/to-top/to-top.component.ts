@@ -4,10 +4,10 @@ import { faArrowUp, faUpLong } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-to-top',
   templateUrl: './to-top.component.html',
-  styleUrls: ['./to-top.component.scss']
+  styleUrls: ['./to-top.component.scss'],
 })
 export class ToTopComponent {
-  constructor() { }
+  constructor() {}
   top = faArrowUp;
   documentHieght: number = 0;
   scrollHeight: number = 0;
@@ -18,7 +18,6 @@ export class ToTopComponent {
     window.scrollTo(0, 0);
   }
   ngOnInit(): void {
-    // console.log('im in');
     this.screenHieght = window.innerHeight;
     window.onscroll = () => {
       this.documentHieght = document.documentElement.scrollHeight;

@@ -27,9 +27,13 @@
         </div>
       </div>
     </div>
-    <button class="btn cyan mx-auto w-48" routerLink="/creatorder">
+    <button *ngIf="acceptOrder" class="btn cyan mx-auto w-48" routerLink="/creatorder">
       <span>اكمال الطلب</span>
     </button>
+    <div *ngIf="!acceptOrder" class="rounded-lg p-2  text-center bg-orange-50 text-orange-500">
+      عذرا استقبال الطلبات متوقف بشكل مؤقت يمكتكم الطلب عن طريق فيسبوك
+    </div>
+
   </ng-container>
   <div class="flex flex-col items-center text-2xl font-bold gap-6 text-center" *ngIf="!products.length">
     <img class="max-w-xs" src="assets/main/no-products.svg" alt="no-products">

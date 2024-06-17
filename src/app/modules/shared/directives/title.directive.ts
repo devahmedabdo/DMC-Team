@@ -12,28 +12,19 @@ import {
 })
 export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
   private intervalId: any;
+  started: boolean = false;
+  text: string = '';
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      // console.log(this.elementRef.nativeElement.getBoundingClientRect().height);
-      this.renderer.addClass(this.elementRef.nativeElement, 'opacity-0');
-      // this.elementRef.nativeElement.style.height =
-      //   this.elementRef.nativeElement.getBoundingClientRect().height + 'px';
-    }, 11);
-  }
-  text: string = '';
   ngOnInit() {
-    // Listen to scroll events
     window.addEventListener('scroll', this.checkScrollPosition.bind(this));
     this.checkScrollPosition();
   }
-
-  ngOnDestroy() {
-    window.removeEventListener('scroll', this.checkScrollPosition.bind(this));
-    clearInterval(this.intervalId);
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.renderer.addClass(this.elementRef.nativeElement, 'opacity-0');
+    }, 11);
   }
-  started: boolean = false;
   private checkScrollPosition() {
     const element = this.elementRef.nativeElement;
     this.text = element.innerText;
@@ -45,7 +36,6 @@ export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
       this.startWriteEffect(this.text);
     }
   }
-
   private startWriteEffect(text: string) {
     this.started = true;
     const words = text.split('');
@@ -65,5 +55,9 @@ export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
         clearInterval(this.intervalId);
       }
     }, 30);
+  }
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.checkScrollPosition.bind(this));
+    clearInterval(this.intervalId);
   }
 }

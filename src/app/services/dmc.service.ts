@@ -70,10 +70,7 @@ export class DmcService {
   getKey(key: string): string {
     return `DMC.${key.split('').reverse().join('')}`;
   }
-  getCookieName(key: string): string {
-    let newName = key.replaceAll('=', 'equalChar');
-    return `DMC.${newName.split('').reverse().join('')}`;
-  }
+
   messageSounds: any = {
     info: new Audio('assets/sounds/done.mp3'),
     delete: new Audio('assets/sounds/delete.mp3'),
@@ -114,13 +111,16 @@ export class DmcService {
   }
 
   // Function to set a session cookie
+  getCookieName(key: string): string {
+    return `DMC.${key.split('').reverse().join('')}`;
+  }
+
   setSessionCookie(name: any, value: any) {
     try {
       const encryptedValue = encodeURIComponent(
         CryptoJS.AES.encrypt(JSON.stringify(value), this.encryptKey).toString()
       );
       document.cookie = `${this.getCookieName(name)}=${encryptedValue}; path=/`;
-      console.log(`Cookie set: ${this.getCookieName(name)}`);
     } catch (e) {
       console.log(e);
     }
@@ -156,7 +156,6 @@ export class DmcService {
     document.cookie = `${this.getCookieName(
       name
     )}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-    console.log(`Cookie deleted: ${this.getCookieName(name)}`);
   }
   clearAllCookies() {
     const cookies = document.cookie.split(';');
@@ -165,7 +164,6 @@ export class DmcService {
       const eqPos = cookie.indexOf('=');
       const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
       document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-      console.log(`Cleared cookie: ${name}`);
     }
   }
 }

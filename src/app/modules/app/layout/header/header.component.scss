@@ -5,7 +5,6 @@
 .menu {
   nav {
     a {
-      // @apply py-1  duration-300 text-neutral-900 transition-colors relative;
       &::after {
         @apply absolute top-full w-0 duration-300 h-0.5 rounded-full bg-cyan-600 right-0;
         content: "";

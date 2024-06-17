@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -6,7 +7,8 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
 })
-export class AboutComponent {
+export class AboutComponent implements OnDestroy {
+  subscriptions: Subscription[] = [];
   policies: string[] = [
     `نحن فريق عمل تطوعي من طلاب الكليات الطبية بالدلنجات ومؤسسة غير ربحية هدفها نشر الوعي وتنظيم بعض الأنشطة الإجتماعية لمساعدة المحتاجين و توفير الرعاية الصحية لغير القادرين`,
     `مبدأ التعاون بين الفريق وأي جهة من الجهات مرفوض تحت أي مسمي وهدفنا الوحيد هو العمل الخيري وليس لأعضاء الفريق أي مصالح شخصية`,
@@ -24,24 +26,31 @@ export class AboutComponent {
     total: 0,
   };
   loading: boolean = false;
+  constructor(private api: ApiService) {
+    this.get();
+  }
   get(page: number = 1) {
     this.loading = true;
     this.error = false;
-    this.api.get('members-card?page=' + page).subscribe({
-      next: (data: any) => {
-        data.items.forEach((ele: any) => {
-          ele.committee = ele.committee[0];
-        });
-        this.loading = false;
-        this.members = [...this.members, ...data.items];
-        this.pagination = data.pagination;
-      },
-      error: (err: any) => {
-        this.error = err;
-      },
-    });
+    this.subscriptions.push(
+      this.api.get('members-card?page=' + page).subscribe({
+        next: (data: any) => {
+          data.items.forEach((ele: any) => {
+            ele.committee = ele.committee[0];
+          });
+          this.loading = false;
+          this.members = [...this.members, ...data.items];
+          this.pagination = data.pagination;
+        },
+        error: (err: any) => {
+          this.error = err;
+        },
+      })
+    );
   }
-  constructor(private api: ApiService) {
-    this.get();
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((item) => {
+      item.unsubscribe();
+    });
   }
 }

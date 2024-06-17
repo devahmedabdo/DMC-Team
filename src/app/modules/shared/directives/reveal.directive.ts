@@ -24,9 +24,6 @@ export class RevealDirective implements OnInit, OnDestroy {
       this.checkPosition();
     }, 300);
   }
-  ngOnDestroy() {
-    window.removeEventListener('scroll', this.checkPosition.bind(this));
-  }
   checkPosition() {
     const rect = this.elementRef.nativeElement.getBoundingClientRect();
     if (rect.top - document.documentElement.clientHeight < -100) {
@@ -36,5 +33,8 @@ export class RevealDirective implements OnInit, OnDestroy {
     } else {
       this.renderer.removeClass(this.elementRef.nativeElement, 'reveal');
     }
+  }
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.checkPosition.bind(this));
   }
 }
