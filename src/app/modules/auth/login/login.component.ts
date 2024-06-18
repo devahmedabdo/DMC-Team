@@ -22,7 +22,7 @@ export class LoginComponent implements OnDestroy {
   type: string = 'password';
   loading: any = {
     form: false,
-    page: false,
+    page: true,
   };
   form: any = {
     errors: null,
@@ -73,9 +73,13 @@ export class LoginComponent implements OnDestroy {
     this.subscriptions.push(
       this.api.get('config').subscribe({
         next: (data: any) => {
+          this.loading.page = false;
           this.acceptSignup = data.config.acceptSignup;
         },
-        error: (error: any) => {},
+        error: (error: any) => {
+          this.loading.page = false;
+          this.dmc.message('حدث خطأ', 'error');
+        },
       })
     );
   }

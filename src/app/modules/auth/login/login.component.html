@@ -1,4 +1,4 @@
-<div class="login">
+<div *ngIf="!loading.page" class="login">
   <div class="container relative flex flex-wrap-reverse gap-12 items-center justify-center py-14">
     <div *ngIf="formType == 'signup'&&acceptSignup" [style]="'--w:'+signupStep / 3 * 100+'%'"
       class="signup-progress h-1 bg-zinc-100 rounded-full justify-between absolute top-8 max-w-3xl">
@@ -478,3 +478,4 @@
     </div>
   </div>
 </div>
+<app-loading *ngIf="loading.page"></app-loading>
