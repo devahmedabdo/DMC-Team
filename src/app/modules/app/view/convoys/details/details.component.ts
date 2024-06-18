@@ -39,18 +39,16 @@ export class DetailsComponent implements OnDestroy {
       this.api.get('convoy/' + this.id).subscribe({
         next: (data: any) => {
           this.loading.convoys = false;
-          data.convoy?.numbers.forEach((number: any) => {
-            number.collabs = data.convoy?.collaborators.filter((coll: any) => {
-              return coll.specialization == number?.specialization._id;
-            });
-          });
+          data.convoy.collaborators = data.convoyCollaborators;
+          data.convoy.forwards = data.convoyForwards;
           this.maxNumber = Math.max(
             ...data.convoy.numbers.map((num: any) => +num.total)
           );
+          delete data.convoyCollaborators;
+          delete data.convoyForwards;
           this.convoy = data.convoy;
           this.pagination = data.pagination;
           this.members = data.members;
-          console.log(data);
         },
       })
     );

@@ -9,8 +9,8 @@ import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
 export class ApiService {
   constructor(private http: HttpClient, private dmc: DmcService) {}
 
-  // apiUrl: any = 'http://127.0.0.1:3001/';
-  apiUrl: any = 'https://dmc-dashboard.vercel.app/';
+  apiUrl: any = 'http://127.0.0.1:3001/';
+  // apiUrl: any = 'https://dmc-dashboard.vercel.app/';
 
   post(url: any, data: any): Observable<any> {
     return this.http.post(this.apiUrl + url, data);
@@ -33,7 +33,7 @@ export class ApiService {
     return this.http.get(this.apiUrl + api, option ? option : '').pipe(
       map((data: any) => {
         // Save data in session cookie
-        this.dmc.data[api] = new BehaviorSubject(data);
+        // this.dmc.data[api] = new BehaviorSubject(data);
         return data; // Return the fetched data
       }),
       catchError((error: any) => {
