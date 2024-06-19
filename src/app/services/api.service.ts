@@ -33,7 +33,7 @@ export class ApiService {
     return this.http.get(this.apiUrl + api, option ? option : '').pipe(
       map((data: any) => {
         // Save data in session cookie
-        // this.dmc.data[api] = new BehaviorSubject(data);
+        this.dmc.data[api] = new BehaviorSubject(data);
         return data; // Return the fetched data
       }),
       catchError((error: any) => {
