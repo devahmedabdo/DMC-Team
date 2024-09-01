@@ -14,8 +14,8 @@ export class ApiService {
     private router: Router
   ) {}
 
-  apiUrl: any = 'http://127.0.0.1:3001/';
-  // apiUrl: any = 'https://dmc-dashboard.vercel.app/';
+  // apiUrl: any = 'http://127.0.0.1:3001/';
+  apiUrl: any = 'https://dmc-dashboard.vercel.app/';
 
   post(url: any, data: any): Observable<any> {
     return this.http.post(this.apiUrl + url, data);
