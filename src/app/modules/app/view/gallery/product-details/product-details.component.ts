@@ -65,7 +65,6 @@ export class ProductDetailsComponent implements OnDestroy {
           setTimeout(() => {
             this.loading = false;
           }, 111);
-          console.log(this.product);
         },
       })
     );

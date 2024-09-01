@@ -105,7 +105,8 @@ export class ProfileComponent implements OnDestroy {
       errors: null,
       message: null,
     };
-    if (!this.modal.password) delete this.modal.password;
+    let data = JSON.parse(JSON.stringify(this.modal));
+    if (!this.modal.password) delete data.password;
     this.loading.form = true;
     this.subscriptions.push(
       this.api.patch('member', this.modal, this.headerOptions).subscribe({
@@ -167,7 +168,7 @@ export class ProfileComponent implements OnDestroy {
     let reader = new FileReader();
     reader.readAsDataURL(croppedImg.blob);
     reader.onloadend = () => {
-      this.modal.image = reader.result;
+      this.modal.newImage = reader.result;
     };
   }
   initCropper() {

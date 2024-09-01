@@ -2,15 +2,20 @@ import { DmcService } from 'src/app/services/dmc.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient, private dmc: DmcService) {}
+  constructor(
+    private http: HttpClient,
+    private dmc: DmcService,
+    private router: Router
+  ) {}
 
-  // apiUrl: any = 'http://127.0.0.1:3001/';
-  apiUrl: any = 'https://dmc-dashboard.vercel.app/';
+  apiUrl: any = 'http://127.0.0.1:3001/';
+  // apiUrl: any = 'https://dmc-dashboard.vercel.app/';
 
   post(url: any, data: any): Observable<any> {
     return this.http.post(this.apiUrl + url, data);
@@ -37,6 +42,10 @@ export class ApiService {
         return data; // Return the fetched data
       }),
       catchError((error: any) => {
+        if (error.status == 403) {
+          this.dmc.removeItem('auth');
+          this.router.navigateByUrl('/login');
+        }
         throw error;
       })
     );

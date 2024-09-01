@@ -5,6 +5,7 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
+  Input,
 } from '@angular/core';
 
 @Directive({
@@ -14,6 +15,7 @@ export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
   private intervalId: any;
   started: boolean = false;
   text: string = '';
+  @Input() page: string = '';
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
   ngOnInit() {
@@ -33,7 +35,11 @@ export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
       rect.top - document.documentElement.clientHeight < -200 &&
       !this.started
     ) {
-      this.startWriteEffect(this.text);
+      if (!localStorage.getItem(this.page)) {
+        this.startWriteEffect(this.text);
+      } else {
+        this.renderer.removeClass(this.elementRef.nativeElement, 'opacity-0');
+      }
     }
   }
   private startWriteEffect(text: string) {
@@ -53,8 +59,13 @@ export class TitleDirective implements OnInit, OnDestroy, AfterViewInit {
         index++;
       } else {
         clearInterval(this.intervalId);
+        window.removeEventListener(
+          'scroll',
+          this.checkScrollPosition.bind(this)
+        );
       }
     }, 30);
+    localStorage.setItem(this.page, 'true');
   }
   ngOnDestroy() {
     window.removeEventListener('scroll', this.checkScrollPosition.bind(this));

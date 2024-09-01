@@ -1,7 +1,7 @@
 <app-page-landing page="about"></app-page-landing>
 
 <h2 class="title" reveal="b" data-text="عن الفريق">من نحن</h2>
-<p textEffect reveal="b" class="text-xl text-neutral-700 font-medium text-center mx-auto max-w-4xl">
+<p textEffect page="about" class="text-xl text-neutral-700 font-medium text-center mx-auto max-w-4xl">
   فريق عمل تطوعي من طلاب الكليات الطبية بالدلنجات ومؤسسة غير ربحية هدفها نشر الوعي وتوفير الرعاية الصحية لغير القادرين
   بالتعاون مع خيرة أطباء الدلنجات وتنظيم بعض الأنشطة الإجتماعية كالندوات والمؤتمرات وحملات الكساء وغيرها من المشاريع
   الخيرية.
@@ -19,7 +19,7 @@
     </swiper-slide>
   </swiper-container>
 </div>
-<div class="container my-40">
+<div class="container my-40" *ngIf="members.length">
   <h2 class="title" reveal="b" data-text="ابطال الفريق">الاعضاء</h2>
   <div class="flex flex-wrap justify-center md:px-5">
     <app-card class="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 scale-90" [user]="member"

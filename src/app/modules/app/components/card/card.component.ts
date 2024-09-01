@@ -39,7 +39,6 @@ export class CardComponent implements OnDestroy {
       new Date().getTime() - new Date(this.team.date).getTime();
 
     this.year_diffrent = ((teamDuration - dateAsMember) / teamDuration) * 185;
-    console.log(this.user?.convoys?.length);
     this.convoys_diffrent =
       ((+this.team.convoys_count - (+this.user?.convoys?.length || 0)) /
         this.team.convoys_count) *

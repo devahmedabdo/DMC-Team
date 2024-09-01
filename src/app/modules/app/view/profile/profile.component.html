@@ -1,6 +1,7 @@
 <ng-container *ngIf="!loading.page">
+
   <app-navigator *ngIf="member" [title]="member.name.first.ar + ' '+ member.name.last.ar"></app-navigator>
-  <div class="container mb-20">
+  <div class="container mb-20" *ngIf="member">
     <img
       class="bg-white md:w-60 w-40 rounded-full aspect-square object-cover shadow-lg border-4 border-white -translate-y-1/2"
       [src]="member.image" alt="">
@@ -204,7 +205,7 @@
           <input id="userImg" #userImgInput type="file" hidden accept=".png,.jpg" (change)="onFileChanged($event)">
           <label class="p-4 rounded-xl flex items-center gap-4 border border-dotted hover:border-cyan-500 duration-300"
             for="userImg">
-            <img class="w-20 rounded-full aspect-square mb-4" src="{{modal.image}}" alt="">
+            <img class="w-20 rounded-full aspect-square mb-4" src="{{modal.newImage||modal.image}}" alt="">
             <div class="flex flex-col gap-2">
               <fa-icon [icon]="'camera'"></fa-icon>
               <span>

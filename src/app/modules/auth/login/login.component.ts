@@ -191,7 +191,7 @@ export class LoginComponent implements OnDestroy {
       email: data.email,
       card: data.card,
       showImg: data.showImg,
-      image: this.userImgCropped,
+      newImage: this.userImgCropped,
       convoys: this.selectedConvoys,
     };
 
