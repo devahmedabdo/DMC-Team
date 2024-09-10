@@ -436,12 +436,9 @@
 }
 
 // scroll animation
-.rReveal,
-.lReveal,
-.tReveal,
-.bReveal {
-  opacity: 0;
+[revea] {
   transition: var(--long-duration, 0.5s);
+  opacity: 0;
 }
 
 .rReveal {
