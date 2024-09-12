@@ -1,6 +1,6 @@
 <header class="bg-neutral-50 relative">
   <div class="px-3 md:px-9 py-2 flex justify-between items-center border-b border-neutral-200 container">
-    <div>
+    <div class="z-20">
       <img class="w-24" src="assets/main/logo.svg" alt="logo">
     </div>
     <div class="flex flex-grow menu duration-300" [ngClass]="{active:activeMenu}">
@@ -34,7 +34,7 @@
         </ng-container>
       </div>
     </div>
-    <div class="menu-icon w-8 flex flex-col  gap-2 items-end cursor-pointer" [ngClass]="{active:activeMenu}"
+    <div class="menu-icon w-8 flex flex-col z-20 gap-2 items-end cursor-pointer" [ngClass]="{active:activeMenu}"
       (click)="reflectActiveMenu()">
       <span></span>
       <span></span>

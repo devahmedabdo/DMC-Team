@@ -34,7 +34,7 @@
     }
   }
   @media (max-width: 983px) {
-    @apply fixed top-0 w-full -z-10 flex flex-col p-3 left-full bg-white;
+    @apply fixed top-0 w-full z-10 flex flex-col p-3 left-full bg-white;
     height: 100dvh;
     padding: 80px 30px 16px;
     nav {
