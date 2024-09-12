@@ -35,7 +35,7 @@
   }
   @media (max-width: 983px) {
     @apply fixed top-0 w-full z-10 flex flex-col p-3 left-full bg-white;
-    height: calc(100vh - calc(100vh -100%));
+    height: calc(100vh - calc(100vh - 100%));
     padding: 80px 30px 16px;
     nav {
       @apply flex-col justify-start items-start border-b border-neutral-200;
