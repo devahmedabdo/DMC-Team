@@ -16,25 +16,27 @@
       </ng-container>
     </div>
   </div>
-  <h3 class="title mt-20" reveal="b" data-text="صور المشروع">
-    الصور
-  </h3>
-  <div class="my-10 mx-auto max-w-4xl px-4" reveal="b">
-    <swiper-container class="mySwiper rounded-lg overflow-hidden w-full" thumbs-swiper=".mySwiper2" space-between="10"
-      zoom="true">
-      <swiper-slide *ngFor="let photo of project?.photos;let i = index">
-        <div class="swiper-zoom-container  aspect-video">
-          <img class="rounded-lg object-cover w-full h-full" src="{{photo}}" />
-        </div>
-      </swiper-slide>
-    </swiper-container>
-    <swiper-container class="mySwiper2 mt-4 w-full" space-between="10" slides-per-view="4" free-mode="true"
-      watch-slides-progress="true">
-      <swiper-slide *ngFor="let photo of project?.photos;let i = index">
-        <img class="rounded-lg aspect-video object-cover" src="{{photo}}" />
-      </swiper-slide>
-    </swiper-container>
-  </div>
+  <ng-container *ngIf="project?.photos?.length">
+    <h3 class="title mt-20" reveal="b" data-text="صور المشروع">
+      الصور
+    </h3>
+    <div class="my-10 mx-auto max-w-4xl px-4" reveal="b">
+      <swiper-container class="mySwiper rounded-lg overflow-hidden w-full" thumbs-swiper=".mySwiper2" space-between="10"
+        zoom="true">
+        <swiper-slide *ngFor="let photo of project?.photos;let i = index">
+          <div class="swiper-zoom-container  aspect-video">
+            <img class="rounded-lg object-cover w-full h-full" src="{{photo}}" />
+          </div>
+        </swiper-slide>
+      </swiper-container>
+      <swiper-container class="mySwiper2 mt-4 w-full" space-between="10" slides-per-view="4" free-mode="true"
+        watch-slides-progress="true">
+        <swiper-slide *ngFor="let photo of project?.photos;let i = index">
+          <img class="rounded-lg aspect-video object-cover" src="{{photo}}" />
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </ng-container>
 
   <div class="mt-20 container pb-20" *ngIf="more.length">
     <h2 class="title" data-text="المزيد من المشاريع">
